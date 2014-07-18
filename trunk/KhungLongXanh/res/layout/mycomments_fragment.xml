@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/mycmt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:maxLines="20"
+        android:scrollHorizontally="true"
+        android:text="Hoi Ngu"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/mycmt_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxHeight="250dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/iviet_temp" />
+    </LinearLayout>
+
+    <!-- cmt details -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="Share your thought"
+            android:minHeight="100dp" />
+
+        <Button
+            android:id="@+id/comment"
+            style="@style/dragon_button_white"
+            android:text="Comment >>>" />
+    </LinearLayout>
+
+</LinearLayout>
