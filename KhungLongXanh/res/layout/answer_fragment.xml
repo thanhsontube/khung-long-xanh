@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/lv1"
+            android:orientation="vertical"
+            android:padding="4dp" >
+
+            <TextView
+                style="@style/style_textview_row"
+                android:maxLines="5"
+                android:tag="title"
+                android:text="@string/test1"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/style_textview_row"
+                android:layout_marginTop="@dimen/lv1"
+                android:singleLine="true"
+                android:tag="name"
+                android:text="@string/test2"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <!-- list -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ListView
+                android:id="@+id/answer_lv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </ListView>
+
+            <include layout="@layout/empty_layout" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- comments -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/them_color2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/green1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Comment"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    style="@style/main_img_style"
+                    android:layout_marginLeft="@dimen/lv1"
+                    android:src="@drawable/arrow_for_button" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
