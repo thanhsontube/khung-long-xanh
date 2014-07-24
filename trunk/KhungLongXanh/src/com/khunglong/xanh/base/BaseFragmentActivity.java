@@ -20,16 +20,22 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 	}
 
 	protected static final String FRAGMENT_KEY = "fragment-key";
+	
 	protected static final String SAVE_KEY_STACK = "tag_stack";
 	private static final String TAG = "BaseFragmentActivity";
 	FilterLog log = new FilterLog(TAG);
 
 	abstract protected Fragment createFragmentMain(Bundle savedInstanceState);
-
 	abstract protected int getFragmentContentId();
-
 	protected final Stack<String> mFragmentTagStack = new Stack<String>();
+	private int currentPosition = 0;
 
+	public int getCurrentPosition() {
+		return currentPosition;
+	}
+	public void setCurrentPosition(int currentPosition) {
+		this.currentPosition = currentPosition;
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,6 +102,54 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 				ft.remove(fm.findFragmentByTag(tag));
 				log.d("log>>>" + "remove:" + tag);
 			}
+			
+			
+			 Fragment f2 = null, f3 = null;
+			Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
+			if (fm.findFragmentByTag("f2") != null) {
+				f2 = fm.findFragmentByTag("f2");
+				ft.hide(f2);
+				
+			}
+			if (fm.findFragmentByTag("f3") != null) {
+				f3 = fm.findFragmentByTag("f3");
+				ft.hide(f3);
+				
+			}
+			switch (currentPosition) {
+			case 0:
+				if (f2 != null) {
+					ft.hide(f2);
+				}
+				
+				if (f3 != null) {
+					ft.hide(f3);
+				}
+				break;
+			case 1:
+				if (f2 != null) {
+					ft.show(f2);
+					ft.hide(ff);
+				}
+				
+				if (f3 != null) {
+					ft.hide(f3);
+				}
+				break;
+			case 2:
+				if (f2 != null) {
+					ft.hide(f2);
+				}
+				
+				if (f3 != null) {
+					ft.show(f3);
+					ft.hide(ff);
+				}
+				break;
+
+			default:
+				break;
+			}
 			ft.commit();
 		}
 
@@ -104,7 +158,7 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 	public void showFragment(Fragment f, boolean isTransit) {
 		String ftag = f.getTag();
 		final String tag = String.format("%s:%d", getClass().getName(), mFragmentTagStack.size());
-		log.d("log>>>" + "showFragment:" + tag);
+		log.d("log>>>" + "showFragment:" + tag + ";mFragmentTagStack.size():" + mFragmentTagStack.size());
 		final FragmentManager fm = getSupportFragmentManager();
 		final FragmentTransaction ft = fm.beginTransaction();
 		
@@ -114,11 +168,24 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 		} else {
 			final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
 			ft.hide(ff);
+			if (fm.findFragmentByTag("f2") != null) {
+				final Fragment f2 = fm.findFragmentByTag("f2");
+				ft.hide(f2);
+				
+			}
+			if (fm.findFragmentByTag("f3") != null) {
+				final Fragment f3 = fm.findFragmentByTag("f3");
+				ft.hide(f3);
+				
+			}
+			
 		}
 		if (fm.findFragmentByTag(ftag) == null) {
+			log.d("log>>>" + "add:" + tag);
 			ft.add(getFragmentContentId(), f, tag);
 			ft.show(f);
 		} else {
+			log.d("log>>>" + "replace:" + tag);
 			ft.replace(getFragmentContentId(), f);
 			ft.show(f);
 		}

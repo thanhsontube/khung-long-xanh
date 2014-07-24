@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.facebook.Response;
 import com.facebook.model.GraphObject;
-import com.khunglong.xanh.json.Data;
+import com.khunglong.xanh.json.PageData;
 import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.json.FbPageCursor;
 import com.khunglong.xanh.json.Paging;
@@ -35,14 +35,17 @@ public abstract class FbPageLoader extends FbLoaderGet<DragonData> {
 			JSONArray jsonArray = jsonObject.getJSONArray("data");
 			
 			DragonData dragonData = new DragonData();
-			Data data;
+			PageData data;
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject ja = (JSONObject) jsonArray.get(i);
 				String id = ja.getString("id");
-				String name = ja.getString("name");
+				String name = "";
+				if(ja.has("name")) {
+					 name = ja.getString("name");
+				}
 				String source = ja.getString("source");
 				String created_time = ja.getString("created_time");
-				data = new Data(id, name, source, created_time);
+				data = new PageData(id, name, source, created_time);
 				
 				dragonData.getData().add(data);
 			}

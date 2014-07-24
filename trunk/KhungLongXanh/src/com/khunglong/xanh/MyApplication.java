@@ -1,9 +1,13 @@
 package com.khunglong.xanh;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Application;
 import android.content.Context;
 
 import com.khunglong.xanh.json.DragonData;
+import com.khunglong.xanh.main.drawer.MainDrawerItemGenerator;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -11,18 +15,25 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class MyApplication extends Application {
 	
+	
+	
+	private List<DragonData> mListDragonDatas;
 	private DragonData dragonData;
 	private FbLoaderManager mFbLoaderManager;
-//	private String id = "KhungLongXanhVietNam";
+	private MainDrawerItemGenerator mMainDrawerItemGenerator;
+//	private String id = "khunglongxanhvietnam";
 //	nhatky
 //	hanhphucgiobay
 //	VoHoaiLinh
 //	HaivlOfficial
-	private String id = "HaivlOfficial";
+	//haivl.com
+	private String id = "khunglongxanhvietnam";
 	private DisplayImageOptions optionsContent;
+	private DisplayImageOptions optionsCircle;
 //	private String id = "huyen.dinh.165";
 	@Override
 	public void onCreate() {
@@ -33,6 +44,7 @@ public class MyApplication extends Application {
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
+		mListDragonDatas = new ArrayList<DragonData>();
 		dragonData = new DragonData();
 		
 		optionsContent = new DisplayImageOptions.Builder()
@@ -44,6 +56,19 @@ public class MyApplication extends Application {
 		.cacheOnDisk(true)
 		.considerExifParams(true)
 		.build();
+		
+		optionsCircle = new DisplayImageOptions.Builder()
+		.showImageOnLoading(R.drawable.chat_emotion_icon)
+		.showImageForEmptyUri(R.drawable.chat_emotion_icon)
+		.showImageOnFail(R.drawable.chat_emotion_icon)
+		.imageScaleType(ImageScaleType.EXACTLY)
+		.cacheInMemory(true)
+		.cacheOnDisk(true)
+		.considerExifParams(true)
+		.displayer(new RoundedBitmapDisplayer(120))
+		.build();
+		
+		mMainDrawerItemGenerator = new MainDrawerItemGenerator(getApplicationContext());
 	}
 	
 	
@@ -51,8 +76,13 @@ public class MyApplication extends Application {
 	public DisplayImageOptions getOptionsContent() {
 		return optionsContent;
 	}
+	
 
 
+
+	public DisplayImageOptions getOptionsCircle() {
+		return optionsCircle;
+	}
 
 	@Override
 	public void onTerminate() {
@@ -105,6 +135,24 @@ public class MyApplication extends Application {
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
 	}
+	
+	public MainDrawerItemGenerator getDrawerItemGenerator() {
+		return mMainDrawerItemGenerator;
+	}
+
+
+
+	public List<DragonData> getmListDragonDatas() {
+		return mListDragonDatas;
+	}
+
+
+
+	public void setmListDragonDatas(List<DragonData> mListDragonDatas) {
+		this.mListDragonDatas = mListDragonDatas;
+	}
+	
+	
 	
 	
 }

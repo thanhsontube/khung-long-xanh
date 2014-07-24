@@ -16,6 +16,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.LoginButton;
+import com.khunglong.xanh.MainActivity;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
 
@@ -47,10 +48,10 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    LoginActivity loginActivity = (LoginActivity) getActivity();
+//	    MainActivity loginActivity = (MainActivity) getActivity();
 	    uiHelper = new UiLifecycleHelper(getActivity(), callback);
 	    uiHelper.onCreate(savedInstanceState);
-	    loginActivity.uiHelper = uiHelper;
+//	    loginActivity.uiHelper = uiHelper;
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	    if (state.isOpened()) {
 	        log.d(">>>Logged in...:" +session.getAccessToken());
 	        listener.onLogin(LoginFragment.this, session);
+	        startActivity(new Intent(getActivity(), MainActivity.class));
+	        getActivity().finish();
 	    } else if (state.isClosed()) {
 	    	  log.d(">>>Logged out...");
 	    	  listener.onLogout(this, session);
@@ -118,6 +121,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	    switch (v.getId()) {
 		case R.id.login_btn_login:
 			listener.onLogin(this, null);
+			 startActivity(new Intent(getActivity(), MainActivity.class));
+			 getActivity().finish();
 			break;
 
 		default:

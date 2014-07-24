@@ -155,7 +155,7 @@
                 android:ellipsize="end"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="@string/test2"
+                android:text="KLX"
                 android:textColor="@color/black"
                 android:textStyle="italic" />
         </LinearLayout>
