@@ -11,7 +11,7 @@
     <Button
         android:id="@+id/login_btn_login"
         style="@style/dragon_button_white"
-        android:text="Login With Facebook Id" />
+        android:text="Let's go!" />
 
     <com.facebook.widget.LoginButton
         android:id="@+id/authButton"
