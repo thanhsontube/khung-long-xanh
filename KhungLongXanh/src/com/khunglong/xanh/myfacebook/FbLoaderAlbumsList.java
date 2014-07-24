@@ -40,7 +40,11 @@ public abstract class FbLoaderAlbumsList extends FbLoaderGet<FbAlbums> {
 				String id = ja.getString("id");
 				String name = ja.getString("name");
 				String type = ja.getString("type");
-				int count = ja.getInt("count");
+				int count = 0;
+				if (ja.has("count")) {
+					count = ja.getInt("count");
+					
+				}
 				dto = new FbAlbumsDto(id, name, type, count);
 				fbAlbums.listFbAlbumsDto.add(dto);
 			}

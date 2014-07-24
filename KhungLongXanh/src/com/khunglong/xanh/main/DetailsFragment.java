@@ -3,9 +3,9 @@ package com.khunglong.xanh.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.MainActivity;
@@ -25,9 +26,8 @@ import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.comments.AnswerFragment;
 import com.khunglong.xanh.comments.CmtAdapter;
-import com.khunglong.xanh.json.PageData;
 import com.khunglong.xanh.json.DragonData;
-import com.khunglong.xanh.main.MainFragment.IMainFragmentListener;
+import com.khunglong.xanh.json.PageData;
 import com.khunglong.xanh.mycomments.MyCommentsFragment;
 import com.khunglong.xanh.myfacebook.FbCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbLikesLoader;
@@ -41,12 +41,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
-public class DetailsFragment extends BaseFragment implements IMainFragmentListener {
+public class DetailsFragment extends BaseFragment   {
 	FilterLog log = new FilterLog("DetailsFragment");
 	ImageLoader imageLoader;
 	private DisplayImageOptions optionsAvatar;
 	private DisplayImageOptions optionsContent;
 	private String link;
+	private String linkHigh;
 	private Holder holder;
 	private int position;
 
@@ -59,8 +60,25 @@ public class DetailsFragment extends BaseFragment implements IMainFragmentListen
 	private Context context;
 //	private DragonData mDragonData;
 	private int maxPosition = -1;
+	private IDetailsFragmentListener listener;
 	
-	
+	public static interface IDetailsFragmentListener {
+		void onDetailsFragmentPicture(String link);
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof IDetailsFragmentListener) {
+			listener = (IDetailsFragmentListener) activity;
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		listener = null;
+	}
 
 	public DetailsFragment(int pos, String link) {
 		this.link = link;
@@ -121,6 +139,13 @@ public class DetailsFragment extends BaseFragment implements IMainFragmentListen
 		});
 
 		imageLoader.displayImage(link, holder.snapshotImg, optionsContent, null);
+		holder.snapshotImg.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//				Toast.makeText(getActivity(), "click:" + link, Toast.LENGTH_SHORT).show();
+				listener.onDetailsFragmentPicture(linkHigh);
+			}
+		});
 		holder.userAvatar.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -171,6 +196,8 @@ public class DetailsFragment extends BaseFragment implements IMainFragmentListen
 		holder.title.setText(pageData.getName());
 		holder.answerUserName.setText(pageData.getType());
 		imageLoader.displayImage(pageData.getSource(), holder.snapshotImg, optionsContent, null);
+		link = pageData.getSource();
+		linkHigh = pageData.getSourceQuality();
 //		controllerLikes.load();
 //		controllerComments.load();
 	}
@@ -192,26 +219,6 @@ public class DetailsFragment extends BaseFragment implements IMainFragmentListen
 		public TextView numberAnswers;
 		public TextView numberViews;
 		public LinearLayout themColor;
-
-	}
-
-	@Override
-	public void onIMainFragmentStart(MainFragment f, int i, BaseObject link) {
-		// log.d("log>>>" + "onIMainFragmentStart:" + link);
-		// if (TextUtils.isEmpty(link.getSnapshot_img())) {
-		// return;
-		// }
-		// imageLoader.displayImage(link.getSnapshot_img(), holder.snapshotImg, optionsContent, null);
-
-	}
-
-	@Override
-	public void onMainFragmentPageSelected(MainFragment main, Fragment selected, BaseObject link) {
-
-	}
-
-	@Override
-	public void onMainFragmentPageDeSelected(MainFragment main, Fragment selected, BaseObject link) {
 
 	}
 

@@ -44,8 +44,13 @@ public abstract class FbPageLoader extends FbLoaderGet<DragonData> {
 					 name = ja.getString("name");
 				}
 				String source = ja.getString("source");
+				//get max image quality
+				JSONArray jImage = ja.getJSONArray("images");
+				JSONObject jMAX = jImage.getJSONObject(0);
+				String sourceQuality = jMAX.getString("source");
+				
 				String created_time = ja.getString("created_time");
-				data = new PageData(id, name, source, created_time);
+				data = new PageData(id, name, source, created_time, sourceQuality);
 				
 				dragonData.getData().add(data);
 			}
