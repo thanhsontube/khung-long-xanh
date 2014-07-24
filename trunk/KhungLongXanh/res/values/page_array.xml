@@ -5,29 +5,41 @@
         <item>khunglongxanhvietnam</item>
         <item>Khủng Long Xanh</item>
     </string-array>
-    
     <string-array name="page2">
         <item>haivl.com</item>
-        <item>HaiVL</item>
+        <item>Góc Thư Giãn</item>
     </string-array>
-    
-    
     <string-array name="page3">
+        <item>HaivlOfficial</item>
+        <item>Haivl</item>
+    </string-array>
+    <string-array name="page4">
         <item>nghiemtucvl</item>
         <item>Nghiêm Túc VL</item>
     </string-array>
-    
-    <string-array name="page4">
+    <string-array name="page5">
         <item>hanhphucgiobay</item>
         <item>Hạnh phúc đôi khi nhẹ như gió bay.</item>
     </string-array>
-    
-    
-    <string-array name="page5">
+    <string-array name="page6">
+        <item>AndroidStoreVietnam</item>
+        <item>Android Store Việt Nam</item>
+    </string-array>
+    <string-array name="page7">
         <item>VoHoaiLinh</item>
         <item>Võ Hoài Linh</item>
     </string-array>
-    
-    
+    <string-array name="page8">
+        <item>ba.tung.7</item>
+        <item>Lê Thị Huyền Anh (Tưng)</item>
+    </string-array>
+    <string-array name="page9">
+        <item>Cristiano</item>
+        <item>Cristiano Ronaldo</item>
+    </string-array>
+    <string-array name="page10">
+        <item>LeoMessi</item>
+        <item>Leo Messi</item>
+    </string-array>
 
 </resources>

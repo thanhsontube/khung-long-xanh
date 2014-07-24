@@ -92,7 +92,6 @@ public class MainFragment4 extends BaseFragment implements OnPageChangeListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActionBarUtils.update(getActivity().getActionBar(), getResources().getStringArray(R.array.page4)[1], R.drawable.hanhphucgiobay);
 		context = getActivity().getApplicationContext();
 		app = (MyApplication) getActivity().getApplication();
 		dragonData = new DragonData();

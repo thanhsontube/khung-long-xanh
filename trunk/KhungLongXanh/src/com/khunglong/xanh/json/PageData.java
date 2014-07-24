@@ -14,6 +14,7 @@ public class PageData{
    	private String id;
    	private String name;
    	private String source;
+   	private String sourceQuality;
    	private String created_time;
    	private String link;
    	private String message;
@@ -34,12 +35,25 @@ public class PageData{
 	public void setLikes(FbLikes likes) {
 		this.likes = likes;
 	}
+	
+	
 	public PageData(String id, String name, String source, String created_time) {
 	    super();
 	    this.id = id;
 	    this.name = name;
 	    this.source = source;
 	    this.created_time = created_time;
+	    comments = new FbComments();
+	    likes = new FbLikes();
+    }
+	
+	public PageData(String id, String name, String source, String created_time, String highSource) {
+	    super();
+	    this.id = id;
+	    this.name = name;
+	    this.source = source;
+	    this.created_time = created_time;
+	    this.sourceQuality = highSource;
 	    comments = new FbComments();
 	    likes = new FbLikes();
     }
@@ -143,4 +157,12 @@ public class PageData{
 	public void setUpdated_time(String updated_time){
 		this.updated_time = updated_time;
 	}
+	public String getSourceQuality() {
+		return sourceQuality;
+	}
+	public void setSourceQuality(String sourceQuality) {
+		this.sourceQuality = sourceQuality;
+	}
+	
+	
 }

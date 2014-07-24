@@ -114,11 +114,10 @@ public class MainFragment5 extends BaseFragment implements OnPageChangeListener,
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = (ViewGroup) inflater.inflate(R.layout.main_fragment5, null, true);
+		View rootView = (ViewGroup) inflater.inflate(R.layout.main_fragment5, container, false);
 		context = getActivity().getApplicationContext();
-		ActionBarUtils.update(getActivity().getActionBar(), getResources().getStringArray(R.array.page5)[1], R.drawable.vohoailinh);
 		mEmpty = (ViewGroup) rootView.findViewById(android.R.id.empty);
-		mEmpty.setVisibility(View.GONE);
+		mEmpty.setVisibility(View.VISIBLE);
 		inflater.inflate(R.layout.waiting, mEmpty, true);
 		log.d("log>>>" + "onCreateView3");
 		// Set up the action bar.
@@ -126,8 +125,7 @@ public class MainFragment5 extends BaseFragment implements OnPageChangeListener,
 
 		mMainPagerAdapter = new MainPagerAdapter2(getFragmentManager(), getActivity());
 
-//		mViewPager = (InfiniteViewPager) rootView.findViewById(R.id.pager5);
-		mViewPager = (InfiniteViewPager) rootView.findViewWithTag("pager");
+		mViewPager = (InfiniteViewPager) rootView.findViewById(R.id.mypager5);
 		mViewPager.setStart(0);
 		wrappedAdapter = new InfinitePagerAdapter(mMainPagerAdapter);
 		mViewPager.setAdapter(wrappedAdapter);

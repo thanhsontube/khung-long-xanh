@@ -31,6 +31,10 @@ public class MyApplication extends Application {
 //	VoHoaiLinh
 //	HaivlOfficial
 	//haivl.com
+//	Cristiano
+//	AndroidStoreVietnam
+//	ba.tung.7
+//	LeoMessi
 	private String id = "khunglongxanhvietnam";
 	private DisplayImageOptions optionsContent;
 	private DisplayImageOptions optionsCircle;
