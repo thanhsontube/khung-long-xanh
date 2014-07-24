@@ -44,6 +44,7 @@ import com.khunglong.xanh.myfacebook.FbMeLoader;
 import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
+import com.khunglong.xanh.utils.ActionBarUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends BaseFragmentActivity  {
@@ -263,7 +264,8 @@ public class MainActivity extends BaseFragmentActivity  {
 					// log.d("log>>>" + "f instanceof MainFragment:" + mFragmentTagStack.size() +"tag:" + mFragmentTagStack.peek());
 
 					// 1
-					if (page.equals("khunglongxanhvietnam")) {
+					if (page.equals(getResources().getStringArray(R.array.page1)[0])) {
+						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page1)[1], R.drawable.ic_launcher);
 						setCurrentPosition(0);
 						MainFragment ftest = (MainFragment) fm.findFragmentByTag(FRAGMENT_KEY);
 						ft.show(ftest);
@@ -277,7 +279,8 @@ public class MainActivity extends BaseFragmentActivity  {
 						ft.commit();
 
 						// 2
-					} else if (page.equals("haivl.com")) {
+					} else if (page.equals(getResources().getStringArray(R.array.page2)[0])) {
+						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page2)[1], R.drawable.haivl);
 						setCurrentPosition(1);
 						final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
 						ft.hide(ff);
@@ -301,7 +304,8 @@ public class MainActivity extends BaseFragmentActivity  {
 						}
 						ft.commit();
 
-					} else if (page.equals(MsConstant.PAGE_3)) {
+					} else if (page.equals(getResources().getStringArray(R.array.page3)[0])) {
+						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page3)[1], R.drawable.nghiemtucvl);
 						setCurrentPosition(2);
 
 						// hide f1
