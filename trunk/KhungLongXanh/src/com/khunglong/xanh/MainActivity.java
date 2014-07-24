@@ -36,6 +36,7 @@ import com.khunglong.xanh.login.MyLoginActivity;
 import com.khunglong.xanh.main.MainFragment;
 import com.khunglong.xanh.main.MainFragment2;
 import com.khunglong.xanh.main.MainFragment3;
+import com.khunglong.xanh.main.MainFragment4;
 import com.khunglong.xanh.main.drawer.DrawerItemGenerator.DrawerItem;
 import com.khunglong.xanh.main.drawer.FragmentChangeDrawerItem;
 import com.khunglong.xanh.main.drawer.PageChangeDrawerItem;
@@ -47,7 +48,7 @@ import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.utils.ActionBarUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends BaseFragmentActivity  {
+public class MainActivity extends BaseFragmentActivity {
 	private static final String TAG = "MainActivity";
 	FilterLog log = new FilterLog(TAG);
 	public DragonData mDragonData;
@@ -65,9 +66,9 @@ public class MainActivity extends BaseFragmentActivity  {
 	// avatar drawer
 	private ImageView imgAvatar;
 	private TextView txtName;
-	
+
 	private Handler handler = new Handler();
-	
+
 	//
 
 	@Override
@@ -87,15 +88,15 @@ public class MainActivity extends BaseFragmentActivity  {
 		log.d("log>>>" + "onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
-		 uiHelper = new UiLifecycleHelper(this, callback);
-		    uiHelper.onCreate(savedInstanceState);
+		uiHelper = new UiLifecycleHelper(this, callback);
+		uiHelper.onCreate(savedInstanceState);
 		app = (MyApplication) getApplication();
 		mHandler.post(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				onLogin(null, Session.getActiveSession());
-				
+
 			}
 		});
 		mDragonData = app.getDragonData();
@@ -120,19 +121,19 @@ public class MainActivity extends BaseFragmentActivity  {
 		LoginButton authButton = (LoginButton) footer.findViewById(R.id.authButtonLogout);
 		View headerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
 		        R.layout.fragment_profile_drawer_item, null);
-		
-//		 authButton.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				startActivity(new Intent(MainActivity.this, LoginActivity.class));
-//				finish();
-//			}
-//		});
-//		    authButton.setReadPermissions(Arrays.asList("email", "user_likes", "user_status"));
-//		    authButton.setFragment(this);
+
+		// authButton.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// startActivity(new Intent(MainActivity.this, LoginActivity.class));
+		// finish();
+		// }
+		// });
+		// authButton.setReadPermissions(Arrays.asList("email", "user_likes", "user_status"));
+		// authButton.setFragment(this);
 		mDrawerList.addHeaderView(headerView, null, false);
-		
+
 		ImageView imgProfile = (ImageView) headerView.findViewWithTag("img_button_profile");
 		ImageView imgNew = (ImageView) headerView.findViewWithTag("img_button_new");
 		imgAvatar = (ImageView) headerView.findViewWithTag("img_hexagon");
@@ -161,8 +162,8 @@ public class MainActivity extends BaseFragmentActivity  {
 				log.d("log>>>" + "FbUserLoader onFbLoaderSuccess");
 				ImageLoader imageLoader = ImageLoader.getInstance();
 				String uri = entry.getSource();
-//				Bitmap mBitmap = imageLoader.loadImageSync(uri);
-//				BitmapUtils.maskBitmap(getApplicationContext(), uri, R.drawable.hexagon_view2);
+				// Bitmap mBitmap = imageLoader.loadImageSync(uri);
+				// BitmapUtils.maskBitmap(getApplicationContext(), uri, R.drawable.hexagon_view2);
 				imageLoader.displayImage(uri, imgAvatar, app.getOptionsCircle());
 			}
 
@@ -201,7 +202,6 @@ public class MainActivity extends BaseFragmentActivity  {
 		});
 
 	}
-
 
 	protected ListAdapter getDrawerAdapter() {
 		final MyApplication app = (MyApplication) getApplication();
@@ -265,7 +265,8 @@ public class MainActivity extends BaseFragmentActivity  {
 
 					// 1
 					if (page.equals(getResources().getStringArray(R.array.page1)[0])) {
-						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page1)[1], R.drawable.ic_launcher);
+						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page1)[1],
+						        R.drawable.ic_launcher);
 						setCurrentPosition(0);
 						MainFragment ftest = (MainFragment) fm.findFragmentByTag(FRAGMENT_KEY);
 						ft.show(ftest);
@@ -280,7 +281,8 @@ public class MainActivity extends BaseFragmentActivity  {
 
 						// 2
 					} else if (page.equals(getResources().getStringArray(R.array.page2)[0])) {
-						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page2)[1], R.drawable.haivl);
+						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page2)[1],
+						        R.drawable.haivl);
 						setCurrentPosition(1);
 						final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
 						ft.hide(ff);
@@ -305,7 +307,8 @@ public class MainActivity extends BaseFragmentActivity  {
 						ft.commit();
 
 					} else if (page.equals(getResources().getStringArray(R.array.page3)[0])) {
-						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page3)[1], R.drawable.nghiemtucvl);
+						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page3)[1],
+						        R.drawable.nghiemtucvl);
 						setCurrentPosition(2);
 
 						// hide f1
@@ -358,7 +361,44 @@ public class MainActivity extends BaseFragmentActivity  {
 					// }
 
 				} else if (item instanceof FragmentChangeDrawerItem) {
-					showFragment((Fragment) item.getParam(), true);
+
+					int i = 0;
+					if (fm.findFragmentByTag(FRAGMENT_KEY) != null) {
+						i++;
+						ft.hide(fm.findFragmentByTag(FRAGMENT_KEY));
+					}
+
+					if (fm.findFragmentByTag("f2") != null) {
+						i++;
+						ft.hide(fm.findFragmentByTag("f2"));
+					}
+
+					if (fm.findFragmentByTag("f3") != null) {
+						i++;
+						ft.hide(fm.findFragmentByTag("f3"));
+					}
+
+					while (mFragmentTagStack.size() > 0) {
+						fm.popBackStackImmediate();
+						log.d("log>>>" + "fm.popBackStackImmediate()");
+					}
+					
+					if (fm.findFragmentByTag("f4") != null) {
+						log.v("log>>>" + "findFragmentByTag f4");
+						i++;
+						ft.remove(fm.findFragmentByTag("f4"));
+					}
+					
+//					f2 = MainFragment2.newInstance(page);
+					// f2 = new MainFragment3();
+//					mFragmentTagStack.add("f4");
+					
+					Fragment f4 = MainFragment4.newInstance("hanhphucgiobay");
+					ft.add(getFragmentContentId(), f4, "f4");
+					ft.show(f4);
+					ft.addToBackStack(null);
+					ft.commit();
+//					showFragment((Fragment) item.getParam(), true);
 				}
 			}
 
@@ -370,53 +410,54 @@ public class MainActivity extends BaseFragmentActivity  {
 		super.onConfigurationChanged(newConfig);
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
+
 	private Session.StatusCallback callback = new Session.StatusCallback() {
-	    @Override
-	    public void call(Session session, SessionState state, Exception exception) {
-	        onSessionStateChange(session, state, exception);
-	    }
+		@Override
+		public void call(Session session, SessionState state, Exception exception) {
+			onSessionStateChange(session, state, exception);
+		}
 	};
-	
+
 	private void onSessionStateChange(final Session session, SessionState state, Exception exception) {
-	    if (state.isOpened()) {
-	        log.d(">>>Logged in...:" +session.getAccessToken());
-	      
-	    } else if (state.isClosed()) {
-	    	  log.d(">>>Logged out...");
-	    	  startActivity(new Intent(getApplicationContext(), MyLoginActivity.class));
-	    	  MainActivity.this.finish();
-	    	  
-	    }
+		if (state.isOpened()) {
+			log.d(">>>Logged in...:" + session.getAccessToken());
+
+		} else if (state.isClosed()) {
+			log.d(">>>Logged out...");
+			startActivity(new Intent(getApplicationContext(), MyLoginActivity.class));
+			MainActivity.this.finish();
+
+		}
 	}
-	
+
 	@Override
 	public void onResume() {
-	    super.onResume();
-	    uiHelper.onResume();
+		super.onResume();
+		uiHelper.onResume();
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    super.onActivityResult(requestCode, resultCode, data);
-	    uiHelper.onActivityResult(requestCode, resultCode, data);
+		super.onActivityResult(requestCode, resultCode, data);
+		uiHelper.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
 	public void onPause() {
-	    super.onPause();
-	    uiHelper.onPause();
+		super.onPause();
+		uiHelper.onPause();
 	}
 
 	@Override
 	public void onDestroy() {
-	    super.onDestroy();
-	    uiHelper.onDestroy();
+		super.onDestroy();
+		uiHelper.onDestroy();
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-	    super.onSaveInstanceState(outState);
-	    uiHelper.onSaveInstanceState(outState);
+		super.onSaveInstanceState(outState);
+		uiHelper.onSaveInstanceState(outState);
 	}
 
 }
