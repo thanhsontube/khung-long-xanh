@@ -1,27 +1,40 @@
 package com.khunglong.xanh.comments;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.facebook.Request;
+import com.facebook.Session;
+import com.facebook.Session.NewPermissionsRequest;
+import com.facebook.android.Facebook;
+import com.khunglong.xanh.MainActivity;
 import com.khunglong.xanh.MyApplication;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.myfacebook.FbCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
+import com.khunglong.xanh.myfacebook.FbPostCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtData;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbComments;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * answer of cmt
@@ -34,6 +47,9 @@ public class AnswerFragment extends BaseFragment {
 	FilterLog log = new FilterLog(TAG);
 	private TextView txtTitle;
 	private TextView txtName;
+	private View viewCmt;
+	private EditText txtContent;
+	private ImageView imgAvatar;
 	private ListView cmtListview;
 	private CmtAdapter cmtAdapter;
 	private List<FbCmtData> cmtListData;
@@ -46,16 +62,19 @@ public class AnswerFragment extends BaseFragment {
 	
 	private String title;
 	private String name;
+	private String userId;
 	private ViewGroup mEmpty;
 	
-	public static AnswerFragment newInstance(String title, String name, String id, int position, int cmtPos) {
+	public static AnswerFragment newInstance(String title, String name,String userId, String id, int position, int cmtPos) {
 		AnswerFragment f = new AnswerFragment();
 		Bundle bundle = new Bundle();
 		bundle.putString("title", title);
 		bundle.putString("name", name);
+		bundle.putString("userId", userId);
 		bundle.putString("id", id);
 		bundle.putInt("position", position);
 		bundle.putInt("cmtPos", cmtPos);
+		
 		f.setArguments(bundle);
 		return f;
 	}
@@ -70,6 +89,7 @@ public class AnswerFragment extends BaseFragment {
 		Bundle bundle = getArguments();
 		title = bundle.getString("title");
 		name = bundle.getString("name");
+		userId = bundle.getString("userId");
 		id = bundle.getString("id");
 		position = bundle.getInt("position");
 		cmtPos = bundle.getInt("cmtPos");
@@ -83,13 +103,26 @@ public class AnswerFragment extends BaseFragment {
 		inflater.inflate(R.layout.waiting, mEmpty, true);
 		txtTitle = (TextView) rootView.findViewWithTag("title");
 		txtName = (TextView) rootView.findViewWithTag("name");
-		
+		txtContent = (EditText) rootView.findViewById(R.id.answer_txt_content);
+		viewCmt = rootView.findViewById(R.id.answer_cmt);
+		viewCmt.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				controllerPost.load();
+			}
+		});
+		imgAvatar = (ImageView) rootView.findViewWithTag("avatar");
 		txtTitle.setText(title);
 		txtName.setText(name);
 		cmtListview = (ListView) rootView.findViewById(R.id.answer_lv);
 		cmtListData = new ArrayList<FbCmtData>();
 		cmtAdapter = new CmtAdapter(context, cmtListData, true);
 		cmtListview.setAdapter(cmtAdapter);
+		if (userId != null) {
+			ImageLoader imageLoader = ImageLoader.getInstance();
+			imageLoader.displayImage(userId, imgAvatar, null, null);
+		}
 		controllerComments.load();
 		return rootView;
 	}
@@ -103,6 +136,7 @@ public class AnswerFragment extends BaseFragment {
 			params.putBoolean("summary", true);
 			params.putString("filter", "toplevel");
 			final String graphPath = id + "/comments";
+			
 			mFbLoaderManager.load(new FbCommentsLoader(context, graphPath, params) {
 
 				@Override
@@ -159,4 +193,53 @@ public class AnswerFragment extends BaseFragment {
 			});
 		}
 	}
+	
+	Controller controllerPost = new Controller() {
+
+		@Override
+		public void load() {
+			Bundle params = new Bundle();
+			String message = txtContent.getText().toString();
+			if (TextUtils.isEmpty(message)) {
+				return;
+			}
+			Session session = Session.getActiveSession();
+			List<String> per = session.getPermissions();
+			boolean isAllowPost = false;
+			for (String string : per) {
+				if (string.equals("publish_actions")) {
+					isAllowPost = true;
+				}
+			}
+			if (isAllowPost) {
+				Session.NewPermissionsRequest newPermissionsRequest = new Session.NewPermissionsRequest(getActivity(),
+				        Arrays.asList("publish_actions"));
+				session.requestNewPublishPermissions(newPermissionsRequest);
+			}
+
+			params.putString("message", message);
+			final String graphPath = id + "/comments";
+			mFbLoaderManager.load(new FbPostCommentsLoader(context, graphPath, params) {
+
+				@Override
+				public void onFbLoaderSuccess(String entry) {
+					log.d("log>>>" + "FbPostCommentsLoader cmt success:" + entry);
+					Toast.makeText(getActivity(), "entry", Toast.LENGTH_SHORT).show();
+					MainActivity loginActivity = (MainActivity) getActivity();
+					loginActivity.onBackPressed();
+				}
+
+				@Override
+				public void onFbLoaderStart() {
+
+				}
+
+				@Override
+				public void onFbLoaderFail(Throwable e) {
+					log.e("log>>>" + "FbPostCommentsLoader onFbLoaderFail:" + e.toString());
+
+				}
+			});
+		}
+	};
 }

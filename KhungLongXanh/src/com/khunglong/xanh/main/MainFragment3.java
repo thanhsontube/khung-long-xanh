@@ -30,11 +30,11 @@ import com.khunglong.xanh.myfacebook.FbPageLoader;
 import com.khunglong.xanh.myfacebook.object.FbAlbums;
 import com.khunglong.xanh.myfacebook.object.FbAlbumsDto;
 
-public class MainFragment extends BaseFragment implements OnPageChangeListener, OnBackPressListener {
+public class MainFragment3 extends BaseFragment implements OnPageChangeListener, OnBackPressListener {
 
-	private static final String TAG = "MainFragment";
+	private static final String TAG = "MainFragment2";
 	private static final int ILOAD = 10;
-	private MainPagerAdapter mMainPagerAdapter;
+	private MainPagerAdapter2 mMainPagerAdapter;
 	private InfinitePagerAdapter wrappedAdapter;
 	private InfiniteViewPager mViewPager;
 	private ActionBar mActionBar;
@@ -55,11 +55,11 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 	private String page;
 
 	public static interface IMainFragmentListener {
-		void onIMainFragmentStart(MainFragment f, int i, BaseObject link);
+		void onIMainFragmentStart(MainFragment3 f, int i, BaseObject link);
 
-		void onMainFragmentPageSelected(MainFragment main, Fragment selected, BaseObject link);
+		void onMainFragmentPageSelected(MainFragment3 main, Fragment selected, BaseObject link);
 
-		void onMainFragmentPageDeSelected(MainFragment main, Fragment selected, BaseObject link);
+		void onMainFragmentPageDeSelected(MainFragment3 main, Fragment selected, BaseObject link);
 	}
 
 	@Override
@@ -76,15 +76,15 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 		listener = null;
 	}
 
-	public static MainFragment newInstance(String page) {
-		MainFragment f = new MainFragment();
+	public static MainFragment3 newInstance(String page) {
+		MainFragment3 f = new MainFragment3();
 		Bundle bundle = new Bundle();
 		bundle.putString("page", page);
 		f.setArguments(bundle);
 		return f;
 	}
 
-	public MainFragment() {
+	public MainFragment3() {
 		super();
 	}
 
@@ -95,9 +95,11 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 		app = (MyApplication) getActivity().getApplication();
 		dragonData = new DragonData();
 		app.getmListDragonDatas().add(dragonData); 
-//		if (app.getmListDragonDatas().size() == 0) {
+//		if (app.getmListDragonDatas().size() == 1) {
+//			log.d("log>>>" + "add new dragonData");
 //		} else {
-//			dragonData = app.getmListDragonDatas().get(0);
+//			dragonData = app.getmListDragonDatas().get(1);
+//			sl
 //		}
 		
 		setHasOptionsMenu(true);
@@ -111,18 +113,18 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = (ViewGroup) inflater.inflate(R.layout.main_fragment, container, false);
+		View rootView = (ViewGroup) inflater.inflate(R.layout.main_fragment3, container, false);
 		context = getActivity().getApplicationContext();
 		mEmpty = (ViewGroup) rootView.findViewById(android.R.id.empty);
 		mEmpty.setVisibility(View.VISIBLE);
 		inflater.inflate(R.layout.waiting, mEmpty, true);
-		log.d("log>>>" + "onCreateView2");
+		log.d("log>>>" + "onCreateView3");
 		// Set up the action bar.
 		mActionBar = getActivity().getActionBar();
 
-		mMainPagerAdapter = new MainPagerAdapter(getFragmentManager(), getActivity());
+		mMainPagerAdapter = new MainPagerAdapter2(getFragmentManager(), getActivity());
 
-		mViewPager = (InfiniteViewPager) rootView.findViewById(R.id.pager);
+		mViewPager = (InfiniteViewPager) rootView.findViewById(R.id.pager3);
 		mViewPager.setStart(0);
 		wrappedAdapter = new InfinitePagerAdapter(mMainPagerAdapter);
 		mViewPager.setAdapter(wrappedAdapter);
@@ -132,7 +134,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 		
 		mFbLoaderManager = app.getmFbLoaderManager();
 		if (listener != null) {
-			listener.onIMainFragmentStart(MainFragment.this, 10, null);
+			listener.onIMainFragmentStart(MainFragment3.this, 10, null);
 		}
 		
 		if (TextUtils.isEmpty(page)) {
@@ -197,7 +199,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 			Bundle params = new Bundle();
 			params.putString("after", after);
 			final String graphPath = albumId + "/photos";
-			log.v("log>>>" + "controllerPhoto LOAD after:" + after + ";graphPath:" + graphPath);
+			log.v("log>>>" + "controllerPhoto LOAD after:" + after + ";graphPath>:" + graphPath);
 			mFbLoaderManager.load(new FbPageLoader(context, graphPath, params) {
 
 				@Override
@@ -207,6 +209,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 					dragonData.setPaging(entry.getPaging());
 					dragonData.getData().addAll(entry.getData());
 					mEmpty.setVisibility(View.GONE);
+					
 					DetailsFragment f1 = (DetailsFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
 					// set id of photos to details
 					if (isFirstLoad) {
@@ -346,20 +349,25 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 			return;
 		}
 		DetailsFragment f1 = (DetailsFragment) mMainPagerAdapter.getFragment(mViewPager, virtualPosition);
+		// f.setData(dragonData.getData().get(arg0));
+		// f.setId(dragonData.getData().get(arg0).getId(), arg0);
 		f1.setData(dragonData.getData().get(arg0), arg0);
+		// List<CmtData> list1 = dragonData.getData().get(arg0).getComments().data;
+		// f.setDataList(list1);
 		if ((dragonData.getData().size() - arg0) <= ILOAD && !isLoading) {
+			// mController.load();
 			controllerPhoto.load();
 		}
 	}
 
 	// adapter
 
-	class MainPagerAdapter extends MyFragmentPagerAdapter {
+	class MainPagerAdapter2 extends MyFragmentPagerAdapter {
 
 		Context mContext;
 		private Fragment mPrimaryFragment;
 
-		public MainPagerAdapter(FragmentManager fm, Context context) {
+		public MainPagerAdapter2(FragmentManager fm, Context context) {
 			super(fm);
 			this.mContext = context;
 		}

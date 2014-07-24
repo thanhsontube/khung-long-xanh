@@ -6,21 +6,21 @@ import java.util.List;
 import com.khunglong.xanh.myfacebook.object.FbAlbums;
 
 public class DragonData {
-	private List<Data> data;
+	private List<PageData> data;
 	private Paging paging;
 	private FbAlbums albums;
 
 	public DragonData() {
 		super();
-		data = new ArrayList<Data>();
+		data = new ArrayList<PageData>();
 		paging = new Paging();
 	}
 
-	public List<Data> getData() {
+	public List<PageData> getData() {
 		return this.data;
 	}
 
-	public void setData(List<Data> data) {
+	public void setData(List<PageData> data) {
 		this.data = data;
 	}
 

@@ -39,6 +39,7 @@
         android:orientation="vertical" >
 
         <EditText
+            android:id="@+id/txt_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -46,7 +47,7 @@
             android:minHeight="100dp" />
 
         <Button
-            android:id="@+id/comment"
+            android:id="@+id/btn_comment"
             style="@style/dragon_button_white"
             android:text="Comment >>>" />
     </LinearLayout>
