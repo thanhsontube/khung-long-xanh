@@ -48,6 +48,7 @@ import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.utils.ActionBarUtils;
+import com.khunglong.xanh.zoom.AnimationActivity;
 import com.khunglong.xanh.zoom.ZoomInZoomOut;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -548,12 +549,17 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
 	@Override
     public void onDetailsFragmentPicture(String link) {
-	    ZoomInZoomOut f = ZoomInZoomOut.newInstance(link);
-	    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-	    ft.add(getFragmentContentId(), f, "fa");
-	    ft.addToBackStack(null);
-	    ft.show(f);
-	    ft.commit();
+//	    ZoomInZoomOut f = ZoomInZoomOut.newInstance(link);
+//	    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//	    ft.add(getFragmentContentId(), f, "fa");
+//	    ft.addToBackStack(null);
+//	    ft.show(f);
+//	    ft.commit();
+		Intent intent = new Intent(this, AnimationActivity.class);
+		intent.putExtra("link", link);
+		startActivity(intent);
+//		startActivity(new Intent(this, AnimationActivity.class));
+		
 //	    showFragment(f, true);
 	    
     }
