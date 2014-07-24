@@ -27,18 +27,18 @@ public class MainDrawerItemGenerator implements
 		
 		
 		// Khung Long XANH
-		list.add(new PageChangeDrawerItem(R.drawable.ic_launcher, context.getText(R.string.home), "home", "home",
-				"khunglongxanhvietnam"));
+		list.add(new PageChangeDrawerItem(R.drawable.ic_launcher, context.getResources().getStringArray(R.array.page1)[1], "home", "home",
+				context.getResources().getStringArray(R.array.page1)[0]));
 		
 		//haiVL
-		list.add(new PageChangeDrawerItem(R.drawable.haivl, context.getText(R.string.notification),
-				"notification", "notification","haivl.com"));
+		list.add(new PageChangeDrawerItem(R.drawable.haivl, context.getResources().getStringArray(R.array.page2)[1],
+				"notification", "notification",context.getResources().getStringArray(R.array.page2)[0]));
 		
 		//nhatky
 		//hanhphucgiobay
 		//nghiemtuc VL
-		list.add(new PageChangeDrawerItem(R.drawable.nghiemtucvl, context.getText(R.string.help), "help", "help",
-				MsConstant.PAGE_3));
+		list.add(new PageChangeDrawerItem(R.drawable.nghiemtucvl, context.getResources().getStringArray(R.array.page3)[1], "help", "help",
+				context.getResources().getStringArray(R.array.page3)[0]));
 		
 		list.add(new FragmentChangeDrawerItem(R.drawable.about_us, context.getText(R.string.about), "about", "about",
 				TestFragment.newInstance("about", 9)));

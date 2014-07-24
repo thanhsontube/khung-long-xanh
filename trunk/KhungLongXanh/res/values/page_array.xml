@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="page1">
+        <item>khunglongxanhvietnam</item>
+        <item>Khủng Long Xanh</item>
+    </string-array>
+    
+    <string-array name="page2">
+        <item>haivl.com</item>
+        <item>HaiVL</item>
+    </string-array>
+    
+    
+    <string-array name="page3">
+        <item>nghiemtucvl</item>
+        <item>Nghiêm Túc VL</item>
+    </string-array>
+    
+    <string-array name="page4">
+        <item>hanhphucgiobay</item>
+        <item>Hạnh phúc đôi khi nhẹ như gió bay.</item>
+    </string-array>
+    
+    
+    <string-array name="page5">
+        <item>VoHoaiLinh</item>
+        <item>Võ Hoài Linh</item>
+    </string-array>
+    
+    
+
+</resources>
