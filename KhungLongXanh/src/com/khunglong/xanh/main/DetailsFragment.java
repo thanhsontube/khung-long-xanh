@@ -48,6 +48,7 @@ public class DetailsFragment extends BaseFragment   {
 	private DisplayImageOptions optionsContent;
 	private String link;
 	private String linkHigh;
+	private String content;
 	private Holder holder;
 	private int position;
 
@@ -63,7 +64,7 @@ public class DetailsFragment extends BaseFragment   {
 	private IDetailsFragmentListener listener;
 	
 	public static interface IDetailsFragmentListener {
-		void onDetailsFragmentPicture(String link);
+		void onDetailsFragmentPicture(String link, String content);
 	}
 
 	@Override
@@ -143,7 +144,7 @@ public class DetailsFragment extends BaseFragment   {
 			@Override
 			public void onClick(View v) {
 //				Toast.makeText(getActivity(), "click:" + link, Toast.LENGTH_SHORT).show();
-				listener.onDetailsFragmentPicture(linkHigh);
+				listener.onDetailsFragmentPicture(linkHigh, content);
 			}
 		});
 		holder.userAvatar.setOnClickListener(new OnClickListener() {
@@ -198,6 +199,7 @@ public class DetailsFragment extends BaseFragment   {
 		imageLoader.displayImage(pageData.getSource(), holder.snapshotImg, optionsContent, null);
 		link = pageData.getSource();
 		linkHigh = pageData.getSourceQuality();
+		content = pageData.getName();
 //		controllerLikes.load();
 //		controllerComments.load();
 	}

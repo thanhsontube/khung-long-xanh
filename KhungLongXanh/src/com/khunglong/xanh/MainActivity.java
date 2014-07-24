@@ -548,7 +548,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 	}
 
 	@Override
-    public void onDetailsFragmentPicture(String link) {
+    public void onDetailsFragmentPicture(String link, String content) {
 //	    ZoomInZoomOut f = ZoomInZoomOut.newInstance(link);
 //	    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //	    ft.add(getFragmentContentId(), f, "fa");
@@ -557,6 +557,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 //	    ft.commit();
 		Intent intent = new Intent(this, AnimationActivity.class);
 		intent.putExtra("link", link);
+		intent.putExtra("content", content);
 		startActivity(intent);
 //		startActivity(new Intent(this, AnimationActivity.class));
 		
