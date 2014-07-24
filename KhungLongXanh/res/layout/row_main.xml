@@ -142,7 +142,7 @@
                 android:ellipsize="end"
                 android:maxLines="20"
                 android:scrollHorizontally="true"
-                android:text="Hoi Ngu"
+                android:text="loading..."
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -155,7 +155,7 @@
                 android:ellipsize="end"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:text="KLX"
+                android:text="Loading..."
                 android:textColor="@color/black"
                 android:textStyle="italic" />
         </LinearLayout>
