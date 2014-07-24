@@ -2,6 +2,8 @@ package com.khunglong.xanh.utils;
 
 import java.net.URL;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -35,7 +37,11 @@ public class BitmapUtils {
 	        
 			Resources resources = context.getResources();
 			URL url = new URL(sUrl);
-			Bitmap original = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//			Bitmap original = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+			ImageLoader imageLoader = ImageLoader.getInstance();
+//			String uri = entry.getSource();
+			Bitmap original = imageLoader.loadImageSync(sUrl);
+			
 			Bitmap mask = BitmapFactory.decodeResource(resources, maskRes);
 			original = Bitmap.createScaledBitmap(original, mask.getWidth(), mask.getHeight(), true);
 			Bitmap result = Bitmap.createBitmap(mask.getWidth(), mask.getHeight(), Config.ARGB_8888);

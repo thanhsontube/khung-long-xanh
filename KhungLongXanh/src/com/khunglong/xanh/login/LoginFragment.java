@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.facebook.Session;
@@ -48,13 +49,12 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-//	    MainActivity loginActivity = (MainActivity) getActivity();
 	    uiHelper = new UiLifecycleHelper(getActivity(), callback);
 	    uiHelper.onCreate(savedInstanceState);
-//	    loginActivity.uiHelper = uiHelper;
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		log.d("log>>>" + "onCreateView");
 	    View rootView = inflater.inflate(R.layout.login_fragment,container,false);
 	    LoginButton authButton = (LoginButton) rootView.findViewById(R.id.authButton);
 	    authButton.setReadPermissions(Arrays.asList("email", "user_likes", "user_status"));
@@ -120,9 +120,14 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
     public void onClick(View v) {
 	    switch (v.getId()) {
 		case R.id.login_btn_login:
-			listener.onLogin(this, null);
-			 startActivity(new Intent(getActivity(), MainActivity.class));
-			 getActivity().finish();
+			if (Session.getActiveSession().isOpened()) {
+				
+				listener.onLogin(this, null);
+				startActivity(new Intent(getActivity(), MainActivity.class));
+				getActivity().finish();
+			} else {
+				Toast.makeText(getActivity(), "Login first", Toast.LENGTH_SHORT).show();
+			}
 			break;
 
 		default:

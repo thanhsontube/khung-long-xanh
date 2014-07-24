@@ -15,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,7 +25,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
-import com.facebook.LoginActivity;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -35,7 +33,6 @@ import com.khunglong.xanh.base.BaseFragmentActivity;
 import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.login.LoginFragment;
 import com.khunglong.xanh.login.MyLoginActivity;
-import com.khunglong.xanh.login.LoginFragment.ILoginFragmentListener;
 import com.khunglong.xanh.main.MainFragment;
 import com.khunglong.xanh.main.MainFragment2;
 import com.khunglong.xanh.main.MainFragment3;
@@ -49,7 +46,7 @@ import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends BaseFragmentActivity implements ILoginFragmentListener {
+public class MainActivity extends BaseFragmentActivity  {
 	private static final String TAG = "MainActivity";
 	FilterLog log = new FilterLog(TAG);
 	public DragonData mDragonData;
@@ -67,6 +64,8 @@ public class MainActivity extends BaseFragmentActivity implements ILoginFragment
 	// avatar drawer
 	private ImageView imgAvatar;
 	private TextView txtName;
+	
+	private Handler handler = new Handler();
 	
 	//
 
@@ -90,6 +89,14 @@ public class MainActivity extends BaseFragmentActivity implements ILoginFragment
 		 uiHelper = new UiLifecycleHelper(this, callback);
 		    uiHelper.onCreate(savedInstanceState);
 		app = (MyApplication) getApplication();
+		mHandler.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				onLogin(null, Session.getActiveSession());
+				
+			}
+		});
 		mDragonData = app.getDragonData();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -139,12 +146,7 @@ public class MainActivity extends BaseFragmentActivity implements ILoginFragment
 	}
 
 	// TODO login listener
-	@Override
 	public void onLogin(LoginFragment f, Session session) {
-
-		MainFragment f1 = new MainFragment();
-		showFragment(f1, true);
-
 		// me request
 		FbLoaderManager fbLoaderManager = app.getmFbLoaderManager();
 		String graphPath = "me/picture";
@@ -157,8 +159,9 @@ public class MainActivity extends BaseFragmentActivity implements ILoginFragment
 			public void onFbLoaderSuccess(FbCmtFrom entry) {
 				log.d("log>>>" + "FbUserLoader onFbLoaderSuccess");
 				ImageLoader imageLoader = ImageLoader.getInstance();
-
 				String uri = entry.getSource();
+//				Bitmap mBitmap = imageLoader.loadImageSync(uri);
+//				BitmapUtils.maskBitmap(getApplicationContext(), uri, R.drawable.hexagon_view2);
 				imageLoader.displayImage(uri, imgAvatar, app.getOptionsCircle());
 			}
 
@@ -196,15 +199,8 @@ public class MainActivity extends BaseFragmentActivity implements ILoginFragment
 			}
 		});
 
-		// getSupportFragmentManager().beginTransaction().replace(getFragmentContentId(), f1).commit();
-
 	}
 
-	@Override
-	public void onLogout(LoginFragment f, Session session) {
-		// TODO Auto-generated method stub
-
-	}
 
 	protected ListAdapter getDrawerAdapter() {
 		final MyApplication app = (MyApplication) getApplication();
