@@ -44,6 +44,7 @@ public class AnimationActivity extends Activity implements OnClickListener {
     private List<Note> notes;
     
     private String link;
+    private String content;
     String title;
 
     @Override
@@ -53,8 +54,9 @@ public class AnimationActivity extends Activity implements OnClickListener {
         
         if (getIntent().getStringExtra("link") != null) {
         	link = getIntent().getStringExtra("link");
+        	content = getIntent().getStringExtra("content");
         }
-        getActionBar().setTitle("Animation");
+        getActionBar().setTitle("Zoom");
         getActionBar().setDisplayHomeAsUpEnabled(true);
         findViewById(R.id.next).setOnClickListener(this);
         findViewById(R.id.previous).setOnClickListener(this);
@@ -127,10 +129,15 @@ public class AnimationActivity extends Activity implements OnClickListener {
         if (position > notes.size() - 1) {
             return;
         }
-        getActionBar().setSubtitle(notes.get(position).subtitle);
+//        getActionBar().setSubtitle(notes.get(position).subtitle);
+        
+        notes.get(position).text = content;
         ((TextView)findViewById(R.id.note)).setText(notes.get(position).text);
-        findViewById(R.id.next).setVisibility(position >= notes.size() - 1 ? View.INVISIBLE : View.VISIBLE);
-        findViewById(R.id.previous).setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
+//        findViewById(R.id.next).setVisibility(position >= notes.size() - 1 ? View.INVISIBLE : View.VISIBLE);
+//        findViewById(R.id.previous).setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
+        
+        findViewById(R.id.next).setVisibility(position >= notes.size() - 1 ? View.INVISIBLE : View.INVISIBLE);
+        findViewById(R.id.previous).setVisibility(position <= 0 ? View.INVISIBLE : View.INVISIBLE);
 
         SubsamplingScaleImageView imageView = (SubsamplingScaleImageView)findViewById(R.id.imageView);
         if (position == 2) {
@@ -142,7 +149,7 @@ public class AnimationActivity extends Activity implements OnClickListener {
     }
 
     private static final class Note {
-        private final String text;
+        private String text;
         private final String subtitle;
         private Note(String subtitle, String text) {
             this.subtitle = subtitle;
