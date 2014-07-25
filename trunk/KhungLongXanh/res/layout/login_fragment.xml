@@ -4,14 +4,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/dragon_textview_title"
-        android:text="Introduce KhungLongXanh Application" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="140dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:gravity="center_horizontal"
+            android:text="@string/introduve" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/lkxanh" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/haivl" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/nghiemtucvl" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/hanhphucgiobay" />
+    </LinearLayout>
 
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/login_btn_login"
         style="@style/dragon_button_white"
-        android:text="Let's go!" />
+        android:text="Let&apos;s go!" />
 
     <com.facebook.widget.LoginButton
         android:id="@+id/authButton"

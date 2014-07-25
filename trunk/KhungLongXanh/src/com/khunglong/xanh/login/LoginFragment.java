@@ -20,6 +20,7 @@ import com.facebook.widget.LoginButton;
 import com.khunglong.xanh.MainActivity;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
+import com.khunglong.xanh.utils.GoogleAnaToolKLX;
 
 public class LoginFragment extends BaseFragment implements OnClickListener{
 	private static final String TAG = "LoginFragment";
@@ -62,6 +63,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	    
 	    Button btnLogin = (Button) rootView.findViewById(R.id.login_btn_login);
 	    btnLogin.setOnClickListener(this);
+	    GoogleAnaToolKLX.trackerView(getActivity(), "LOGIN FRAGMENT");
 		return rootView;
 	    
 	}
