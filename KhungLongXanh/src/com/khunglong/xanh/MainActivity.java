@@ -49,6 +49,7 @@ import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.utils.ActionBarUtils;
 import com.khunglong.xanh.zoom.AnimationActivity;
+import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.khunglong.xanh.zoom.ZoomInZoomOut;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -555,7 +556,8 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 //	    ft.addToBackStack(null);
 //	    ft.show(f);
 //	    ft.commit();
-		Intent intent = new Intent(this, AnimationActivity.class);
+//		Intent intent = new Intent(this, AnimationActivity.class);
+		Intent intent = new Intent(this, SingleTouchImageViewActivity.class);
 		intent.putExtra("link", link);
 		intent.putExtra("content", content);
 		startActivity(intent);
