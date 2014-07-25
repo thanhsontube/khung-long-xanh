@@ -594,6 +594,8 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 				} else {
 					finish();
 				}
+			} else {
+				return super.dispatchKeyEvent(event);
 			}
 
 			return true;
