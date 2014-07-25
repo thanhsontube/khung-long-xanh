@@ -50,6 +50,7 @@ import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.utils.ActionBarUtils;
+import com.khunglong.xanh.utils.GoogleAnaToolKLX;
 import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -190,6 +191,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 			public void onFbLoaderSuccess(FbMe entry) {
 				// TODO Auto-generated method stub
 				txtName.setText(entry.getName());
+				GoogleAnaToolKLX.trackerView(getApplicationContext(), "LOGIN:" + entry.getName() + ";email:" + entry.getEmail());
 
 			}
 
@@ -269,6 +271,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 					// log.d("log>>>" + "f instanceof MainFragment:" + mFragmentTagStack.size() +"tag:" + mFragmentTagStack.peek());
 
 					// 1
+					GoogleAnaToolKLX.trackerView(getApplicationContext(), "page:" + page);
 					if (page.equals(getResources().getStringArray(R.array.page1)[0])) {
 						ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page1)[1],
 						        R.drawable.ic_launcher);
