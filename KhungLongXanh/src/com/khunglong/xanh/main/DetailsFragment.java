@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.MainActivity;
@@ -118,6 +117,7 @@ public class DetailsFragment extends BaseFragment   {
 		holder.numberAnswers = (TextView) v.findViewById(R.id.number_answers);
 		holder.numberViews = (TextView) v.findViewById(R.id.number_views);
 		holder.themColor = (LinearLayout) v.findViewById(R.id.them_color2);
+		holder.themColor.setEnabled(false);
 		holder.snapshotImg.setBackgroundResource(R.drawable.iviet_temp);
 
 		// list
@@ -200,8 +200,9 @@ public class DetailsFragment extends BaseFragment   {
 		linkHigh = pageData.getSourceQuality();
 		imageLoader.displayImage(linkHigh, holder.snapshotImg, optionsContent, null);
 		content = pageData.getName();
-//		controllerLikes.load();
-//		controllerComments.load();
+		controllerLikes.load();
+		controllerComments.load();
+		holder.themColor.setEnabled(true);
 	}
 
 	
@@ -230,8 +231,8 @@ public class DetailsFragment extends BaseFragment   {
 		public void load() {
 			Bundle params = new Bundle();
 			params.putBoolean("summary", true);
-			params.putString("filter", "toplevel");
-			params.putInt("limit", 50);
+//			params.putString("filter", "toplevel");
+			params.putInt("limit", 20);
 			final String graphPath = pageData.getId() + "/comments";
 			mFbLoaderManager.load(new FbCommentsLoader(context, graphPath, params) {
 
