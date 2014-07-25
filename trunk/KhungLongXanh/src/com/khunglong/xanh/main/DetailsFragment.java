@@ -196,9 +196,9 @@ public class DetailsFragment extends BaseFragment   {
 		holder.snapshotContent.setVisibility(View.GONE);
 		holder.title.setText(pageData.getName());
 		holder.answerUserName.setText(pageData.getType());
-		imageLoader.displayImage(pageData.getSource(), holder.snapshotImg, optionsContent, null);
 		link = pageData.getSource();
 		linkHigh = pageData.getSourceQuality();
+		imageLoader.displayImage(linkHigh, holder.snapshotImg, optionsContent, null);
 		content = pageData.getName();
 //		controllerLikes.load();
 //		controllerComments.load();

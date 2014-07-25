@@ -56,6 +56,8 @@ public class AnimationActivity extends Activity implements OnClickListener {
         	link = getIntent().getStringExtra("link");
         	content = getIntent().getStringExtra("content");
         }
+        
+        
         getActionBar().setTitle("Zoom");
         getActionBar().setDisplayHomeAsUpEnabled(true);
         findViewById(R.id.next).setOnClickListener(this);
