@@ -15,5 +15,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/zoom_img_close"
         android:src="@drawable/close"/>
+    
+      <ImageView
+        android:layout_gravity="right|bottom" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/zoom_img_save"
+        android:src="@drawable/save"/>
 
 </FrameLayout>
