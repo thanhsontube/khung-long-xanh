@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.facebook.Session;
@@ -48,9 +50,7 @@ import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.utils.ActionBarUtils;
-import com.khunglong.xanh.zoom.AnimationActivity;
 import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
-import com.khunglong.xanh.zoom.ZoomInZoomOut;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener{
@@ -566,5 +566,40 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 //	    showFragment(f, true);
 	    
     }
+	private static final long EXIT_INTERVAL = 2000L;
+	private long exitTimer = Long.MIN_VALUE;
+
+	private boolean tryFinish = false;
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		log.d("log>>>" + "dispatchKeyEvent");
+
+		if ((event.getAction() == KeyEvent.ACTION_DOWN)
+				&& (event.getKeyCode() == KeyEvent.KEYCODE_BACK)
+				&& (event.getRepeatCount() == 0)) {
+			
+			tryFinish = false;
+			if(mFragmentTagStack.size() == 0) {
+				tryFinish = true;
+			}
+			
+
+//			super.dispatchKeyEvent(event);
+
+			if (tryFinish) {
+				if ((exitTimer + EXIT_INTERVAL) < System.currentTimeMillis()) {
+					Toast.makeText(this, "Back Again to finish", Toast.LENGTH_SHORT)
+							.show();
+					exitTimer = System.currentTimeMillis();
+				} else {
+					finish();
+				}
+			}
+
+			return true;
+		}
+
+		return super.dispatchKeyEvent(event);
+	}
 
 }
