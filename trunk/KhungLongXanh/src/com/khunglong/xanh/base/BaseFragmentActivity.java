@@ -39,8 +39,6 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		log.d("log>>>" + "onCreate savedInstanceState:" + savedInstanceState);
-
 		if (savedInstanceState == null) {
 			getSupportFragmentManager()
 					.beginTransaction()
@@ -57,17 +55,10 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 		getSupportFragmentManager().addOnBackStackChangedListener(this);
 	}
 
-	@Override
-	protected void onResumeFragments() {
-		log.d("log>>>" + "onResumeFragments");
-		super.onResumeFragments();
-		// restoreFragmentsState();
-
-	}
 
 	@Override
 	public void onBackPressed() {
-		log.d("log>>>" + "onBackPressed mFragmentTagStack.size():" + mFragmentTagStack.size());
+		log.d("log>>>" + "BASE onBackPressed mFragmentTagStack.size():" + mFragmentTagStack.size());
 		final FragmentManager fm = getSupportFragmentManager();
 		final Fragment f;
 		if (mFragmentTagStack.size() > 0) {
@@ -87,7 +78,7 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 
 	@Override
 	public void onBackStackChanged() {
-		log.d("log>>>" + "onBackStackChanged:" + mFragmentTagStack.size());
+		log.d("log>>>" + "BASE onBackStackChanged:" + mFragmentTagStack.size());
 		FragmentManager fm = getSupportFragmentManager();
 		if (fm.getBackStackEntryCount() == mFragmentTagStack.size()) {
 			log.d("log>>>" + "======");
@@ -97,10 +88,8 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 		if (mFragmentTagStack.size() > 0) {
 			final FragmentTransaction ft = fm.beginTransaction();
 			String tag = mFragmentTagStack.pop();
-			log.d("log>>>" + "tag:" + tag);
 			if (fm.findFragmentByTag(tag) != null) {
 				ft.remove(fm.findFragmentByTag(tag));
-				log.d("log>>>" + "remove:" + tag);
 			}
 			
 			
@@ -158,7 +147,6 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 	public void showFragment(Fragment f, boolean isTransit) {
 		String ftag = f.getTag();
 		final String tag = String.format("%s:%d", getClass().getName(), mFragmentTagStack.size());
-		log.d("log>>>" + "showFragment:" + tag + ";mFragmentTagStack.size():" + mFragmentTagStack.size());
 		final FragmentManager fm = getSupportFragmentManager();
 		final FragmentTransaction ft = fm.beginTransaction();
 		
@@ -181,11 +169,9 @@ abstract public class BaseFragmentActivity extends FragmentActivity implements
 			
 		}
 		if (fm.findFragmentByTag(ftag) == null) {
-			log.d("log>>>" + "add:" + tag);
 			ft.add(getFragmentContentId(), f, tag);
 			ft.show(f);
 		} else {
-			log.d("log>>>" + "replace:" + tag);
 			ft.replace(getFragmentContentId(), f);
 			ft.show(f);
 		}

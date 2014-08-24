@@ -6,6 +6,7 @@ import java.util.List;
 import com.khunglong.xanh.myfacebook.object.FbAlbums;
 
 public class DragonData {
+	private String albumTimeLines;
 	private List<PageData> data;
 	private Paging paging;
 	private FbAlbums albums;
@@ -39,5 +40,14 @@ public class DragonData {
 	public void setAlbums(FbAlbums albums) {
 		this.albums = albums;
 	}
+
+	public String getAlbumTimeLines() {
+		return albumTimeLines;
+	}
+
+	public void setAlbumTimeLines(String albumTimeLines) {
+		this.albumTimeLines = albumTimeLines;
+	}
+	
 
 }

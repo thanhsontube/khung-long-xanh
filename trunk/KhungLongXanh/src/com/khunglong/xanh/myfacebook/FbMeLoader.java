@@ -25,8 +25,8 @@ public abstract class FbMeLoader extends FbLoaderGet<FbMe> {
 //			String bio = jsonObject.getString("bio");
 			String email = jsonObject.getString("email");
 			String name = jsonObject.getString("name");
-			String quotes = jsonObject.getString("quotes");
-			FbMe f = new FbMe(id, null, email, name, quotes);
+//			String quotes = jsonObject.getString("quotes");
+			FbMe f = new FbMe(id, null, email, name, "");
 			return f;
 		} catch (Exception e) {
 			Log.e("", "log>>>" + "error  FbMeLoader handleResult:" + e.toString());
