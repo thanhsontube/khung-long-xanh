@@ -14,13 +14,13 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
             android:src="@drawable/chat_emotion_icon"
             android:tag="icon" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/lv1"
@@ -31,68 +31,78 @@
                 style="@style/style_textview_row"
                 android:maxLines="100"
                 android:tag="title"
-                android:text="@string/test1"
-                android:textStyle="bold" />
+                android:text="Neu aban bi vo sinh Nhung vo ban keu co con, tinh sao ?"
+                android:textStyle="normal" />
 
-            <TextView
-                style="@style/style_textview_row"
-                android:layout_marginTop="@dimen/lv1"
-                android:singleLine="true"
-                android:tag="time"
-                android:text="@string/test2"
-                android:textStyle="italic" />
-        </LinearLayout>
-    </LinearLayout>
-    <!-- Like - cmt -->
-
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:orientation="horizontal" >
-
-        <!-- like -->
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:tag="likes"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="50"
-                android:textColor="@color/black" />
+                android:orientation="horizontal" >
 
-            <ImageView
-                style="@style/main_img_style"
-                android:src="@drawable/like_icon" />
-        </LinearLayout>
-        <!-- Comment -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/lv1"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:tag="time"
+                    android:text="Sonnt"
+                    android:textStyle="bold" />
 
-        <LinearLayout
-            android:tag="ll_cmt"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
+                <!-- Like - cmt -->
 
-            <TextView
-                android:tag="cmt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/black" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="100dp"
+                    android:orientation="horizontal" >
 
-            <ImageView
-                style="@style/main_img_style"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/comment" />
+                    <!-- like -->
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tag="likes"
+                            android:text="50"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/main_img_style"
+                            android:src="@drawable/like_icon" />
+                    </LinearLayout>
+                    <!-- Comment -->
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:tag="ll_cmt" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:tag="cmt"
+                            android:text=""
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/main_img_style"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginTop="3dp"
+                            android:src="@drawable/comment" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

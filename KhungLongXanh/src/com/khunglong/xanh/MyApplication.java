@@ -39,9 +39,12 @@ public class MyApplication extends Application {
 	private DisplayImageOptions optionsContent;
 	private DisplayImageOptions optionsCircle;
 //	private String id = "huyen.dinh.165";
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
+		ResourceManager.createInstance(getApplicationContext());
 		mFbLoaderManager = new FbLoaderManager();
 		try {
 			initImageLoader(getApplicationContext());

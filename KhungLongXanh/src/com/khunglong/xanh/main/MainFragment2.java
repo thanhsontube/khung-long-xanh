@@ -158,38 +158,6 @@ public class MainFragment2 extends BaseFragment implements OnPageChangeListener,
 		return false;
 	}
 
-	public void update() {
-	}
-
-	// Controller mController = new Controller() {
-	//
-	// @Override
-	// public void load() {
-	// isLoading = true;
-	// String pathLoad = "KhungLongXanhVietNam/feed";
-	// log.d("log>>>" + "pathLoad:" + pathLoad);
-	// Request request = Request.newGraphPathRequest(Session.getActiveSession(), pathLoad, facebookCallback);
-	// if (dragonData.getPaging() != null) {
-	// Paging paging = dragonData.getPaging();
-	// String next = paging.getNext();
-	// log.d("log>>>" + ">>>>>>>>>>>>>>>>>>>>>>>>>next:" + next);
-	// Bundle bundle = new Bundle();
-	// List<NameValuePair>list1 = URLEncodedUtils.parse(URI.create(next), "UTF-8");
-	// log.d("log>>>" + "list1:" + list1.size());
-	// for (NameValuePair nameValuePair : list1) {
-	// log.d("log>>>" + "name:" + nameValuePair.getName() + ";value:" +nameValuePair.getValue());
-	// if (nameValuePair.getName().equalsIgnoreCase("limit")) {
-	// bundle.putString("limit", nameValuePair.getValue());
-	// }
-	// if (nameValuePair.getName().equalsIgnoreCase("until")) {
-	// bundle.putString("until", nameValuePair.getValue());
-	// }
-	// }
-	// request.setParameters(bundle);
-	// }
-	// Request.executeBatchAsync(request);
-	// }
-	// };
 	Controller controllerPhoto = new Controller() {
 
 		@Override
@@ -425,9 +393,6 @@ public class MainFragment2 extends BaseFragment implements OnPageChangeListener,
 				mMainPagerAdapter.getCurrentFragment().setMenuVisibility(true);
 			}
 			if (mActionBar != null) {
-				// ActionBarUtils.setTitle(mActionBar, getApplicationTitle(mViewPager.getCurrentItem()));
-				// mActionBar.setTitle(getApplicationTitle(mViewPager.getCurrentItem()));
-				update();
 			}
 		}
 	}

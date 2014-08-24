@@ -55,7 +55,7 @@ import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener{
-	private static final String TAG = "MainActivity";
+	private static final String TAG = "MainActivity"; 
 	FilterLog log = new FilterLog(TAG);
 	public DragonData mDragonData;
 	public MyApplication app;
@@ -73,15 +73,9 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 	private ImageView imgAvatar;
 	private TextView txtName;
 
-	private Handler handler = new Handler();
-
-	//
-
 	@Override
 	protected Fragment createFragmentMain(Bundle savedInstanceState) {
-		// return new LoginFragment();
-		// return TestFragment.newInstance("khunglongxanhvietnam", 0);
-		return MainFragment.newInstance("khunglongxanhvietnam");
+		return MainFragment.newInstance(MsConstant.PAGE_KLX);
 	}
 
 	@Override
@@ -161,52 +155,52 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 		Bundle params = new Bundle();
 		params.putBoolean("redirect", false);
 		params.putInt("width", 500);
-		fbLoaderManager.load(new FbUserLoader(getApplicationContext(), graphPath, params) {
-
-			@Override
-			public void onFbLoaderSuccess(FbCmtFrom entry) {
-				log.d("log>>>" + "FbUserLoader onFbLoaderSuccess");
-				ImageLoader imageLoader = ImageLoader.getInstance();
-				String uri = entry.getSource();
-				// Bitmap mBitmap = imageLoader.loadImageSync(uri);
-				// BitmapUtils.maskBitmap(getApplicationContext(), uri, R.drawable.hexagon_view2);
-				imageLoader.displayImage(uri, imgAvatar, app.getOptionsCircle());
-			}
-
-			@Override
-			public void onFbLoaderStart() {
-
-			}
-
-			@Override
-			public void onFbLoaderFail(Throwable e) {
-				log.e("log>>>" + "FbUserLoader onFbLoaderFail:" + e.toString());
-
-			}
-		});
-
-		fbLoaderManager.load(new FbMeLoader(getApplicationContext(), "me", null) {
-
-			@Override
-			public void onFbLoaderSuccess(FbMe entry) {
-				// TODO Auto-generated method stub
-				txtName.setText(entry.getName());
-				GoogleAnaToolKLX.trackerView(getApplicationContext(), "LOGIN:" + entry.getName() + ";email:" + entry.getEmail());
-
-			}
-
-			@Override
-			public void onFbLoaderStart() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onFbLoaderFail(Throwable e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+//		fbLoaderManager.load(new FbUserLoader(getApplicationContext(), graphPath, params) {
+//
+//			@Override
+//			public void onFbLoaderSuccess(FbCmtFrom entry) {
+//				log.d("log>>>" + "FbUserLoader onFbLoaderSuccess");
+//				ImageLoader imageLoader = ImageLoader.getInstance();
+//				String uri = entry.getSource();
+//				// Bitmap mBitmap = imageLoader.loadImageSync(uri);
+//				// BitmapUtils.maskBitmap(getApplicationContext(), uri, R.drawable.hexagon_view2);
+//				imageLoader.displayImage(uri, imgAvatar, app.getOptionsCircle());
+//			}
+//
+//			@Override
+//			public void onFbLoaderStart() {
+//
+//			}
+//
+//			@Override
+//			public void onFbLoaderFail(Throwable e) {
+//				log.e("log>>>" + "FbUserLoader onFbLoaderFail:" + e.toString());
+//
+//			}
+//		});
+//
+//		fbLoaderManager.load(new FbMeLoader(getApplicationContext(), "me", null) {
+//
+//			@Override
+//			public void onFbLoaderSuccess(FbMe entry) {
+//				// TODO Auto-generated method stub
+//				txtName.setText(entry.getName());
+//				GoogleAnaToolKLX.trackerView(getApplicationContext(), "LOGIN:" + entry.getName() + ";email:" + entry.getEmail());
+//
+//			}
+//
+//			@Override
+//			public void onFbLoaderStart() {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void onFbLoaderFail(Throwable e) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//		});
 
 	}
 
@@ -569,7 +563,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 //	    showFragment(f, true);
 	    
     }
-	private static final long EXIT_INTERVAL = 2000L;
+	/*private static final long EXIT_INTERVAL = 2000L;
 	private long exitTimer = Long.MIN_VALUE;
 
 	private boolean tryFinish = false;
@@ -577,22 +571,17 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		log.d("log>>>" + "dispatchKeyEvent");
 
-		if ((event.getAction() == KeyEvent.ACTION_DOWN)
-				&& (event.getKeyCode() == KeyEvent.KEYCODE_BACK)
+		if ((event.getAction() == KeyEvent.ACTION_DOWN) && (event.getKeyCode() == KeyEvent.KEYCODE_BACK)
 				&& (event.getRepeatCount() == 0)) {
-			
+
 			tryFinish = false;
-			if(mFragmentTagStack.size() == 0) {
+			if (mFragmentTagStack.size() == 0) {
 				tryFinish = true;
 			}
-			
-
-//			super.dispatchKeyEvent(event);
 
 			if (tryFinish) {
 				if ((exitTimer + EXIT_INTERVAL) < System.currentTimeMillis()) {
-					Toast.makeText(this, "Back Again to finish", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(this, "Back Again to finish", Toast.LENGTH_SHORT).show();
 					exitTimer = System.currentTimeMillis();
 				} else {
 					finish();
@@ -606,5 +595,5 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
 		return super.dispatchKeyEvent(event);
 	}
-
+*/
 }

@@ -21,8 +21,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:background">@drawable/dialog_button_common_selector</item>
     </style>
-    
-    
+
     <style name="main_img_profile">
         <item name="android:layout_width">38dp</item>
         <item name="android:layout_height">38dp</item>
@@ -34,7 +33,7 @@
         <item name="android:layout_height">18dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
-    
+
     <style name="menu_img_style">
         <item name="android:layout_width">28dp</item>
         <item name="android:layout_height">28dp</item>
@@ -81,6 +80,14 @@
         <item name="android:ellipsize">end</item>
         <item name="android:scrollHorizontally">true</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="txt_title_image">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">5</item>
     </style>
 
 </resources>
