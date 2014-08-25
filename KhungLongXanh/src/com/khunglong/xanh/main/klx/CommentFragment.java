@@ -75,8 +75,8 @@ public class CommentFragment extends BaseFragment {
 		public void load() {
 			Bundle params = new Bundle();
 			params.putBoolean("summary", true);
-			// params.putString("filter", "toplevel");
-			params.putInt("limit", 20);
+			params.putString("filter", "toplevel");
+			params.putInt("limit", 30);
 			final String graphPath = pageData.getId() + "/comments";
 
 			resource.getFbLoaderManager().load(new FbCommentsLoader(getActivity(), graphPath, params) {
@@ -89,6 +89,35 @@ public class CommentFragment extends BaseFragment {
 					cmtListData.addAll(collection);
 					cmtAdapter.notifyDataSetChanged();
 					enableEmptyview(false);
+					
+					// load avatar commenter
+//					for (int i = 0; i < entry.getData().size(); i++) {
+//
+//						final int pos = i;
+//
+//						String idFrom = entry.getData().get(i).getFrom().getId();
+//						String graphPath = idFrom + "/picture";
+//						Bundle params = new Bundle();
+//						params.putBoolean("redirect", false);
+//						params.putInt("width", 100);
+//						resource.getFbLoaderManager().load(new FbUserLoader(getActivity(), graphPath, params) {
+//
+//							@Override
+//							public void onFbLoaderSuccess(FbCmtFrom f) {
+//								cmtListData.get(pos).getFrom().setSource(f.getSource());
+//								cmtAdapter.notifyDataSetChanged();
+//							}
+//
+//							@Override
+//							public void onFbLoaderStart() {
+//							}
+//
+//							@Override
+//							public void onFbLoaderFail(Throwable e) {
+//								log.e("log>>>" + "FbUserLoader  onFbLoaderFail:" + e.toString());
+//							}
+//						});
+//					}
 				}
 
 				@Override
@@ -127,33 +156,33 @@ public class CommentFragment extends BaseFragment {
 		cmtAdapter.notifyDataSetChanged();
 
 		// load avatar commenter
-		// for (int i = 0; i < entry.getData().size(); i++) {
-		//
-		//
-		// final int pos = i;
-		//
-		// String idFrom = entry.getData().get(i).getFrom().getId();
-		// String graphPath = idFrom + "/picture";
-		// Bundle params = new Bundle();
-		// params.putBoolean("redirect", false);
-		// params.putInt("width", 100);
-		// mFbLoaderManager.load(new FbUserLoader(context, graphPath, params) {
-		//
-		// @Override
-		// public void onFbLoaderSuccess(FbCmtFrom f) {
-		// cmtListData.get(pos).getFrom().setSource(f.getSource());
-		// cmtAdapter.notifyDataSetChanged();
-		// }
-		// @Override
-		// public void onFbLoaderStart() {
-		// }
-		//
-		// @Override
-		// public void onFbLoaderFail(Throwable e) {
-		// log.e("log>>>" + "FbUserLoader  onFbLoaderFail:" + e.toString());
-		// }
-		// });
-		// }
+		for (int i = 0; i < entry.getData().size(); i++) {
+
+			final int pos = i;
+
+			String idFrom = entry.getData().get(i).getFrom().getId();
+			String graphPath = idFrom + "/picture";
+			Bundle params = new Bundle();
+			params.putBoolean("redirect", false);
+			params.putInt("width", 100);
+			resource.getFbLoaderManager().load(new FbUserLoader(getActivity(), graphPath, params) {
+
+				@Override
+				public void onFbLoaderSuccess(FbCmtFrom f) {
+					cmtListData.get(pos).getFrom().setSource(f.getSource());
+					cmtAdapter.notifyDataSetChanged();
+				}
+
+				@Override
+				public void onFbLoaderStart() {
+				}
+
+				@Override
+				public void onFbLoaderFail(Throwable e) {
+					log.e("log>>>" + "FbUserLoader  onFbLoaderFail:" + e.toString());
+				}
+			});
+		}
 	}
 
 	public void enableEmptyview(boolean isOpen) {
