@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
@@ -18,7 +21,7 @@ import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.comments.CmtAdapter;
-import com.khunglong.xanh.json.DragonData;
+import com.khunglong.xanh.dialog.ReplyDialog;
 import com.khunglong.xanh.json.PageData;
 import com.khunglong.xanh.myfacebook.FbCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbUserLoader;
@@ -56,6 +59,28 @@ public class CommentFragment extends BaseFragment {
 				return false;
 			}
 		});
+
+		cmtListview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+				// MainActivity loginActivity = (MainActivity) getActivity();
+				 String link = cmtListData.get(pos).getFrom().getSource();
+//				 AnswerFragment f = AnswerFragment.newInstance(cmtListData.get(pos).getMessage(), cmtListData.get(pos)
+//				 .getFrom().getName(),link, cmtListData.get(pos).getId(), position, pos);
+				// loginActivity.showFragment(f, true);
+
+				FragmentManager fm = getChildFragmentManager();
+				FragmentTransaction ft = fm.beginTransaction();
+//				ReplyDialog dialog = new ReplyDialog();
+				
+				ReplyDialog dialog = ReplyDialog.newInstance(cmtListData.get(pos).getLike_count(), cmtListData.get(pos).getMessage(), cmtListData.get(pos)
+						 .getFrom().getName(),link, cmtListData.get(pos).getId(), position, pos);
+				ft.add(dialog, dialog.getClass().getName());
+				ft.commitAllowingStateLoss();
+
+			}
+		});
 		resource = ResourceManager.getInstance();
 		return rootView;
 	}
@@ -84,40 +109,37 @@ public class CommentFragment extends BaseFragment {
 				@Override
 				public void onFbLoaderSuccess(FbComments entry) {
 					// updateComments(entry, position);
-					cmtListData.clear();
-					List<FbCmtData> collection = entry.getData();
-					cmtListData.addAll(collection);
-					cmtAdapter.notifyDataSetChanged();
+					cmtAdapter.setData(entry.getData(), true);
 					enableEmptyview(false);
-					
+
 					// load avatar commenter
-//					for (int i = 0; i < entry.getData().size(); i++) {
-//
-//						final int pos = i;
-//
-//						String idFrom = entry.getData().get(i).getFrom().getId();
-//						String graphPath = idFrom + "/picture";
-//						Bundle params = new Bundle();
-//						params.putBoolean("redirect", false);
-//						params.putInt("width", 100);
-//						resource.getFbLoaderManager().load(new FbUserLoader(getActivity(), graphPath, params) {
-//
-//							@Override
-//							public void onFbLoaderSuccess(FbCmtFrom f) {
-//								cmtListData.get(pos).getFrom().setSource(f.getSource());
-//								cmtAdapter.notifyDataSetChanged();
-//							}
-//
-//							@Override
-//							public void onFbLoaderStart() {
-//							}
-//
-//							@Override
-//							public void onFbLoaderFail(Throwable e) {
-//								log.e("log>>>" + "FbUserLoader  onFbLoaderFail:" + e.toString());
-//							}
-//						});
-//					}
+					// for (int i = 0; i < entry.getData().size(); i++) {
+					//
+					// final int pos = i;
+					//
+					// String idFrom = entry.getData().get(i).getFrom().getId();
+					// String graphPath = idFrom + "/picture";
+					// Bundle params = new Bundle();
+					// params.putBoolean("redirect", false);
+					// params.putInt("width", 100);
+					// resource.getFbLoaderManager().load(new FbUserLoader(getActivity(), graphPath, params) {
+					//
+					// @Override
+					// public void onFbLoaderSuccess(FbCmtFrom f) {
+					// cmtListData.get(pos).getFrom().setSource(f.getSource());
+					// cmtAdapter.notifyDataSetChanged();
+					// }
+					//
+					// @Override
+					// public void onFbLoaderStart() {
+					// }
+					//
+					// @Override
+					// public void onFbLoaderFail(Throwable e) {
+					// log.e("log>>>" + "FbUserLoader  onFbLoaderFail:" + e.toString());
+					// }
+					// });
+					// }
 				}
 
 				@Override

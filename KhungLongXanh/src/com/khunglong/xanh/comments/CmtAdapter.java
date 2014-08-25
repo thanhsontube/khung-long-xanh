@@ -65,12 +65,12 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 			holder.txtLikes = (TextView) v.findViewWithTag("likes");
 			holder.txtCmts = (TextView) v.findViewWithTag("cmt");
 			holder.viewCmt = v.findViewWithTag("ll_cmt");
-			holder.img.setTag(position);
 			v.setTag(holder);
 
 		} else {
 			holder = (Holder) v.getTag();
 		}
+		holder.img.setTag(position);
 
 		holder.txtTitle.setText(dto.getMessage());
 		holder.txtTime.setText(dto.getFrom().getName());
@@ -91,13 +91,15 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 		// update avatar
 		String idFrom = dto.getFrom().getId();
 		int pos = (Integer) holder.img.getTag();
-		Log.v("LOG", "log>>>" + "AVATAR tag:" + pos);
-		loadDataAvatar(idFrom, holder.img);
+//		Log.v("LOG", "log>>>" + "AVATAR tag:" + pos);
+		loadDataAvatar(position, idFrom, holder.img);
 		return v;
 	}
 
-	public void setData(List<FbCmtData> objects) {
-		mList.clear();
+	public void setData(List<FbCmtData> objects, boolean isReset) {
+		if (isReset) {
+			mList.clear();
+		}
 		mList.addAll(objects);
 		notifyDataSetChanged();
 	}
@@ -112,16 +114,16 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 		View viewCmt;
 	}
 
-	public void loadDataAvatar(String idFrom, ImageView imageView) {
-		int pos = (Integer) imageView.getTag();
+	public void loadDataAvatar(int pos, String idFrom, ImageView imageView) {
+//		int pos = (Integer) imageView.getTag();
 		String source = mList.get(pos).getFrom().getSource();
 		if (!TextUtils.isEmpty(source)) {
-			Log.v("LOG", "log>>>" + "YESS:" + pos);
+//			Log.v("LOG", "log>>>" + "YESS:" + pos);
 			imageLoader.displayImage(source, imageView, options, null);
 			return;
 		}
-		Log.v("LOG", "log>>>" + "NOO:" + pos);
-		imageViewReference = new WeakReference<ImageView>(imageView);
+//		Log.v("LOG", "log>>>" + "NOO:" + pos);
+		final WeakReference<ImageView> imageViewReference = new WeakReference<ImageView>(imageView);
 		String graphPath = idFrom + "/picture";
 		Bundle params = new Bundle();
 		params.putBoolean("redirect", false);
@@ -135,6 +137,7 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 					final ImageView imageView = imageViewReference.get();
 					if (imageView != null) {
 						int pos = (Integer) imageView.getTag();
+						Log.v("LOG", "log>>>" + "SUCCESS:" + pos);
 						mList.get(pos).getFrom().setSource(f.getSource());
 						imageLoader.displayImage(f.getSource(), imageView, options, null);
 					}
