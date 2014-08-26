@@ -24,16 +24,16 @@ public abstract class FbLikesLoader extends FbLoaderGet<FbLikes> {
 		try {
 			GraphObject graphObject = response.getGraphObjectAs(GraphObject.class);
 			JSONObject jsonObject = graphObject.getInnerJSONObject();
-			JSONArray jsonArray = jsonObject.getJSONArray("data");
+//			JSONArray jsonArray = jsonObject.getJSONArray("data");
 			FbLikes likes = new FbLikes();
-			FbLikesData dto;
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject ja = (JSONObject) jsonArray.get(i);
-				String id = ja.getString("id");
-				String name = ja.getString("name");
-				dto = new FbLikesData(id, name);
-				likes.getData().add(dto);
-			}
+//			FbLikesData dto;
+//			for (int i = 0; i < jsonArray.length(); i++) {
+//				JSONObject ja = (JSONObject) jsonArray.get(i);
+//				String id = ja.getString("id");
+//				String name = ja.getString("name");
+//				dto = new FbLikesData(id, name);
+//				likes.getData().add(dto);
+//			}
 			
 			//get summaty
 			

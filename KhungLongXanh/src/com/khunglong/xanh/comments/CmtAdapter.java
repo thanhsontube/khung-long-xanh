@@ -51,7 +51,7 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.d("LOG", "log>>>" + "getView:" + position);
+//		Log.d("LOG", "log>>>" + "getView:" + position);
 		View v = convertView;
 		final Holder holder;
 		final FbCmtData dto = mList.get(position);
@@ -90,9 +90,9 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 
 		// update avatar
 		String idFrom = dto.getFrom().getId();
-		int pos = (Integer) holder.img.getTag();
+//		int pos = (Integer) holder.img.getTag();
 //		Log.v("LOG", "log>>>" + "AVATAR tag:" + pos);
-		loadDataAvatar(position, idFrom, holder.img);
+//		loadDataAvatar(position, idFrom, holder.img);
 		return v;
 	}
 

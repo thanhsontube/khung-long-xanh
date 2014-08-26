@@ -46,6 +46,12 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 public class DetailsKLXFragment extends BaseFragment {
 	FilterLog log = new FilterLog("DetailsKLXFragment");
 	ImageLoader imageLoader;
+
+	// layout
+
+	// actionBar
+	TextView txtLike;
+
 	private DisplayImageOptions optionsAvatar;
 	private DisplayImageOptions optionsContent;
 	private String link;
@@ -108,12 +114,12 @@ public class DetailsKLXFragment extends BaseFragment {
 		ImageTitleKlxFragment f = (ImageTitleKlxFragment) fm.findFragmentById(R.id.detail_top);
 		FragmentTransaction ft = fm.beginTransaction();
 		if (f == null) {
-			ft.add(R.id.detail_top,  ImageTitleKlxFragment.newInstance());
+			ft.add(R.id.detail_top, ImageTitleKlxFragment.newInstance());
 		}
 
 		CommentFragment cmtFragment = (CommentFragment) fm.findFragmentById(R.id.detail_bottom);
 		if (cmtFragment == null) {
-			ft.add(R.id.detail_bottom,  CommentFragment.newInstance());
+			ft.add(R.id.detail_bottom, CommentFragment.newInstance());
 		}
 		ft.commit();
 	}
@@ -123,12 +129,24 @@ public class DetailsKLXFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		log.d("log>>>" + "onCreateView");
 		View rootView = inflater.inflate(R.layout.klx_detail_fragment, container, false);
+
+		View v = getActivity().getActionBar().getCustomView();
+		txtLike = (TextView) v.findViewWithTag("like");
 		return rootView;
 	}
 
 	public void setData(PageData data, int position) {
+		txtLike.setText("---");
 		log.d("log>>>" + "setData position:" + position + ";" + data.getSource());
+		this.pageData = data;
+		this.position = position;
 		updateLayoutPage(data);
+
+		if (data.getLikes().getSummary() == null) {
+			controllerLikes.load();
+		} else {
+			txtLike.setText("old:" + data.getLikes().getSummary().getTotal_count());
+		}
 	}
 
 	private void updateLayoutPage(PageData pageData) {
@@ -149,10 +167,43 @@ public class DetailsKLXFragment extends BaseFragment {
 			ft.add(R.id.detail_bottom, cmtFragment);
 		}
 		ft.commit();
-		
-		//update
+
+		// update
 		f.updateImageAndTitle(pageData);
-		cmtFragment.setData(pageData);
+		cmtFragment.setData(pageData, position);
 	}
+
+	private Controller controllerLikes = new Controller() {
+
+		@Override
+		public void load() {
+			Bundle params = new Bundle();
+			params.putString("summary", "1");
+			String graphPath = pageData.getId() + "/likes";
+			mFbLoaderManager.load(new FbLikesLoader(context, graphPath, params) {
+
+				@Override
+				public void onFbLoaderSuccess(FbLikes entry) {
+					log.d("log>>>" + "FbLikesLoader onFbLoaderSuccess entry:" + entry.getSummary().getTotal_count());
+
+					// update data like
+					resource.getKlxData().getData().get(position).setLikes(entry);
+
+					txtLike.setText("new:" + entry.getSummary().getTotal_count());
+				}
+
+				@Override
+				public void onFbLoaderStart() {
+
+				}
+
+				@Override
+				public void onFbLoaderFail(Throwable e) {
+					log.e("log>>>" + "FbLikesLoader onFbLoaderFail:" + e.toString());
+				}
+
+			});
+		}
+	};
 
 }

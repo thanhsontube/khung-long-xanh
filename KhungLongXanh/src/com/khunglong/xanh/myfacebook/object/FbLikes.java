@@ -11,7 +11,6 @@ public class FbLikes {
    	
    	public FbLikes() {
    		data = new ArrayList<FbLikesData>();
-   		summary = new FbLikesSummary();
    		paging = new FbLikesPaging();
    	}
 

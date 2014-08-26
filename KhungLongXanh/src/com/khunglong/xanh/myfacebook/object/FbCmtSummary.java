@@ -5,8 +5,14 @@ package com.khunglong.xanh.myfacebook.object;
 public class FbCmtSummary{
    	private String order;
    	private int total_count;
+   	
+   	
 
- 	public String getOrder(){
+ 	public FbCmtSummary(int total_count) {
+		super();
+		this.total_count = total_count;
+	}
+	public String getOrder(){
 		return this.order;
 	}
 	public void setOrder(String order){

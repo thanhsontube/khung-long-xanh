@@ -11,7 +11,6 @@ public class FbComments{
    	
    	public FbComments() {
    		data = new ArrayList<FbCmtData>();
-   		summary = new FbCmtSummary();
    		paging = new FbCmtPaging();
    	}
 

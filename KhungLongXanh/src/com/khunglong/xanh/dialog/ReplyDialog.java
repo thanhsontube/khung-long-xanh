@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,7 @@ public class ReplyDialog extends DialogFragment {
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.waiting, mEmpty, true);
 		txtTitle = (TextView) rootView.findViewById(R.id.title);
+		txtTitle.setMovementMethod(new ScrollingMovementMethod());
 		txtLike = (TextView) rootView.findViewById(R.id.like);
 		txtTitle.setText("" + like);
 		txtName = (TextView) rootView.findViewById(R.id.name);
