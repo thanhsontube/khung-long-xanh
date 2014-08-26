@@ -53,9 +53,7 @@ public abstract class FbCommentsLoader extends FbLoaderGet<FbComments> {
 			
 			JSONObject jSummary = (JSONObject) jsonObject.get("summary");
 			int total_count = jSummary.getInt("total_count");
-			FbCmtSummary fbCmtSummary = new FbCmtSummary();
-			fbCmtSummary.setTotal_count(total_count);
-			comments.setSummary(fbCmtSummary);
+			comments.setSummary(new FbCmtSummary(total_count));
 			return comments;
 		} catch (Exception e) {
 			Log.e("", "log>>>" + "error  Comments handleResult:" + e.toString());

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -32,9 +33,15 @@ import com.khunglong.xanh.myfacebook.object.FbComments;
 public class CommentFragment extends BaseFragment {
 	FilterLog log = new FilterLog("CommentFragment");
 
-	private ListView cmtListview;
+	// adapter
 	private CmtAdapter cmtAdapter;
+
+	// data
 	private List<FbCmtData> cmtListData = new ArrayList<FbCmtData>();
+
+	// layout
+	private ListView cmtListview;
+	TextView txtCommend;
 	private View mEmpty;
 
 	public static CommentFragment newInstance() {
@@ -45,6 +52,9 @@ public class CommentFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.comment_fragment, container, false);
+		View v = getActivity().getActionBar().getCustomView();
+		txtCommend = (TextView) v.findViewWithTag("commend");
+		
 		cmtListview = (ListView) rootView.findViewWithTag("listview");
 		mEmpty = (ViewGroup) rootView.findViewById(android.R.id.empty);
 		inflater.inflate(R.layout.waiting, (ViewGroup) mEmpty, true);
@@ -65,17 +75,18 @@ public class CommentFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				// MainActivity loginActivity = (MainActivity) getActivity();
-				 String link = cmtListData.get(pos).getFrom().getSource();
-//				 AnswerFragment f = AnswerFragment.newInstance(cmtListData.get(pos).getMessage(), cmtListData.get(pos)
-//				 .getFrom().getName(),link, cmtListData.get(pos).getId(), position, pos);
+				String link = cmtListData.get(pos).getFrom().getSource();
+				// AnswerFragment f = AnswerFragment.newInstance(cmtListData.get(pos).getMessage(), cmtListData.get(pos)
+				// .getFrom().getName(),link, cmtListData.get(pos).getId(), position, pos);
 				// loginActivity.showFragment(f, true);
 
 				FragmentManager fm = getChildFragmentManager();
 				FragmentTransaction ft = fm.beginTransaction();
-//				ReplyDialog dialog = new ReplyDialog();
-				
-				ReplyDialog dialog = ReplyDialog.newInstance(cmtListData.get(pos).getLike_count(), cmtListData.get(pos).getMessage(), cmtListData.get(pos)
-						 .getFrom().getName(),link, cmtListData.get(pos).getId(), position, pos);
+				// ReplyDialog dialog = new ReplyDialog();
+
+				ReplyDialog dialog = ReplyDialog.newInstance(cmtListData.get(pos).getLike_count(), cmtListData.get(pos)
+						.getMessage(), cmtListData.get(pos).getFrom().getName(), link, cmtListData.get(pos).getId(),
+						position, pos);
 				ft.add(dialog, dialog.getClass().getName());
 				ft.commitAllowingStateLoss();
 
@@ -89,9 +100,18 @@ public class CommentFragment extends BaseFragment {
 	private int position = 1;
 	ResourceManager resource;
 
-	public void setData(PageData data) {
+	public void setData(PageData data, int position) {
+		txtCommend.setText("---");
 		this.pageData = data;
-		controllerComments.load();
+		this.position = position;
+
+		if (resource.getKlxData().getData().get(position).getComments() == null) {
+			controllerComments.load();
+		} else {
+			txtCommend.setText("Old:" + resource.getKlxData().getData().get(position).getComments().getSummary().getTotal_count());
+			cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
+			enableEmptyview(false);
+		}
 	}
 
 	private Controller controllerComments = new Controller() {
@@ -109,6 +129,9 @@ public class CommentFragment extends BaseFragment {
 				@Override
 				public void onFbLoaderSuccess(FbComments entry) {
 					// updateComments(entry, position);
+					resource.getKlxData().getData().get(position).setComments(entry);
+					
+					txtCommend.setText("N" + resource.getKlxData().getData().get(position).getComments().getSummary().getTotal_count());
 					cmtAdapter.setData(entry.getData(), true);
 					enableEmptyview(false);
 

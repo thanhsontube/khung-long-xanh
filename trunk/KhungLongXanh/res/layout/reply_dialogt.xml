@@ -46,8 +46,10 @@
 
                     <TextView
                         android:id="@+id/title"
-                        style="@style/style_textview_row"
-                        android:maxLines="100"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="6"
+                        android:scrollbars="vertical"
                         android:tag="title"
                         android:text="Neu aban bi vo sinh Nhung vo ban keu co con, tinh sao ?"
                         android:textColor="@color/white"

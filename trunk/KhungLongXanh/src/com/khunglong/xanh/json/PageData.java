@@ -43,7 +43,6 @@ public class PageData{
 	    this.name = name;
 	    this.source = source;
 	    this.created_time = created_time;
-	    comments = new FbComments();
 	    likes = new FbLikes();
     }
 	
@@ -54,7 +53,6 @@ public class PageData{
 	    this.source = source;
 	    this.created_time = created_time;
 	    this.sourceQuality = highSource;
-	    comments = new FbComments();
 	    likes = new FbLikes();
     }
 	public String getName() {
