@@ -2,15 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_likes"
-        android:icon="@drawable/like_icon"
-        android:showAsAction="always|withText"
-        android:title="likes"/>
-    
-    <item
-        android:id="@+id/action_cmt"
-        android:icon="@drawable/comment"
-        android:showAsAction="always|withText"
-        android:title="commends"/>
+        android:id="@+id/action_save"
+        android:icon="@drawable/save"
+        android:showAsAction="always"
+        android:title="Save"/>
 
 </menu>

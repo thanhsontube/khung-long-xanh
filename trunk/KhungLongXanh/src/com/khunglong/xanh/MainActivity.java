@@ -591,5 +591,13 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 	 * 
 	 * return super.dispatchKeyEvent(event); }
 	 */
+	
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		getMenuInflater().inflate(R.menu.main, menu);
+//		return true;
+//	}
+	
+	
 
 }

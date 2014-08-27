@@ -4,12 +4,21 @@
     android:layout_height="wrap_content"
     android:background="@color/blue1"
     android:orientation="vertical" >
+    
+    <ImageView 
+        android:tag="save"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/save"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/lv1"
         android:orientation="vertical" >
 
         <LinearLayout
