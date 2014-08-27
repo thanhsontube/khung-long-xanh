@@ -9,10 +9,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
@@ -65,6 +67,7 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 			holder.txtLikes = (TextView) v.findViewWithTag("likes");
 			holder.txtCmts = (TextView) v.findViewWithTag("cmt");
 			holder.viewCmt = v.findViewWithTag("ll_cmt");
+			holder.viewSave = v.findViewWithTag("save");
 			v.setTag(holder);
 
 		} else {
@@ -87,6 +90,16 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 		} else {
 			holder.viewCmt.setVisibility(View.VISIBLE);
 		}
+		
+		holder.viewSave.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (resource.getSqlite().insertData(dto.getMessage())) {
+					Toast.makeText(mContext, "Save success:" + dto.getMessage(), Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 
 		// update avatar
 		String idFrom = dto.getFrom().getId();
@@ -112,6 +125,9 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 		TextView txtCmts;
 
 		View viewCmt;
+		
+		//save cmt
+		View viewSave;
 	}
 
 	public void loadDataAvatar(int pos, String idFrom, ImageView imageView) {

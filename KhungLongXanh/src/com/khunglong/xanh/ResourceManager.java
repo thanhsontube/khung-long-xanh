@@ -1,6 +1,7 @@
 package com.khunglong.xanh;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.khunglong.xanh.data.MyData;
 import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
 import com.khunglong.xanh.myfacebook.object.FbMe;
@@ -20,6 +21,9 @@ public class ResourceManager {
 	private FbMe userInfo;
 	private FbLoaderManager fbLoaderManager;
 	private ImageLoader imageLoader;
+	
+	private MyData sqlite;
+	private Context context;
 
 	FilterLog log = new FilterLog(TAG);
 
@@ -38,6 +42,8 @@ public class ResourceManager {
 			klxData.setAlbumTimeLines(MsConstant.ID_KLX_TIME_LINES);
 			
 			imageLoader = ImageLoader.getInstance();
+			
+			sqlite = new MyData(context);
 
 		} catch (Exception e) {
 			log.e("log>>>" + "error startup:" + e.toString());
@@ -74,6 +80,7 @@ public class ResourceManager {
 	}
 
 	public ResourceManager(Context context) {
+		this.context = context;
 	}
 
 	public FbMe getUserInfo() {
@@ -96,6 +103,8 @@ public class ResourceManager {
 		return imageLoader;
 	}
 
-	
+	public MyData getSqlite() {
+		return sqlite;
+	}
 
 }

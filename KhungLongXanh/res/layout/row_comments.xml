@@ -57,6 +57,27 @@
                     android:minWidth="100dp"
                     android:orientation="horizontal" >
 
+                    <!-- save text -->
+
+                    <LinearLayout
+                        android:tag="save"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SAVE"
+                            android:textColor="@color/black" />
+
+                        <ImageView
+                            style="@style/main_img_style"
+                            android:src="@drawable/save" />
+                    </LinearLayout>
+
                     <!-- like -->
 
                     <LinearLayout

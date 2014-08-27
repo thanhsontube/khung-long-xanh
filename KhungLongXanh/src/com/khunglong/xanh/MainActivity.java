@@ -458,40 +458,9 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 					// }
 
 				} else if (item instanceof FragmentChangeDrawerItem) {
-
-					int i = 0;
-					if (fm.findFragmentByTag(FRAGMENT_KEY) != null) {
-						i++;
-						ft.hide(fm.findFragmentByTag(FRAGMENT_KEY));
-					}
-
-					if (fm.findFragmentByTag("f2") != null) {
-						i++;
-						ft.hide(fm.findFragmentByTag("f2"));
-					}
-
-					if (fm.findFragmentByTag("f3") != null) {
-						i++;
-						ft.hide(fm.findFragmentByTag("f3"));
-					}
-					//
-					// while (mFragmentTagStack.size() > 0) {
-					// fm.popBackStackImmediate();
-					// log.d("log>>>" + "fm.popBackStackImmediate()");
-					// }
-
-					if (fm.findFragmentByTag("f4") != null) {
-						log.v("log>>>" + "findFragmentByTag f4");
-						i++;
-						ft.show(fm.findFragmentByTag("f4"));
-					} else {
-						Fragment f4 = MainFragment5.newInstance("ba.tung.7");
-						ft.add(getFragmentContentId(), f4, "f4");
-						ft.show(f4);
-					}
-					ft.commit();
-
-					// showFragment((Fragment) item.getParam(), true);
+					
+					Fragment f = (Fragment) item.getParam();
+					showFragment(f, true);
 				}
 			}
 
