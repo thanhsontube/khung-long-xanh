@@ -1,47 +1,40 @@
 package com.khunglong.xanh.main.klx;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
-import com.khunglong.xanh.MainActivity;
+import com.example.sonnt_commonandroid.utils.PreferenceUtil;
+import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.MyApplication;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
-import com.khunglong.xanh.comments.AnswerFragment;
-import com.khunglong.xanh.comments.CmtAdapter;
-import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.json.PageData;
-import com.khunglong.xanh.mycomments.MyCommentsFragment;
-import com.khunglong.xanh.myfacebook.FbCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbLikesLoader;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
-import com.khunglong.xanh.myfacebook.FbUserLoader;
-import com.khunglong.xanh.myfacebook.object.FbCmtData;
-import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
-import com.khunglong.xanh.myfacebook.object.FbComments;
 import com.khunglong.xanh.myfacebook.object.FbLikes;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class DetailsKLXFragment extends BaseFragment {
 	FilterLog log = new FilterLog("DetailsKLXFragment");
@@ -50,24 +43,16 @@ public class DetailsKLXFragment extends BaseFragment {
 	// layout
 
 	// actionBar
-	TextView txtLike;
+	private TextView txtLike;
+	private ImageView imgSaveActionbar;
 
-	private DisplayImageOptions optionsAvatar;
-	private DisplayImageOptions optionsContent;
-	private String link;
-	private String linkHigh;
-	private String content;
 	private int position;
 
-	private ListView cmtListview;
-	private CmtAdapter cmtAdapter;
-	private List<FbCmtData> cmtListData;
 	private PageData pageData;
 	private FbLoaderManager mFbLoaderManager;
 	private MyApplication app;
 	private Context context;
 	// private DragonData mDragonData;
-	private int maxPosition = -1;
 
 	private ResourceManager resource;
 	private IDetailsFragmentListener listener;
@@ -102,9 +87,7 @@ public class DetailsKLXFragment extends BaseFragment {
 		resource = ResourceManager.getInstance();
 		app = (MyApplication) getActivity().getApplication();
 		imageLoader = ImageLoader.getInstance();
-		optionsContent = app.getOptionsContent();
 		mFbLoaderManager = resource.getFbLoaderManager();
-
 	}
 
 	@Override
@@ -132,15 +115,28 @@ public class DetailsKLXFragment extends BaseFragment {
 
 		View v = getActivity().getActionBar().getCustomView();
 		txtLike = (TextView) v.findViewWithTag("like");
+
+		imgSaveActionbar = (ImageView) v.findViewWithTag("save");
+		
 		return rootView;
 	}
+	
+	OnClickListener imgSaveOnClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			log.d("log>>>" + "pageData.getSourceQuality():" + pageData.getSource());
+			 saveImage(pageData.getSourceQuality());
+		}
+	};
 
-	public void setData(PageData data, int position) {
+	public void setData(PageData data, int pos) {
 		txtLike.setText("---");
-		log.d("log>>>" + "setData position:" + position + ";" + data.getSource());
-		this.pageData = data;
-		this.position = position;
-		updateLayoutPage(data);
+		pageData = data;
+		position = pos;
+		log.d("log>>>" + "setData position:" + position + ";" + pageData.getSource());
+		updateLayoutPage(pageData);
+		imgSaveActionbar.setOnClickListener(imgSaveOnClickListener);
 
 		if (data.getLikes().getSummary() == null) {
 			controllerLikes.load();
@@ -205,5 +201,65 @@ public class DetailsKLXFragment extends BaseFragment {
 			});
 		}
 	};
+
+	private void saveImage(String link) {
+		imageLoader.loadImage(link, new ImageLoadingListener() {
+
+			@Override
+			public void onLoadingStarted(String imageUri, View view) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+				try {
+
+					ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+					loadedImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+					// you can create a new file name "test.jpg" in sdcard folder.
+					File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "KLX");
+					if (!folder.exists()) {
+						folder.mkdirs();
+					}
+
+					String title = "KLX_";
+					int i = PreferenceUtil.getPreference(getActivity(), MsConstant.KEY_SAVE, 0);
+					title += i;
+					title += ".jpg";
+
+					File f = new File(Environment.getExternalStorageDirectory() + File.separator + "KLX"
+							+ File.separator + title);
+					f.createNewFile();
+					// write the bytes in file
+					FileOutputStream fo = new FileOutputStream(f);
+					fo.write(bytes.toByteArray());
+
+					// remember close de FileOutput
+					fo.close();
+					PreferenceUtil.setPreference(getActivity(), MsConstant.KEY_SAVE, ++i);
+					Toast.makeText(getActivity(), "Your image is saved to this folder:" + f.toString(),
+							Toast.LENGTH_LONG).show();
+				} catch (Exception e) {
+					Log.e("", "log>>>" + "error save Image:" + e.toString());
+					Toast.makeText(getActivity(), "Error save Imager", Toast.LENGTH_LONG).show();
+				}
+
+			}
+
+			@Override
+			public void onLoadingCancelled(String imageUri, View view) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+	}
 
 }
