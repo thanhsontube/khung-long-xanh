@@ -30,8 +30,8 @@ import com.khunglong.xanh.myfacebook.object.FbCmtData;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbComments;
 
-public class CommentFragment extends BaseFragment {
-	FilterLog log = new FilterLog("CommentFragment");
+public class DetailCommentFragment extends BaseFragment {
+	FilterLog log = new FilterLog("DetailCommentFragment");
 
 	// adapter
 	private CmtAdapter cmtAdapter;
@@ -44,8 +44,8 @@ public class CommentFragment extends BaseFragment {
 	TextView txtCommend;
 	private View mEmpty;
 
-	public static CommentFragment newInstance() {
-		CommentFragment f = new CommentFragment();
+	public static DetailCommentFragment newInstance() {
+		DetailCommentFragment f = new DetailCommentFragment();
 		return f;
 	}
 

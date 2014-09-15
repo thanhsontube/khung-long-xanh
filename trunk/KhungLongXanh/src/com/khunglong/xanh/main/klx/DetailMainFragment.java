@@ -36,8 +36,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-public class DetailsKLXFragment extends BaseFragment {
-	FilterLog log = new FilterLog("DetailsKLXFragment");
+public class DetailMainFragment extends BaseFragment {
+	FilterLog log = new FilterLog("DetailMainFragment");
 	ImageLoader imageLoader;
 
 	// layout
@@ -75,8 +75,8 @@ public class DetailsKLXFragment extends BaseFragment {
 		listener = null;
 	}
 
-	public static DetailsKLXFragment newInstance() {
-		DetailsKLXFragment f = new DetailsKLXFragment();
+	public static DetailMainFragment newInstance() {
+		DetailMainFragment f = new DetailMainFragment();
 		return f;
 	}
 
@@ -94,15 +94,15 @@ public class DetailsKLXFragment extends BaseFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		FragmentManager fm = getChildFragmentManager();
-		ImageTitleKlxFragment f = (ImageTitleKlxFragment) fm.findFragmentById(R.id.detail_top);
+		DetailHeaderFragment f = (DetailHeaderFragment) fm.findFragmentById(R.id.detail_top);
 		FragmentTransaction ft = fm.beginTransaction();
 		if (f == null) {
-			ft.add(R.id.detail_top, ImageTitleKlxFragment.newInstance());
+			ft.add(R.id.detail_top, DetailHeaderFragment.newInstance());
 		}
 
-		CommentFragment cmtFragment = (CommentFragment) fm.findFragmentById(R.id.detail_bottom);
+		DetailCommentFragment cmtFragment = (DetailCommentFragment) fm.findFragmentById(R.id.detail_bottom);
 		if (cmtFragment == null) {
-			ft.add(R.id.detail_bottom, CommentFragment.newInstance());
+			ft.add(R.id.detail_bottom, DetailCommentFragment.newInstance());
 		}
 		ft.commit();
 	}
@@ -149,17 +149,17 @@ public class DetailsKLXFragment extends BaseFragment {
 		log.d("log>>>" + "updateLayoutPage title:" + pageData.getName());
 
 		FragmentManager fm = getChildFragmentManager();
-		ImageTitleKlxFragment f = (ImageTitleKlxFragment) fm.findFragmentById(R.id.detail_top);
+		DetailHeaderFragment f = (DetailHeaderFragment) fm.findFragmentById(R.id.detail_top);
 		FragmentTransaction ft = fm.beginTransaction();
 		if (f == null) {
-			f = ImageTitleKlxFragment.newInstance();
+			f = DetailHeaderFragment.newInstance();
 			ft.add(R.id.detail_top, f);
 		}
 
 		// comment
-		CommentFragment cmtFragment = (CommentFragment) fm.findFragmentById(R.id.detail_bottom);
+		DetailCommentFragment cmtFragment = (DetailCommentFragment) fm.findFragmentById(R.id.detail_bottom);
 		if (cmtFragment == null) {
-			cmtFragment = CommentFragment.newInstance();
+			cmtFragment = DetailCommentFragment.newInstance();
 			ft.add(R.id.detail_bottom, cmtFragment);
 		}
 		ft.commit();

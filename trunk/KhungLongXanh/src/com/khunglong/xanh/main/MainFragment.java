@@ -25,7 +25,7 @@ import com.khunglong.xanh.base.MyFragmentPagerAdapter;
 import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.libs.InfinitePagerAdapter;
 import com.khunglong.xanh.libs.InfiniteViewPager;
-import com.khunglong.xanh.main.klx.DetailsKLXFragment;
+import com.khunglong.xanh.main.klx.DetailMainFragment;
 import com.khunglong.xanh.myfacebook.FbLoaderAlbumsList;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
 import com.khunglong.xanh.myfacebook.FbPageLoader;
@@ -265,7 +265,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 		if (position > dragonData.getData().size() - 1) {
 			return;
 		}
-		DetailsKLXFragment f1 = (DetailsKLXFragment) mMainPagerAdapter.getFragment(mViewPager, virtualPosition);
+		DetailMainFragment f1 = (DetailMainFragment) mMainPagerAdapter.getFragment(mViewPager, virtualPosition);
 		f1.setData(dragonData.getData().get(position), position);
 
 		if ((dragonData.getData().size() - position) <= ILOAD && !isLoading) {
@@ -303,7 +303,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 		@Override
 		public Fragment getItem(int position) {
 			// return new DetailsFragment(position, null);
-			return DetailsKLXFragment.newInstance();
+			return DetailMainFragment.newInstance();
 		}
 
 		@Override
@@ -396,7 +396,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 					// isFirstLoad = false;
 					// }
 
-					DetailsKLXFragment f1 = (DetailsKLXFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
+					DetailMainFragment f1 = (DetailMainFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
 					f1.setData(entry.getData().get(0), 0);
 					isLoading = false;
 					timingLogger.dumpToLog();
