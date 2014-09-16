@@ -28,13 +28,11 @@ public class MyLoginActivity extends BaseFragmentActivity implements ILoginFragm
 
     @Override
     public void onLogin(LoginFragment f, Session session) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLogout(LoginFragment f, Session session) {
-        // TODO Auto-generated method stub
 
     }
 }

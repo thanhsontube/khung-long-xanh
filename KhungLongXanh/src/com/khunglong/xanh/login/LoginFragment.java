@@ -71,7 +71,7 @@ public class LoginFragment extends BaseFragment {
                 if (Session.getActiveSession().isOpened()) {
                     listener.onLogin(LoginFragment.this, null);
                     startActivity(new Intent(getActivity(), MainActivity.class));
-                    getActivity().finish();
+//                    getActivity().finish();
                 } else {
                     Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
                 }
@@ -86,8 +86,8 @@ public class LoginFragment extends BaseFragment {
         if (state.isOpened()) {
             log.d(">>>Logged in...:" + session.getAccessToken());
             listener.onLogin(LoginFragment.this, session);
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();
+//            startActivity(new Intent(getActivity(), MainActivity.class));
+//            getActivity().finish();
         } else if (state.isClosed()) {
             log.d(">>>Logged out...");
             listener.onLogout(this, session);
