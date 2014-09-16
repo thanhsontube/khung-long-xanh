@@ -24,7 +24,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class DetailHeaderFragment extends BaseFragment {
 
     private static final String TAG = "DetailHeaderFragment";
-    private ImageView img;
     private TextView txtTitle;
     private ResourceManager resource;
     private FilterLog log = new FilterLog(TAG);
@@ -38,7 +37,6 @@ public class DetailHeaderFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.detail_image_fragment, container, false);
-        img = (ImageView) rootView.findViewWithTag("image");
         txtTitle = (TextView) rootView.findViewWithTag("title");
         resource = ResourceManager.getInstance();
 
@@ -64,8 +62,8 @@ public class DetailHeaderFragment extends BaseFragment {
             String link = pageData.getSource();
             // String linkHigh = pageData.getSourceQuality();
             MyApplication app = (MyApplication) getActivity().getApplication();
-            resource.getImageLoader().displayImage(link, img, app.getOptionsContent(), null);
-            resource.getImageLoader().displayImage(link, cardThumbnail.getImageView(), app.getOptionsContent(), null);
+            // resource.getImageLoader().displayImage(link, img, app.getOptionsContent(), null);
+//            resource.getImageLoader().displayImage(link, cardThumbnail.getImageView(), app.getOptionsContent(), null);
 
             // title
             txtTitle.setText(pageData.getName());
@@ -93,9 +91,11 @@ public class DetailHeaderFragment extends BaseFragment {
         @Override
         public void setupInnerViewElements(ViewGroup parent, View viewImage) {
             this.imageView = (ImageView) viewImage;
-            MyApplication app = (MyApplication) getActivity().getApplication();
-            String link = "https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg";
-            resource.getImageLoader().displayImage(link, cardThumbnail.getImageView(), app.getOptionsContent(), null);
+            // MyApplication app = (MyApplication) getActivity().getApplication();
+            // String link =
+            // "https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg";
+            // resource.getImageLoader().displayImage(link, cardThumbnail.getImageView(), app.getOptionsContent(),
+            // null);
 
             /*
              * If your cardthumbnail uses external library you have to provide how to load the image. If your
