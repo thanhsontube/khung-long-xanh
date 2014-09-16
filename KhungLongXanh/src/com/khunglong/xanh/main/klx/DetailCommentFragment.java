@@ -25,6 +25,7 @@ import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
+import com.khunglong.xanh.card.UniversalImageLoaderCard;
 import com.khunglong.xanh.comments.CmtAdapter;
 import com.khunglong.xanh.dialog.ReplyDialog;
 import com.khunglong.xanh.json.PageData;
@@ -40,7 +41,7 @@ public class DetailCommentFragment extends BaseFragment {
     // adapter
     private CmtAdapter cmtAdapter;
     private CardArrayAdapter mCardArrayAdapter;
-    private List<Card> listCards = new ArrayList<Card>(); 
+    private List<Card> listCards = new ArrayList<Card>();
 
     // data
     private List<FbCmtData> cmtListData = new ArrayList<FbCmtData>();
@@ -102,7 +103,7 @@ public class DetailCommentFragment extends BaseFragment {
         resource = ResourceManager.getInstance();
         return rootView;
     }
-    
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -112,20 +113,20 @@ public class DetailCommentFragment extends BaseFragment {
     private int position = 1;
     ResourceManager resource;
 
-//    public void setData(PageData data, int position) {
-//        txtCommend.setText("---");
-//        this.pageData = data;
-//        this.position = position;
-//
-//        if (resource.getKlxData().getData().get(position).getComments() == null) {
-//            controllerComments.load();
-//        } else {
-//            txtCommend.setText("Old:"
-//                    + resource.getKlxData().getData().get(position).getComments().getSummary().getTotal_count());
-//            cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
-//            enableEmptyview(false);
-//        }
-//    }
+    // public void setData(PageData data, int position) {
+    // txtCommend.setText("---");
+    // this.pageData = data;
+    // this.position = position;
+    //
+    // if (resource.getKlxData().getData().get(position).getComments() == null) {
+    // controllerComments.load();
+    // } else {
+    // txtCommend.setText("Old:"
+    // + resource.getKlxData().getData().get(position).getComments().getSummary().getTotal_count());
+    // cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
+    // enableEmptyview(false);
+    // }
+    // }
     public void setData(PageData data, int position) {
         txtCommend.setText("---");
         this.pageData = data;
@@ -136,17 +137,14 @@ public class DetailCommentFragment extends BaseFragment {
         } else {
             txtCommend.setText("Old:"
                     + resource.getKlxData().getData().get(position).getComments().getSummary().getTotal_count());
-            
+            int i = 1;
             for (FbCmtData dto : resource.getKlxData().getData().get(position).getComments().getData()) {
-                Card card = new Card(getActivity());
-                CardHeader cardHeader = new CardHeader(getActivity());
-                cardHeader.setTitle(dto.getMessage());
-                card.addCardHeader(cardHeader);
-                listCards.add(card);
+              addCards(i, dto);
+              i ++;
             }
             mCardArrayAdapter.notifyDataSetChanged();
-//            setScaleAdapter();
-//            cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
+            // setScaleAdapter();
+            // cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
             enableEmptyview(false);
         }
     }
@@ -172,17 +170,16 @@ public class DetailCommentFragment extends BaseFragment {
                             .setText("N"
                                     + resource.getKlxData().getData().get(position).getComments().getSummary()
                                             .getTotal_count());
-//                    cmtAdapter.setData(entry.getData(), true);
+                    // cmtAdapter.setData(entry.getData(), true);
+                    int i = 1;
                     for (FbCmtData dto : entry.getData()) {
-                        Card card = new Card(getActivity());
-                        CardHeader cardHeader = new CardHeader(getActivity());
-                        cardHeader.setTitle(dto.getMessage());
-                        card.addCardHeader(cardHeader);
-                        listCards.add(card);
+                        // Card card = new Card(getActivity());
+                        addCards(i, dto);
+                        i++;
                     }
                     mCardArrayAdapter.notifyDataSetChanged();
-//                    setScaleAdapter();
-                    
+                    // setScaleAdapter();
+
                     enableEmptyview(false);
 
                     // load avatar commenter
@@ -214,6 +211,8 @@ public class DetailCommentFragment extends BaseFragment {
                     // });
                     // }
                 }
+
+               
 
                 @Override
                 public void onFbLoaderStart() {
@@ -289,12 +288,19 @@ public class DetailCommentFragment extends BaseFragment {
             cmtListview.setVisibility(View.VISIBLE);
         }
     }
-    
-//    private void setScaleAdapter() {
-//        AnimationAdapter animCardArrayAdapter = new ScaleInAnimationAdapter(mCardArrayAdapter);
-//        animCardArrayAdapter.setAbsListView(cmtListview);
-//        if (cmtListview != null) {
-//            cmtListview.setExternalAdapter(animCardArrayAdapter,mCardArrayAdapter);
-//        }
-//    }
+
+    // private void setScaleAdapter() {
+    // AnimationAdapter animCardArrayAdapter = new ScaleInAnimationAdapter(mCardArrayAdapter);
+    // animCardArrayAdapter.setAbsListView(cmtListview);
+    // if (cmtListview != null) {
+    // cmtListview.setExternalAdapter(animCardArrayAdapter,mCardArrayAdapter);
+    // }
+    // }
+    public void addCards(int i, FbCmtData dto) {
+        UniversalImageLoaderCard card = new UniversalImageLoaderCard(getActivity(), null);
+        card.setTitle(dto.getMessage());
+        card.setSecondaryTitle(dto.getFrom().getName());
+        card.setCount(i);
+        listCards.add(card);
+    }
 }
