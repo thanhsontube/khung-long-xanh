@@ -16,7 +16,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
  * 
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class UniversalImageLoaderCard extends Card {
+public class CardComment extends Card {
 
     protected String mTitle;
     protected String mSecondaryTitle;
@@ -24,12 +24,12 @@ public class UniversalImageLoaderCard extends Card {
 
     DisplayImageOptions options;
 
-    public UniversalImageLoaderCard(Context context, DisplayImageOptions options) {
+    public CardComment(Context context, DisplayImageOptions options) {
         this(context, R.layout.carddemo_extra_picasso_inner_content);
         this.options = options;
     }
 
-    public UniversalImageLoaderCard(Context context, int innerLayout) {
+    public CardComment(Context context, int innerLayout) {
         super(context, innerLayout);
         init();
     }
@@ -95,7 +95,7 @@ public class UniversalImageLoaderCard extends Card {
             //
             // //Here you have to set your image with an external library
             // //Only for test, use a Resource Id and a Url
-            // if (((UniversalImageLoaderCard) getParentCard()).getCount() % 2 == 0) {
+            // if (((CardComment) getParentCard()).getCount() % 2 == 0) {
             // imageLoader.displayImage("https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg",
             // (ImageView) viewImage,options);
             // } else {
