@@ -25,7 +25,7 @@ import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
-import com.khunglong.xanh.card.UniversalImageLoaderCard;
+import com.khunglong.xanh.card.CardComment;
 import com.khunglong.xanh.comments.CmtAdapter;
 import com.khunglong.xanh.dialog.ReplyDialog;
 import com.khunglong.xanh.json.PageData;
@@ -297,7 +297,7 @@ public class DetailCommentFragment extends BaseFragment {
     // }
     // }
     public void addCards(int i, FbCmtData dto) {
-        UniversalImageLoaderCard card = new UniversalImageLoaderCard(getActivity(), null);
+        CardComment card = new CardComment(getActivity(), null);
         card.setTitle(dto.getMessage());
         card.setSecondaryTitle(dto.getFrom().getName());
         card.setCount(i);
