@@ -1,71 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    tools:ignore="UnusedAttribute" >
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="140dp" >
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true" >
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="17sp"
+            android:clipToPadding="false"
             android:gravity="center_horizontal"
-            android:text="@string/introduve" />
+            android:orientation="vertical"
+            android:padding="4dp"
+            android:scrollbarStyle="outsideOverlay" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="4dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:tag="page1" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/snsd1" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/pink_transparent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="48dp"
+                        android:layout_marginLeft="12dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Tuyển tập ảnh gái xinh lớn nhất Facebook"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
+
+                    <com.facebook.widget.LoginButton
+                        android:id="@+id/authButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom" />
+                </FrameLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_marginBottom="4dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <!-- page2 -->
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:tag="page2" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:scaleType="center"
+                        android:src="@drawable/login_klx" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/red_transparent"
+                        android:padding="12dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Khủng Long Xanh"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+                    </FrameLayout>
+                </FrameLayout>
+                <!-- page3 -->
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:tag="page3" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:scaleType="center"
+                        android:src="@drawable/login_haivl" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/blue_transparent"
+                        android:padding="12dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Góc Thư Giãn"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+                    </FrameLayout>
+                </FrameLayout>
+            </LinearLayout>
+            <!-- page 4 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:tag="page4" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:scaleType="center"
+                        android:src="@drawable/login_haivlofficial" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/green_transparent"
+                        android:padding="12dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Giúp bạn cười nhiều hơn mỗi ngày"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+                    </FrameLayout>
+                </FrameLayout>
+                <!-- page 5 -->
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1"
+                    android:background="@color/purple_transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:tag="page5" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/nghiemtucvl" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/purple_transparent"
+                        android:padding="12dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Lớn cả rồi, nghiêm túc đê!"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+                    </FrameLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+        </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/lkxanh" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/haivl" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/nghiemtucvl" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/hanhphucgiobay" />
-    </LinearLayout>
+    <!-- go -->
 
     <Button
-        android:layout_marginTop="10dp"
         android:id="@+id/login_btn_login"
-        style="@style/dragon_button_white"
-        android:text="Let&apos;s go!" />
-
-    <com.facebook.widget.LoginButton
-        android:id="@+id/authButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp" />
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/ic_circle_blue"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:padding="@dimen/lv1"
+        android:text="Let&apos;s go!"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
-</LinearLayout>
+</FrameLayout>

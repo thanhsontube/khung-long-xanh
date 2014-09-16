@@ -1,0 +1,11 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto" >
+
+    <it.gmariotti.cardslib.library.view.component.CardThumbnailView
+        android:id="@+id/card_thumbnail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        card:card_thumbnail_layout_resourceID="@layout/carddemo_googlenowbirth_thumbnail_layout" />
+
+</LinearLayout>
