@@ -1412,7 +1412,7 @@ public class SubsamplingScaleImageView extends View {
     }
 
     /**
-     * Set the pan limiting style. See static fields. Normally {@link #PAN_LIMIT_INSIDE} is best, for image galleries.
+     * Set the pan limiting style. See static fields. Normally {@image #PAN_LIMIT_INSIDE} is best, for image galleries.
      */
     public final void setPanLimit(int panLimit) {
         if (!VALID_PAN_LIMITS.contains(panLimit)) {
@@ -1427,7 +1427,7 @@ public class SubsamplingScaleImageView extends View {
 
     /**
      * Set the maximum scale allowed. A value of 1 means 1:1 pixels at maximum scale. You may wish to set this according
-     * to screen density - on a retina screen, 1:1 may still be too small. Consider using {@link #setMinimumDpi(int)},
+     * to screen density - on a retina screen, 1:1 may still be too small. Consider using {@image #setMinimumDpi(int)},
      * which is density aware.
      */
     public final void setMaxScale(float maxScale) {
@@ -1442,7 +1442,7 @@ public class SubsamplingScaleImageView extends View {
     }
 
     /**
-     * This is a screen density aware alternative to {@link #setMaxScale(float)}; it allows you to express the maximum
+     * This is a screen density aware alternative to {@image #setMaxScale(float)}; it allows you to express the maximum
      * allowed scale in terms of the minimum pixel density. This avoids the problem of 1:1 scale still being
      * too small on a high density screen. A sensible starting point is 160 - the default used by this view.
      * @param dpi Source image pixel density at maximum zoom.
@@ -1538,7 +1538,7 @@ public class SubsamplingScaleImageView extends View {
     }
 
     /**
-     * Get source width, ignoring orientation. If {@link #getOrientation()} returns 90 or 270, you can use {@link #getSHeight()}
+     * Get source width, ignoring orientation. If {@image #getOrientation()} returns 90 or 270, you can use {@image #getSHeight()}
      * for the apparent width.
      */
     public final int getSWidth() {
@@ -1546,7 +1546,7 @@ public class SubsamplingScaleImageView extends View {
     }
 
     /**
-     * Get source height, ignoring orientation. If {@link #getOrientation()} returns 90 or 270, you can use {@link #getSWidth()}
+     * Get source height, ignoring orientation. If {@image #getOrientation()} returns 90 or 270, you can use {@image #getSWidth()}
      * for the apparent height.
      */
     public final int getSHeight() {
@@ -1554,8 +1554,8 @@ public class SubsamplingScaleImageView extends View {
     }
 
     /**
-     * Returns the orientation setting. This can return {@link #ORIENTATION_USE_EXIF}, in which case it doesn't tell you
-     * the applied orientation of the image. For that, use {@link #getAppliedOrientation()}.
+     * Returns the orientation setting. This can return {@image #ORIENTATION_USE_EXIF}, in which case it doesn't tell you
+     * the applied orientation of the image. For that, use {@image #getAppliedOrientation()}.
      */
     public final int getOrientation() {
         return orientation;
@@ -1627,7 +1627,7 @@ public class SubsamplingScaleImageView extends View {
     }
 
     /**
-     * A density aware alternative to {@link #setDoubleTapZoomScale(float)}; this allows you to express the scale the
+     * A density aware alternative to {@image #setDoubleTapZoomScale(float)}; this allows you to express the scale the
      * image will zoom in to when double tapped in terms of the image pixel density. Values lower than the max scale will
      * be ignored. A sensible starting point is 160 - the default used by this view.
      * @param dpi New value for double tap gesture zoom scale.
@@ -1662,7 +1662,7 @@ public class SubsamplingScaleImageView extends View {
      * image is instead animated to move the center point as near to the center of the screen as is allowed - it's
      * guaranteed to be on screen.
      * @param sCenter Target center point
-     * @return {@link AnimationBuilder} instance. Call {@link com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.AnimationBuilder#start()} to start the anim.
+     * @return {@image AnimationBuilder} instance. Call {@image com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.AnimationBuilder#start()} to start the anim.
      */
     public AnimationBuilder animateCenter(PointF sCenter) {
         if (!isImageReady()) {
@@ -1675,7 +1675,7 @@ public class SubsamplingScaleImageView extends View {
      * Creates a scale animation builder, that when started will animate a zoom in or out. If this would move the image
      * beyond the panning limits, the image is automatically panned during the animation.
      * @param scale Target scale.
-     * @return {@link AnimationBuilder} instance. Call {@link com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.AnimationBuilder#start()} to start the anim.
+     * @return {@image AnimationBuilder} instance. Call {@image com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.AnimationBuilder#start()} to start the anim.
      */
     public AnimationBuilder animateScale(float scale) {
         if (!isImageReady()) {
@@ -1688,7 +1688,7 @@ public class SubsamplingScaleImageView extends View {
      * Creates a scale animation builder, that when started will animate a zoom in or out. If this would move the image
      * beyond the panning limits, the image is automatically panned during the animation.
      * @param scale Target scale.
-     * @return {@link AnimationBuilder} instance. Call {@link com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.AnimationBuilder#start()} to start the anim.
+     * @return {@image AnimationBuilder} instance. Call {@image com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.AnimationBuilder#start()} to start the anim.
      */
     public AnimationBuilder animateScaleAndCenter(float scale, PointF sCenter) {
         if (!isImageReady()) {
@@ -1698,8 +1698,8 @@ public class SubsamplingScaleImageView extends View {
     }
 
     /**
-     * Builder class used to set additional options for a scale animation. Create an instance using {@link #animateScale(float)},
-     * then set your options and call {@link #start()}.
+     * Builder class used to set additional options for a scale animation. Create an instance using {@image #animateScale(float)},
+     * then set your options and call {@image #start()}.
      */
     public final class AnimationBuilder {
 
@@ -1756,7 +1756,7 @@ public class SubsamplingScaleImageView extends View {
         }
 
         /**
-         * Set the easing style. See static fields. {@link #EASE_IN_OUT_QUAD} is recommended, and the default.
+         * Set the easing style. See static fields. {@image #EASE_IN_OUT_QUAD} is recommended, and the default.
          * @param easing easing style.
          * @return this builder for method chaining.
          */

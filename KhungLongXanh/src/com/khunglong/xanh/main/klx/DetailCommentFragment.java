@@ -2,7 +2,6 @@ package com.khunglong.xanh.main.klx;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
-import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardListView;
 
 import java.util.ArrayList;
@@ -19,13 +18,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
-import com.khunglong.xanh.card.CardComment;
+import com.khunglong.xanh.card.GooglePlaySmallCard;
 import com.khunglong.xanh.comments.CmtAdapter;
 import com.khunglong.xanh.dialog.ReplyDialog;
 import com.khunglong.xanh.json.PageData;
@@ -85,7 +85,7 @@ public class DetailCommentFragment extends BaseFragment {
                 // MainActivity loginActivity = (MainActivity) getActivity();
                 String link = cmtListData.get(pos).getFrom().getSource();
                 // AnswerFragment f = AnswerFragment.newInstance(cmtListData.get(pos).getMessage(), cmtListData.get(pos)
-                // .getFrom().getName(),link, cmtListData.get(pos).getId(), position, pos);
+                // .getFrom().getName(),image, cmtListData.get(pos).getId(), position, pos);
                 // loginActivity.showFragment(f, true);
 
                 FragmentManager fm = getChildFragmentManager();
@@ -139,8 +139,8 @@ public class DetailCommentFragment extends BaseFragment {
                     + resource.getKlxData().getData().get(position).getComments().getSummary().getTotal_count());
             int i = 1;
             for (FbCmtData dto : resource.getKlxData().getData().get(position).getComments().getData()) {
-              addCards(i, dto);
-              i ++;
+                addCards(i, dto);
+                i++;
             }
             mCardArrayAdapter.notifyDataSetChanged();
             // setScaleAdapter();
@@ -212,8 +212,6 @@ public class DetailCommentFragment extends BaseFragment {
                     // }
                 }
 
-               
-
                 @Override
                 public void onFbLoaderStart() {
                     enableEmptyview(true);
@@ -221,7 +219,8 @@ public class DetailCommentFragment extends BaseFragment {
 
                 @Override
                 public void onFbLoaderFail(Throwable e) {
-                    enableEmptyview(true);
+                    enableEmptyview(false);
+                    Toast.makeText(getActivity(), "FbCommentsLoader onFbLoaderFail:" + e.toString(), Toast.LENGTH_SHORT).show();
                     log.e("log>>>" + "FbCommentsLoader onFbLoaderFail:" + e.toString());
                 }
             });
@@ -297,10 +296,11 @@ public class DetailCommentFragment extends BaseFragment {
     // }
     // }
     public void addCards(int i, FbCmtData dto) {
-        CardComment card = new CardComment(getActivity(), null);
-        card.setTitle(dto.getMessage());
-        card.setSecondaryTitle(dto.getFrom().getName());
-        card.setCount(i);
+//        GooglePlaySmallCard card = new GooglePlaySmallCard(getActivity(), null, "");
+        GooglePlaySmallCard card = new GooglePlaySmallCard(getActivity(), dto);
+//        card.setTitle(dto.getMessage());
+//        card.setSecondaryTitle(dto.getFrom().getName());
+//        card.setCount(i);
         listCards.add(card);
     }
 }

@@ -143,7 +143,7 @@ public class DetailsFragment extends BaseFragment   {
 		holder.snapshotImg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Toast.makeText(getActivity(), "click:" + link, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getActivity(), "click:" + image, Toast.LENGTH_SHORT).show();
 				listener.onDetailsFragmentPicture(linkHigh, content);
 			}
 		});

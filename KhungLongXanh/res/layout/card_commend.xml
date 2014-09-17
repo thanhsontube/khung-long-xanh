@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="3dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <!-- message -->
+
+    <TextView
+        style="@style/txt_black_18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="title"
+        android:text="I want to Improve my English\nI bought a beatiful computer" />
+    <!-- user and like count, cmt count -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <!-- user -->
+
+        <TextView
+            style="@style/txt_blue_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/lv1"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:tag="user"
+            android:text="Sonnt" />
+
+        <!-- Like - cmt -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:orientation="horizontal" >
+
+            <!-- like -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    style="@style/txt_red_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="likes"
+                    android:text="50" />
+
+                <ImageView
+                    style="@style/main_img_style"
+                    android:src="@drawable/like_icon" />
+            </LinearLayout>
+            <!-- Comment -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:tag="ll_cmt" >
+
+                <TextView
+                    style="@style/txt_green_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="cmt"
+                    android:text="-" />
+
+                <ImageView
+                    style="@style/main_img_style"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/comment" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
