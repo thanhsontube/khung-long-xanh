@@ -31,7 +31,7 @@ public abstract class FbCommentsLoader extends FbLoaderGet<FbComments> {
 			JSONObject jsonObject = graphObject.getInnerJSONObject();
 			JSONArray jsonArray = jsonObject.getJSONArray("data");
 			FbComments comments = new FbComments();
-			FbCmtData dto;
+			FbCmtData dto; 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject ja = (JSONObject) jsonArray.get(i);
 				String id = ja.getString("id");

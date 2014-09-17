@@ -28,6 +28,7 @@ import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.card.CardComment;
 import com.khunglong.xanh.comments.CmtAdapter;
 import com.khunglong.xanh.dialog.ReplyDialog;
+import com.khunglong.xanh.json.CmtData;
 import com.khunglong.xanh.json.PageData;
 import com.khunglong.xanh.myfacebook.FbCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbUserLoader;
@@ -39,7 +40,7 @@ public class DetailCommentFragment extends BaseFragment {
     FilterLog log = new FilterLog("DetailCommentFragment");
 
     // adapter
-    private CmtAdapter cmtAdapter;
+     private CmtAdapter cmtAdapter;
     private CardArrayAdapter mCardArrayAdapter;
     private List<Card> listCards = new ArrayList<Card>();
 
@@ -66,7 +67,7 @@ public class DetailCommentFragment extends BaseFragment {
         mEmpty = (ViewGroup) rootView.findViewById(android.R.id.empty);
         inflater.inflate(R.layout.waiting, (ViewGroup) mEmpty, true);
         enableEmptyview(true);
-        cmtAdapter = new CmtAdapter(getActivity(), cmtListData, false);
+        // cmtAdapter = new CmtAdapter(getActivity(), cmtListData, false);
         mCardArrayAdapter = new CardArrayAdapter(getActivity(), listCards);
         cmtListview.setAdapter(mCardArrayAdapter);
         cmtListview.setOnTouchListener(new OnTouchListener() {
@@ -171,45 +172,48 @@ public class DetailCommentFragment extends BaseFragment {
                                     + resource.getKlxData().getData().get(position).getComments().getSummary()
                                             .getTotal_count());
                     // cmtAdapter.setData(entry.getData(), true);
-                    int i = 1;
+                    int j = 1;
                     for (FbCmtData dto : entry.getData()) {
-                        // Card card = new Card(getActivity());
-                        addCards(i, dto);
-                        i++;
+                        addCards(j, dto);
+                        j++;
                     }
                     mCardArrayAdapter.notifyDataSetChanged();
                     // setScaleAdapter();
 
                     enableEmptyview(false);
+//                  updateComments(entry, position);
 
-                    // load avatar commenter
-                    // for (int i = 0; i < entry.getData().size(); i++) {
-                    //
-                    // final int pos = i;
-                    //
-                    // String idFrom = entry.getData().get(i).getFrom().getId();
-                    // String graphPath = idFrom + "/picture";
-                    // Bundle params = new Bundle();
-                    // params.putBoolean("redirect", false);
-                    // params.putInt("width", 100);
-                    // resource.getFbLoaderManager().load(new FbUserLoader(getActivity(), graphPath, params) {
-                    //
-                    // @Override
-                    // public void onFbLoaderSuccess(FbCmtFrom f) {
-                    // cmtListData.get(pos).getFrom().setSource(f.getSource());
-                    // cmtAdapter.notifyDataSetChanged();
-                    // }
-                    //
-                    // @Override
-                    // public void onFbLoaderStart() {
-                    // }
-                    //
-                    // @Override
-                    // public void onFbLoaderFail(Throwable e) {
-                    // log.e("log>>>" + "FbUserLoader  onFbLoaderFail:" + e.toString());
-                    // }
-                    // });
-                    // }
+//                     load avatar commenter
+                    for (int i = 0; i < entry.getData().size(); i++) {
+
+                        final int pos = i;
+
+                        String idFrom = entry.getData().get(i).getFrom().getId();
+                        String graphPath = idFrom + "/picture";
+                        Bundle params = new Bundle();
+                        params.putBoolean("redirect", false);
+                        params.putInt("width", 100);
+                        resource.getFbLoaderManager().load(new FbUserLoader(getActivity(), graphPath, params) {
+
+                            @Override
+                            public void onFbLoaderSuccess(FbCmtFrom f) {
+//                                cmtListData.get(pos).getFrom().setSource(f.getSource());
+//                                cmtAdapter.notifyDataSetChanged();
+                                CardComment cardComment = (CardComment) listCards.get(pos);
+                                cardComment.getDto().getFrom().setSource(f.getSource());
+                                cardComment.setSource(f.getSource());
+                            }
+
+                            @Override
+                            public void onFbLoaderStart() {
+                            }
+
+                            @Override
+                            public void onFbLoaderFail(Throwable e) {
+                                log.e("log>>>" + "FbUserLoader  onFbLoaderFail:" + e.toString());
+                            }
+                        });
+                    }
                 }
 
                 @Override
@@ -220,7 +224,8 @@ public class DetailCommentFragment extends BaseFragment {
                 @Override
                 public void onFbLoaderFail(Throwable e) {
                     enableEmptyview(false);
-                    Toast.makeText(getActivity(), "FbCommentsLoader onFbLoaderFail:" + e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "FbCommentsLoader onFbLoaderFail:" + e.toString(), Toast.LENGTH_SHORT)
+                            .show();
                     log.e("log>>>" + "FbCommentsLoader onFbLoaderFail:" + e.toString());
                 }
             });
@@ -264,6 +269,10 @@ public class DetailCommentFragment extends BaseFragment {
                 public void onFbLoaderSuccess(FbCmtFrom f) {
                     cmtListData.get(pos).getFrom().setSource(f.getSource());
                     cmtAdapter.notifyDataSetChanged();
+                    
+                    CardComment cardComment = (CardComment) listCards.get(pos);
+                    
+                    mCardArrayAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -296,11 +305,11 @@ public class DetailCommentFragment extends BaseFragment {
     // }
     // }
     public void addCards(int i, FbCmtData dto) {
-//        CardComment card = new CardComment(getActivity(), null, "");
+        // CardComment card = new CardComment(getActivity(), null, "");
         CardComment card = new CardComment(getActivity(), dto);
-//        card.setTitle(dto.getMessage());
-//        card.setSecondaryTitle(dto.getFrom().getName());
-//        card.setCount(i);
+        // card.setTitle(dto.getMessage());
+        // card.setSecondaryTitle(dto.getFrom().getName());
+        // card.setCount(i);
         listCards.add(card);
     }
 }
