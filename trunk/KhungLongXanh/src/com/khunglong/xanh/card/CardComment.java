@@ -13,22 +13,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.khunglong.xanh.R;
+import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.myfacebook.object.FbCmtData;
 
-public class GooglePlaySmallCard extends Card {
+public class CardComment extends Card {
 
     private FbCmtData dto;
 
-    public GooglePlaySmallCard(Context context, FbCmtData dto) {
+    public CardComment(Context context, FbCmtData dto) {
         this(context, R.layout.card_commend);
         this.dto = dto;
     }
 
-    public GooglePlaySmallCard(Context context) {
+    public CardComment(Context context) {
         this(context, R.layout.card_commend);
     }
 
-    public GooglePlaySmallCard(Context context, int innerLayout) {
+    public CardComment(Context context, int innerLayout) {
         super(context, innerLayout);
         init();
     }
@@ -37,10 +38,13 @@ public class GooglePlaySmallCard extends Card {
 
         CardHeader header = new CardHeader(getContext());
         header.setButtonOverflowVisible(true);
-        header.setPopupMenu(R.menu.main, new CardHeader.OnClickCardHeaderPopupMenuListener() {
+        header.setPopupMenu(R.menu.menu_commend, new CardHeader.OnClickCardHeaderPopupMenuListener() {
             @Override
             public void onMenuItemClick(BaseCard card, MenuItem item) {
-                Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+                ResourceManager resource = ResourceManager.getInstance();
+                if (resource.getSqlite().insertData(dto.getMessage())) {
+                    Toast.makeText(mContext, "Lưu thành công:" + dto.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -55,7 +59,7 @@ public class GooglePlaySmallCard extends Card {
         setOnClickListener(new OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
-                Toast.makeText(getContext(), "Click Listener card=", Toast.LENGTH_LONG).show();
+
             }
         });
     }
