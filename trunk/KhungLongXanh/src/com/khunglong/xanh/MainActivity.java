@@ -524,7 +524,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
 	@Override
 	public void onDetailsFragmentPicture(String link, String content) {
-		// ZoomInZoomOut f = ZoomInZoomOut.newInstance(link);
+		// ZoomInZoomOut f = ZoomInZoomOut.newInstance(image);
 		// FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		// ft.add(getFragmentContentId(), f, "fa");
 		// ft.addToBackStack(null);
@@ -532,7 +532,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 		// ft.commit();
 		// Intent intent = new Intent(this, AnimationActivity.class);
 		Intent intent = new Intent(this, SingleTouchImageViewActivity.class);
-		intent.putExtra("link", link);
+		intent.putExtra("image", link);
 		intent.putExtra("content", content);
 		startActivity(intent);
 		// startActivity(new Intent(this, AnimationActivity.class));

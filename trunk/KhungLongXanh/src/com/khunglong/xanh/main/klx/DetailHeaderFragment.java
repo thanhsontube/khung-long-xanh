@@ -28,6 +28,7 @@ public class DetailHeaderFragment extends BaseFragment {
     private ResourceManager resource;
     private FilterLog log = new FilterLog(TAG);
     UniversalCardThumbnail cardThumbnail;
+    CardView cardview;
 
     public static DetailHeaderFragment newInstance() {
         DetailHeaderFragment f = new DetailHeaderFragment();
@@ -40,7 +41,7 @@ public class DetailHeaderFragment extends BaseFragment {
         txtTitle = (TextView) rootView.findViewWithTag("title");
         resource = ResourceManager.getInstance();
 
-        CardView cardview = (CardView) rootView.findViewById(R.id.mycard);
+        cardview = (CardView) rootView.findViewById(R.id.mycard);
         Card card = new Card(getActivity());
         CardHeader cardHeader = new CardHeader(getActivity());
         cardHeader.setTitle("tscard");
@@ -62,11 +63,13 @@ public class DetailHeaderFragment extends BaseFragment {
             String link = pageData.getSource();
             // String linkHigh = pageData.getSourceQuality();
             MyApplication app = (MyApplication) getActivity().getApplication();
-            // resource.getImageLoader().displayImage(link, img, app.getOptionsContent(), null);
-//            resource.getImageLoader().displayImage(link, cardThumbnail.getImageView(), app.getOptionsContent(), null);
+            // resource.getImageLoader().displayImage(image, img, app.getOptionsContent(), null);
+//            resource.getImageLoader().displayImage(image, cardThumbnail.getImageView(), app.getOptionsContent(), null);
 
             // title
             txtTitle.setText(pageData.getName());
+            cardview.getCard().getCardHeader().setTitle(pageData.getName());
+            
         } catch (Exception e) {
             log.e("log>>>" + "error updateImageAndTitle:" + e.toString());
         }
@@ -92,9 +95,9 @@ public class DetailHeaderFragment extends BaseFragment {
         public void setupInnerViewElements(ViewGroup parent, View viewImage) {
             this.imageView = (ImageView) viewImage;
             // MyApplication app = (MyApplication) getActivity().getApplication();
-            // String link =
+            // String image =
             // "https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg";
-            // resource.getImageLoader().displayImage(link, cardThumbnail.getImageView(), app.getOptionsContent(),
+            // resource.getImageLoader().displayImage(image, cardThumbnail.getImageView(), app.getOptionsContent(),
             // null);
 
             /*
@@ -110,7 +113,7 @@ public class DetailHeaderFragment extends BaseFragment {
             //
             // //Here you have to set your image with an external library
             // //Only for test, use a Resource Id and a Url
-            // if (((CardComment) getParentCard()).getCount() % 2 == 0) {
+            // if (((GooglePlaySmallCard) getParentCard()).getCount() % 2 == 0) {
             // imageLoader.displayImage("https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg",
             // (ImageView) viewImage,options);
             // } else {

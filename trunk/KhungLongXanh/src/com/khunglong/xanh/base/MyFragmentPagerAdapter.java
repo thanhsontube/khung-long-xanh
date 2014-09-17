@@ -26,8 +26,8 @@ import android.view.View;
 import com.example.sonnt_commonandroid.utils.FilterLog;
 
 /**
- * Implementation of {@link android.support.v4.view.PagerAdapter} that
- * represents each page as a {@link Fragment} that is persistently
+ * Implementation of {@image android.support.v4.view.PagerAdapter} that
+ * represents each page as a {@image Fragment} that is persistently
  * kept in the fragment manager as long as the user can return to the page.
  */
 public abstract class MyFragmentPagerAdapter extends PagerAdapter {

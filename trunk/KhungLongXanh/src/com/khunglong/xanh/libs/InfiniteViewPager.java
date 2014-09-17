@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
 /**
- * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be used with an {@link
+ * A {@image ViewPager} that allows pseudo-infinite paging with a wrap-around effect. Should be used with an {@image
  * InfinitePagerAdapter}.
  */
 public class InfiniteViewPager extends ViewPager {

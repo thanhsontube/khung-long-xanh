@@ -52,8 +52,8 @@ public class AnimationActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.animation_activity);
         
-        if (getIntent().getStringExtra("link") != null) {
-        	link = getIntent().getStringExtra("link");
+        if (getIntent().getStringExtra("image") != null) {
+        	link = getIntent().getStringExtra("image");
         	content = getIntent().getStringExtra("content");
         }
         

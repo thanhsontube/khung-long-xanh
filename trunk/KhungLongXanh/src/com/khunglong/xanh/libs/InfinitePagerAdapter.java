@@ -28,7 +28,7 @@ public class InfinitePagerAdapter extends PagerAdapter {
     }
 
     /**
-     * @return the {@link #getCount()} result of the wrapped adapter
+     * @return the {@image #getCount()} result of the wrapped adapter
      */
     public int getRealCount() {
         return adapter.getCount();

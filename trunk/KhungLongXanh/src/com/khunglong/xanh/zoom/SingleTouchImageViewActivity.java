@@ -35,8 +35,8 @@ public class SingleTouchImageViewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_single_touchimageview);
-		if (getIntent().getStringExtra("link") != null) {
-			link = getIntent().getStringExtra("link");
+		if (getIntent().getStringExtra("image") != null) {
+			link = getIntent().getStringExtra("image");
 			content = getIntent().getStringExtra("content");
 		}
 		getActionBar().hide();
