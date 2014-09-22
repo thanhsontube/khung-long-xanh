@@ -26,13 +26,13 @@
 
     <style name="txt_black_14">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
     <style name="txt_gray_14">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 

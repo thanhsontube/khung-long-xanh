@@ -25,7 +25,7 @@ public class CardHeaderImage extends Card {
     }
 
     public CardHeaderImage(Context context, PageData data) {
-        super(context);
+        super(context, R.layout.card_header_image);
         this.dto = data;
     }
 
@@ -39,9 +39,9 @@ public class CardHeaderImage extends Card {
         cardHeader.setTitle("KLX ");
         addCardHeader(cardHeader);
 
-        thumbnail = new ThumbnailHeader(mContext);
-        thumbnail.setDrawableResource(R.drawable.login_klx);
-        addCardThumbnail(thumbnail);
+//        thumbnail = new ThumbnailHeader(mContext);
+//        thumbnail.setDrawableResource(R.drawable.login_klx);
+//        addCardThumbnail(thumbnail);
     }
 
     class ThumbnailHeader extends CardThumbnail {
@@ -55,7 +55,7 @@ public class CardHeaderImage extends Card {
         @Override
         public void setupInnerViewElements(ViewGroup parent, View imageView) {
             if (imageView != null) {
-                
+
                 this.imageView = (ImageView) imageView;
                 FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                         FrameLayout.LayoutParams.WRAP_CONTENT);

@@ -6,13 +6,28 @@
     android:background="@color/black"
     android:orientation="vertical" >
 
-    <it.gmariotti.cardslib.library.view.CardView
+    <!--
+         <it.gmariotti.cardslib.library.view.CardView
         android:id="@+id/mycard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
-        card:card_layout_resourceID="@layout/card_thumbnail_layout" />
+        android:layout_marginTop="12dp" />
+    -->
+
+    <TextView
+        style="@style/txt_black_14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="title"
+        android:text="I want to Improve my English" />
+    <!-- image -->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_haivl"
+        android:tag="image" />
 
 </LinearLayout>

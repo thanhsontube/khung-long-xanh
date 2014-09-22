@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
@@ -42,7 +43,7 @@ public class DetailHeaderFragment extends BaseFragment {
 //        txtTitle = (TextView) rootView.findViewWithTag("title");
 //        resource = ResourceManager.getInstance();
 
-        cardview = (CardView) rootView.findViewById(R.id.mycard);
+//        cardview = (CardView) rootView.findViewById(R.id.mycard);
 //        Card card = new Card(getActivity());
 //        CardHeader cardHeader = new CardHeader(getActivity());
 //        cardHeader.setTitle("tscard");
@@ -53,9 +54,9 @@ public class DetailHeaderFragment extends BaseFragment {
 //        cardThumbnail.setExternalUsage(true);
 //        card.addCardThumbnail(cardThumbnail);
         
-        CardHeaderImage card = new CardHeaderImage(getActivity());
-
-        cardview.setCard(card);
+//        CardHeaderImage card = new CardHeaderImage(getActivity(), new PageData());
+//
+//        cardview.setCard(card);
 
         return rootView;
     }
