@@ -32,33 +32,45 @@ public class DetailHeaderFragment extends BaseFragment {
     UniversalCardThumbnail cardThumbnail;
     CardView cardview;
 
+    private ImageView image;
+
     public static DetailHeaderFragment newInstance() {
         DetailHeaderFragment f = new DetailHeaderFragment();
         return f;
     }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        resource = ResourceManager.getInstance();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.detail_commend_fragment, container, false);
-//        txtTitle = (TextView) rootView.findViewWithTag("title");
-//        resource = ResourceManager.getInstance();
+        View rootView = inflater.inflate(R.layout.detail_image_fragment, container, false);
+        image = (ImageView) rootView.findViewWithTag("image");
+         txtTitle = (TextView) rootView.findViewWithTag("title");
 
-//        cardview = (CardView) rootView.findViewById(R.id.mycard);
-//        Card card = new Card(getActivity());
-//        CardHeader cardHeader = new CardHeader(getActivity());
-//        cardHeader.setTitle("tscard");
-//        card.addCardHeader(cardHeader);
-//
-//        cardThumbnail = new UniversalCardThumbnail(getActivity());
-//        cardThumbnail.setDrawableResource(R.drawable.art5);
-//        cardThumbnail.setExternalUsage(true);
-//        card.addCardThumbnail(cardThumbnail);
-        
-//        CardHeaderImage card = new CardHeaderImage(getActivity(), new PageData());
-//
-//        cardview.setCard(card);
+        // cardview = (CardView) rootView.findViewById(R.id.mycard);
+        // Card card = new Card(getActivity());
+        // CardHeader cardHeader = new CardHeader(getActivity());
+        // cardHeader.setTitle("tscard");
+        // card.addCardHeader(cardHeader);
+        //
+        // cardThumbnail = new UniversalCardThumbnail(getActivity());
+        // cardThumbnail.setDrawableResource(R.drawable.art5);
+        // cardThumbnail.setExternalUsage(true);
+        // card.addCardThumbnail(cardThumbnail);
+
+        // CardHeaderImage card = new CardHeaderImage(getActivity(), new PageData());
+        //
+        // cardview.setCard(card);
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     public void updateImageAndTitle(PageData pageData) {
@@ -68,13 +80,14 @@ public class DetailHeaderFragment extends BaseFragment {
             String link = pageData.getSource();
             // String linkHigh = pageData.getSourceQuality();
             MyApplication app = (MyApplication) getActivity().getApplication();
-            // resource.getImageLoader().displayImage(image, img, app.getOptionsContent(), null);
-//            resource.getImageLoader().displayImage(image, cardThumbnail.getImageView(), app.getOptionsContent(), null);
+            resource.getImageLoader().displayImage(link, image);
+            // resource.getImageLoader().displayImage(image, cardThumbnail.getImageView(), app.getOptionsContent(),
+            // null);
 
             // title
-//            txtTitle.setText(pageData.getName());
-//            cardview.getCard().getCardHeader().setTitle(pageData.getName());
-            
+             txtTitle.setText(pageData.getName());
+            // cardview.getCard().getCardHeader().setTitle(pageData.getName());
+
         } catch (Exception e) {
             log.e("log>>>" + "error updateImageAndTitle:" + e.toString());
         }
@@ -96,38 +109,40 @@ public class DetailHeaderFragment extends BaseFragment {
             super(context);
         }
 
-//        @Override
-//        public void setupInnerViewElements(ViewGroup parent, View viewImage) {
-//            this.imageView = (ImageView) viewImage;
-//            // MyApplication app = (MyApplication) getActivity().getApplication();
-//            // String image =
-//            // "https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg";
-//            // resource.getImageLoader().displayImage(image, cardThumbnail.getImageView(), app.getOptionsContent(),
-//            // null);
-//
-//            /*
-//             * If your cardthumbnail uses external library you have to provide how to load the image. If your
-//             * cardthumbnail doesn't use an external library it will use a built-in method
-//             */
-//
-//            // It is just an example.
-//            // In real case you should config better the imageLoader
-//            // ImageLoader imageLoader = ImageLoader.getInstance();
-//            // imageLoader.init(ImageLoaderConfiguration.createDefault(mContext));
-//            //
-//            //
-//            // //Here you have to set your image with an external library
-//            // //Only for test, use a Resource Id and a Url
-//            // if (((CardComment) getParentCard()).getCount() % 2 == 0) {
-//            // imageLoader.displayImage("https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg",
-//            // (ImageView) viewImage,options);
-//            // } else {
-//            // imageLoader.displayImage("drawable://" + R.drawable.ic_tris, (ImageView) viewImage,options);
-//            // }
-//
-//            /*
-//             * viewImage.getLayoutParams().width = 96; viewImage.getLayoutParams().height = 96;
-//             */
-//        }
+        // @Override
+        // public void setupInnerViewElements(ViewGroup parent, View viewImage) {
+        // this.imageView = (ImageView) viewImage;
+        // // MyApplication app = (MyApplication) getActivity().getApplication();
+        // // String image =
+        // //
+        // "https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg";
+        // // resource.getImageLoader().displayImage(image, cardThumbnail.getImageView(), app.getOptionsContent(),
+        // // null);
+        //
+        // /*
+        // * If your cardthumbnail uses external library you have to provide how to load the image. If your
+        // * cardthumbnail doesn't use an external library it will use a built-in method
+        // */
+        //
+        // // It is just an example.
+        // // In real case you should config better the imageLoader
+        // // ImageLoader imageLoader = ImageLoader.getInstance();
+        // // imageLoader.init(ImageLoaderConfiguration.createDefault(mContext));
+        // //
+        // //
+        // // //Here you have to set your image with an external library
+        // // //Only for test, use a Resource Id and a Url
+        // // if (((CardComment) getParentCard()).getCount() % 2 == 0) {
+        // //
+        // imageLoader.displayImage("https://lh5.googleusercontent.com/-squZd7FxR8Q/UyN5UrsfkqI/AAAAAAAAbAo/VoDHSYAhC_E/s96/new%2520profile%2520%25282%2529.jpg",
+        // // (ImageView) viewImage,options);
+        // // } else {
+        // // imageLoader.displayImage("drawable://" + R.drawable.ic_tris, (ImageView) viewImage,options);
+        // // }
+        //
+        // /*
+        // * viewImage.getLayoutParams().width = 96; viewImage.getLayoutParams().height = 96;
+        // */
+        // }
     }
 }
