@@ -43,6 +43,8 @@ public class DetailCommentFragment extends BaseFragment {
      private CmtAdapter cmtAdapter;
     private CardArrayAdapter mCardArrayAdapter;
     private List<Card> listCards = new ArrayList<Card>();
+    
+    //normal adapter
 
     // data
     private List<FbCmtData> cmtListData = new ArrayList<FbCmtData>();
@@ -67,9 +69,9 @@ public class DetailCommentFragment extends BaseFragment {
         mEmpty = (ViewGroup) rootView.findViewById(android.R.id.empty);
         inflater.inflate(R.layout.waiting, (ViewGroup) mEmpty, true);
         enableEmptyview(true);
-        // cmtAdapter = new CmtAdapter(getActivity(), cmtListData, false);
+          cmtAdapter = new CmtAdapter(getActivity(), cmtListData, false);
         mCardArrayAdapter = new CardArrayAdapter(getActivity(), listCards);
-        cmtListview.setAdapter(mCardArrayAdapter);
+        cmtListview.setAdapter(cmtAdapter);
         cmtListview.setOnTouchListener(new OnTouchListener() {
 
             @Override
@@ -143,9 +145,9 @@ public class DetailCommentFragment extends BaseFragment {
                 addCards(i, dto);
                 i++;
             }
-            mCardArrayAdapter.notifyDataSetChanged();
+//            mCardArrayAdapter.notifyDataSetChanged();
             // setScaleAdapter();
-            // cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
+             cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
             enableEmptyview(false);
         }
     }
@@ -171,13 +173,13 @@ public class DetailCommentFragment extends BaseFragment {
                             .setText("N"
                                     + resource.getKlxData().getData().get(position).getComments().getSummary()
                                             .getTotal_count());
-                    // cmtAdapter.setData(entry.getData(), true);
+                     cmtAdapter.setData(entry.getData(), true);
                     int j = 1;
                     for (FbCmtData dto : entry.getData()) {
                         addCards(j, dto);
                         j++;
                     }
-                    mCardArrayAdapter.notifyDataSetChanged();
+//                    mCardArrayAdapter.notifyDataSetChanged();
                     // setScaleAdapter();
 
                     enableEmptyview(false);

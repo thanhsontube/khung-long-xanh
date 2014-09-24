@@ -5,6 +5,7 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.view.CardView;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.khunglong.xanh.card.CardHeaderImage;
 import com.khunglong.xanh.json.PageData;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class DetailHeaderFragment extends BaseFragment {
 
@@ -38,17 +41,19 @@ public class DetailHeaderFragment extends BaseFragment {
         DetailHeaderFragment f = new DetailHeaderFragment();
         return f;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resource = ResourceManager.getInstance();
+        imageLoader = ImageLoader.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.detail_image_fragment, container, false);
-        image = (ImageView) rootView.findViewWithTag("image");
-         txtTitle = (TextView) rootView.findViewWithTag("title");
+        image = (ImageView) rootView.findViewById(R.id.detail_image);
+        txtTitle = (TextView) rootView.findViewWithTag("title");
 
         // cardview = (CardView) rootView.findViewById(R.id.mycard);
         // Card card = new Card(getActivity());
@@ -73,19 +78,52 @@ public class DetailHeaderFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    ImageLoader imageLoader;
+
     public void updateImageAndTitle(PageData pageData) {
         try {
             log.d("log>>>" + "updateImageAndTitle:" + pageData.getName());
+            log.d("log>>> " + "link:" + pageData.getSource());
             // image
             String link = pageData.getSource();
             // String linkHigh = pageData.getSourceQuality();
             MyApplication app = (MyApplication) getActivity().getApplication();
-            resource.getImageLoader().displayImage(link, image);
+            log.d("log>>> " + "image:" + image);
+            imageLoader.displayImage(link, image, app.getOptionsContent(), new ImageLoadingListener() {
+                
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                    // TODO Auto-generated method stub
+                    log.d("log>>> " + "onLoadingStarted");
+                    
+                }
+                
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    // TODO Auto-generated method stub
+                    log.d("log>>> " + "onLoadingFailed:" + failReason.getCause().getMessage());
+                    
+                }
+                
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    // TODO Auto-generated method stub
+                    log.d("log>>> " + "onLoadingComplete");
+                    
+                }
+                
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+                    // TODO Auto-generated method stub
+                    log.d("log>>> " + "onLoadingCancelled");
+                    
+                }
+            });
             // resource.getImageLoader().displayImage(image, cardThumbnail.getImageView(), app.getOptionsContent(),
             // null);
 
             // title
-             txtTitle.setText(pageData.getName());
+            txtTitle.setText(pageData.getName());
             // cardview.getCard().getCardHeader().setTitle(pageData.getName());
 
         } catch (Exception e) {

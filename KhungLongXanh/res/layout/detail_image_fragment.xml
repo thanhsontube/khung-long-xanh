@@ -14,12 +14,13 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:tag="image"
+            android:id="@+id/detail_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/lv1"
             android:layout_marginTop="@dimen/lv1"
-            android:src="@drawable/snsd1" />
+            android:src="@drawable/iviet_temp"
+            android:tag="image" />
 
         <TextView
             style="@style/txt_blue_14"
