@@ -4,24 +4,25 @@
     <string-array name="page1">
         <item>khunglongxanhvietnam</item>
         <item>Khủng Long Xanh</item>
-        <item >Khủng Long Xanh</item>
+        <item>Khủng Long Xanh</item>
     </string-array>
     <string-array name="page2">
         <item>haivl.com</item>
         <item>Góc Thư Giãn</item>
-        <item >Góc Thư Giãn</item>
+        <item>Góc Thư Giãn</item>
     </string-array>
     <string-array name="page3">
         <item>HaivlOfficial</item>
         <item>Haivl</item>
-        <item >Giúp bạn cười nhiều hơn mỗi ngày</item>
+        <item>Giúp bạn cười nhiều hơn mỗi ngày</item>
     </string-array>
     <string-array name="page4">
         <item>nghiemtucvl</item>
         <item>Nghiêm Túc VL</item>
-        <item >Lớn cả rồi, nghiêm túc đê!</item>
+        <item>Lớn cả rồi, nghiêm túc đê!</item>
     </string-array>
     <string-array name="page5">
+        <item>hanhphucgiobay</item>
         <item>hanhphucgiobay</item>
         <item>Hạnh phúc đôi khi nhẹ như gió bay.</item>
     </string-array>

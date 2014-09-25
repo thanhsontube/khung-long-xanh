@@ -27,9 +27,10 @@ public class LoginFragment extends BaseFragment {
     FilterLog log = new FilterLog(TAG);
 
     private ILoginFragmentListener listener;
+    private String pageName = "khunglongxanhvietnam";
 
     public static interface ILoginFragmentListener {
-        void onLogin(LoginFragment f, Session session);
+        void onLogin(LoginFragment f, String pageName);
 
         void onLogout(LoginFragment f, Session session);
     }
@@ -69,7 +70,7 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (Session.getActiveSession().isOpened()) {
-                    listener.onLogin(LoginFragment.this, null);
+                    listener.onLogin(LoginFragment.this, pageName);
                     startActivity(new Intent(getActivity(), MainActivity.class));
 //                    getActivity().finish();
                 } else {
@@ -85,7 +86,7 @@ public class LoginFragment extends BaseFragment {
     private void onSessionStateChange(final Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             log.d(">>>Logged in...:" + session.getAccessToken());
-            listener.onLogin(LoginFragment.this, session);
+            listener.onLogin(LoginFragment.this, pageName);
 //            startActivity(new Intent(getActivity(), MainActivity.class));
 //            getActivity().finish();
         } else if (state.isClosed()) {
