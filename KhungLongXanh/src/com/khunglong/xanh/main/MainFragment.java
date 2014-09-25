@@ -375,7 +375,6 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 
 		@Override
 		public void load() {
-			final TimingLogger timingLogger = new TimingLogger(TAG, "log>>>controllerTimelines");
 			isLoading = true;
 			String after = dragonData.getPaging().getCursors().after;
 			Bundle params = new Bundle();
@@ -385,7 +384,6 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 
 				@Override
 				public void onFbLoaderSuccess(DragonData entry) {
-					timingLogger.addSplit("onFbLoaderSuccess");
 					log.d("log>>>" + "1 controllerTimelines success " + "load Image:" + entry.getData().size());
 					dragonData.setPaging(entry.getPaging());
 					dragonData.getData().addAll(entry.getData());
@@ -399,12 +397,10 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 					DetailMainFragment f1 = (DetailMainFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
 					f1.setData(entry.getData().get(0), 0);
 					isLoading = false;
-					timingLogger.dumpToLog();
 				}
 
 				@Override
 				public void onFbLoaderStart() {
-					timingLogger.addSplit("onFbLoaderStart");
 					mEmpty.setVisibility(View.VISIBLE);
 
 				}

@@ -5,5 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="app_id">734530499944860</string>
     <string name="kh_ng_long_xanh">Khủng Long Xanh</string>
+    <string name="save_image">Save Image</string>
+    <string name="save_text">Save Text</string>
+    <string name="save">Save</string>
 
 </resources>
