@@ -129,8 +129,8 @@ public class BitmapUtils {
                     // remember close de FileOutput
                     fo.close();
                     PreferenceUtil.setPreference(context, MsConstant.KEY_SAVE, ++i);
-                    Toast.makeText(context, R.string.your_image_is_saved_to_this_folder + f.toString(), Toast.LENGTH_LONG)
-                            .show();
+                    Toast.makeText(context, R.string.your_image_is_saved_to_this_folder + f.toString(),
+                            Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Log.e("", "log>>>" + "error save Image:" + e.toString());
                     Toast.makeText(context, "Error save Imager", Toast.LENGTH_LONG).show();
@@ -172,10 +172,11 @@ public class BitmapUtils {
             // remember close de FileOutput
             fo.close();
             PreferenceUtil.setPreference(context, MsConstant.KEY_SAVE, ++i);
-            Toast.makeText(context, R.string.your_image_is_saved_to_this_folder + f.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.your_image_is_saved_to_this_folder) + f.toString(),
+                    Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e("", "log>>>" + "error save Image:" + e.toString());
-            Toast.makeText(context, R.string.error_save_imager, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.error_save_imager), Toast.LENGTH_LONG).show();
         }
 
     }
