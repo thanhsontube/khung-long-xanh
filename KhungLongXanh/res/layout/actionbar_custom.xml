@@ -4,14 +4,6 @@
     android:layout_height="wrap_content"
     android:background="@color/blue1"
     android:orientation="vertical" >
-    
-    <ImageView 
-        android:tag="save"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/save"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -27,12 +19,16 @@
             android:orientation="horizontal" >
 
             <TextView
-                style="@style/txt_title_image"
+                style="@style/txt_white_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:tag="like"
                 android:text="24900" />
 
             <TextView
-                style="@style/txt_title_image"
+                style="@style/txt_red_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text=" likes" />
         </LinearLayout>
 
@@ -42,12 +38,16 @@
             android:orientation="horizontal" >
 
             <TextView
-                style="@style/txt_title_image"
+                style="@style/txt_white_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:tag="commend"
                 android:text="900" />
 
             <TextView
-                style="@style/txt_title_image"
+                style="@style/txt_red_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text=" commends" />
         </LinearLayout>
     </LinearLayout>

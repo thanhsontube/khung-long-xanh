@@ -15,14 +15,13 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.json.PageData;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.khunglong.xanh.utils.BitmapUtils;
 
 public class DetailHeaderFragment extends BaseFragment {
 
@@ -33,7 +32,6 @@ public class DetailHeaderFragment extends BaseFragment {
 
     private ImageView image;
     private ImageButton btnPopup;
-    private ImageLoader imageLoader;
     private PageData mPageData;
 
     public static DetailHeaderFragment newInstance() {
@@ -45,7 +43,6 @@ public class DetailHeaderFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resource = ResourceManager.getInstance();
-        imageLoader = ImageLoader.getInstance();
     }
 
     @Override
@@ -63,44 +60,16 @@ public class DetailHeaderFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void updateImageAndTitle(PageData pageData) {
+    public void setData(PageData pageData) {
         this.mPageData = pageData;
         try {
-            log.d("log>>>" + "updateImageAndTitle:" + pageData.getName());
-            // log.d("log>>> " + "link:" + pageData.getSource());
-            // image
-            String link = pageData.getSource();
-            // String linkHigh = pageData.getSourceQuality();
-            imageLoader.displayImage(link, image, resource.getOptionsContent(), new ImageLoadingListener() {
-
-                @Override
-                public void onLoadingStarted(String imageUri, View view) {
-                    log.d("log>>> " + "onLoadingStarted:" + imageUri);
-
-                }
-
-                @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    log.d("log>>> " + "onLoadingFailed:" + failReason.getCause().getMessage());
-
-                }
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    log.d("log>>> " + "onLoadingComplete");
-
-                }
-
-                @Override
-                public void onLoadingCancelled(String imageUri, View view) {
-                    log.d("log>>> " + "onLoadingCancelled");
-
-                }
-            });
-
+            log.d("log>>>" + "setData:" + pageData.getName());
             // title
             txtTitle.setText(pageData.getName());
-
+            // image
+            String link = pageData.getSource();
+            AQuery aQuery = new AQuery(getActivity());
+            aQuery.id(image).image(link);
         } catch (Exception e) {
             log.e("log>>>" + "error updateImageAndTitle:" + e.toString());
         }
@@ -128,12 +97,15 @@ public class DetailHeaderFragment extends BaseFragment {
             switch (item.getItemId()) {
             case R.id.action_save_text:
                 if (resource.getSqlite().insertData(mPageData.getName())) {
-                    Toast.makeText(getActivity(), "Save success:" + mPageData.getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.save_success + mPageData.getName(), Toast.LENGTH_SHORT)
+                            .show();
                 }
 
                 break;
             case R.id.action_save_image:
-                Toast.makeText(getActivity(), "coming soon...", Toast.LENGTH_SHORT).show();
+                AQuery aQuery = new AQuery(getActivity());
+                Bitmap bitmap = aQuery.getCachedImage(mPageData.getSource());
+                BitmapUtils.saveImage(getActivity(), bitmap);
                 break;
 
             default:
