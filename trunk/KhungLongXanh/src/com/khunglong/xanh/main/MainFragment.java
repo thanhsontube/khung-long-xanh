@@ -1,5 +1,6 @@
 package com.khunglong.xanh.main;
 
+import android.animation.TimeAnimator.TimeListener;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -99,6 +100,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         if (getArguments() != null) {
             Bundle bundle = getArguments();
             page = bundle.getString("page");
+        } else {
+            page = resource.getListPageResource().get(0).getFbName();
         }
         log.d("log>>> onCreate " + "page:" + page);
 
@@ -127,8 +130,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         }
 
         // load(page, 0);
-        // mController.load();
-        controllerTimelines.load();
+        mController.load();
+        // controllerTimelines.load();
         return rootView;
     }
 
@@ -206,7 +209,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
                     for (final FbAlbumsDto element : entry.listFbAlbumsDto) {
                         if (element.getName().equalsIgnoreCase("Timeline Photos")) {
                             albumId = element.getId();
-                            controllerPhoto.load();
+                            controllerTimelines.load();
+                            // controllerPhoto.load();
                         }
                     }
                 }
@@ -367,7 +371,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
             String after = dragonData.getPaging().getCursors().after;
             Bundle params = new Bundle();
             params.putString("after", after);
-            final String graphPath = dragonData.getAlbumTimeLines() + "/photos";
+            // final String graphPath = dragonData.getAlbumTimeLines() + "/photos";
+            final String graphPath = albumId + "/photos";
             mFbLoaderManager.load(new FbPageLoader(context, graphPath, params) {
 
                 @Override
