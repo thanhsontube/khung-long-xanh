@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="page0">
+        <item>chandai.tv</item>
+        <item>Đẹp Từng Centimet</item>
+        <item>Đẹp Từng Centimet</item>
+    </string-array>
     <string-array name="page1">
         <item>khunglongxanhvietnam</item>
         <item>Khủng Long Xanh</item>

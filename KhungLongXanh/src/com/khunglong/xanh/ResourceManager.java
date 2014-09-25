@@ -69,6 +69,9 @@ public class ResourceManager {
             String[] arr;
 
             listPageResource = new ArrayList<PageResourceDto>();
+            arr = context.getResources().getStringArray(R.array.page0);
+            listPageResource.add(new PageResourceDto(arr));
+
             arr = context.getResources().getStringArray(R.array.page1);
             listPageResource.add(new PageResourceDto(arr));
             arr = context.getResources().getStringArray(R.array.page2);

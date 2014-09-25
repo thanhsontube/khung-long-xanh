@@ -7,15 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.TextUtils;
-import android.util.TimingLogger;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.MsConstant;
-import com.khunglong.xanh.MyApplication;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
@@ -87,17 +84,12 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         return f;
     }
 
-    public MainFragment() {
-        super();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity().getApplicationContext();
         resource = ResourceManager.getInstance();
         mFbLoaderManager = resource.getFbLoaderManager();
-
         // dragonData = new DragonData();
         // app.getmListDragonDatas().add(dragonData);
 
@@ -108,6 +100,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
             Bundle bundle = getArguments();
             page = bundle.getString("page");
         }
+        log.d("log>>> onCreate " + "page:" + page);
 
     }
 
