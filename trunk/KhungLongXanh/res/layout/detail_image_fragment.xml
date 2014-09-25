@@ -22,13 +22,32 @@
             android:src="@drawable/iviet_temp"
             android:tag="image" />
 
-        <TextView
-            style="@style/txt_blue_14"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="title"
-            android:text="Den em em, cho long het chenh venh"
-            android:visibility="visible" />
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/txt_blue_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:tag="title"
+                android:text="Đến bên em, cho lòng hết chênh vênh !!!" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <!-- overflow button. It has a Popup Menu -->
+
+                <ImageButton
+                    style="@style/card.header_button_base.overflow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="popup" />
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

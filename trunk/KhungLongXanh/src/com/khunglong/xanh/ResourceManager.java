@@ -5,106 +5,140 @@ import com.khunglong.xanh.data.MyData;
 import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
 import com.khunglong.xanh.myfacebook.object.FbMe;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import android.content.Context;
 
 public class ResourceManager {
 
-	private static final String TAG = "ResourceManager";
+    private static final String TAG = "ResourceManager";
 
-	static ResourceManager instance = null;
+    static ResourceManager instance = null;
 
-	private DragonData klxData;
-	private DragonData haivlData;
-	private DragonData nghiemtucvlData;
-	private FbMe userInfo;
-	private FbLoaderManager fbLoaderManager;
-	private ImageLoader imageLoader;
-	
-	private MyData sqlite;
-	private Context context;
+    private DragonData klxData;
+    private DragonData haivlData;
+    private DragonData nghiemtucvlData;
+    private FbMe userInfo;
+    private FbLoaderManager fbLoaderManager;
+    private ImageLoader imageLoader;
 
-	FilterLog log = new FilterLog(TAG);
+    private MyData sqlite;
+    private Context context;
 
-	public static void createInstance(Context context) {
+    FilterLog log = new FilterLog(TAG);
 
-		instance = new ResourceManager(context);
-		instance.startup();
+    private DisplayImageOptions optionsContent;
+    private DisplayImageOptions optionsCircle;
 
-	}
+    public static void createInstance(Context context) {
 
-	private void startup() {
-		log.d("log>>>" + "startup");
-		try {
-			fbLoaderManager = new FbLoaderManager();
-			klxData = new DragonData();
-			klxData.setAlbumTimeLines(MsConstant.ID_KLX_TIME_LINES);
-			
-			imageLoader = ImageLoader.getInstance();
-			
-			sqlite = new MyData(context);
+        instance = new ResourceManager(context);
+        instance.startup();
 
-		} catch (Exception e) {
-			log.e("log>>>" + "error startup:" + e.toString());
-		}
+    }
 
-	}
+    private void startup() {
+        log.d("log>>>" + "startup");
+        try {
+            fbLoaderManager = new FbLoaderManager();
+            klxData = new DragonData();
+            klxData.setAlbumTimeLines(MsConstant.ID_KLX_TIME_LINES);
 
-	public static ResourceManager getInstance() {
-		return instance;
-	}
+            imageLoader = ImageLoader.getInstance();
 
-	public DragonData getKlxData() {
-		return klxData;
-	}
+            optionsContent = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.iviet_temp)
+                    .showImageForEmptyUri(R.drawable.iviet_temp).showImageOnFail(R.drawable.iviet_temp)
+                    .imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true)
+                    .considerExifParams(true).build();
 
-	public void setKlxData(DragonData klxData) {
-		this.klxData = klxData;
-	}
+            optionsCircle = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.chat_emotion_icon)
+                    .showImageForEmptyUri(R.drawable.chat_emotion_icon).showImageOnFail(R.drawable.chat_emotion_icon)
+                    .imageScaleType(ImageScaleType.EXACTLY).cacheInMemory(true).cacheOnDisk(true)
+                    .considerExifParams(true).displayer(new RoundedBitmapDisplayer(120)).build();
 
-	public DragonData getHaivlData() {
-		return haivlData;
-	}
+            sqlite = new MyData(context);
 
-	public void setHaivlData(DragonData haivlData) {
-		this.haivlData = haivlData;
-	}
+        } catch (Exception e) {
+            log.e("log>>>" + "error startup:" + e.toString());
+        }
 
-	public DragonData getNghiemtucvlData() {
-		return nghiemtucvlData;
-	}
+    }
 
-	public void setNghiemtucvlData(DragonData nghiemtucvlData) {
-		this.nghiemtucvlData = nghiemtucvlData;
-	}
+    public static ResourceManager getInstance() {
+        return instance;
+    }
 
-	public ResourceManager(Context context) {
-		this.context = context;
-	}
+    public DragonData getKlxData() {
+        return klxData;
+    }
 
-	public FbMe getUserInfo() {
-		return userInfo;
-	}
+    public void setKlxData(DragonData klxData) {
+        this.klxData = klxData;
+    }
 
-	public void setUserInfo(FbMe userInfo) {
-		this.userInfo = userInfo;
-	}
+    public DragonData getHaivlData() {
+        return haivlData;
+    }
 
-	public FbLoaderManager getFbLoaderManager() {
-		return fbLoaderManager;
-	}
+    public void setHaivlData(DragonData haivlData) {
+        this.haivlData = haivlData;
+    }
 
-	public void setFbLoaderManager(FbLoaderManager fbLoaderManager) {
-		this.fbLoaderManager = fbLoaderManager;
-	}
+    public DragonData getNghiemtucvlData() {
+        return nghiemtucvlData;
+    }
 
-	public ImageLoader getImageLoader() {
-		return imageLoader;
-	}
+    public void setNghiemtucvlData(DragonData nghiemtucvlData) {
+        this.nghiemtucvlData = nghiemtucvlData;
+    }
 
-	public MyData getSqlite() {
-		return sqlite;
-	}
+    public ResourceManager(Context context) {
+        this.context = context;
+    }
+
+    public FbMe getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(FbMe userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public FbLoaderManager getFbLoaderManager() {
+        return fbLoaderManager;
+    }
+
+    public void setFbLoaderManager(FbLoaderManager fbLoaderManager) {
+        this.fbLoaderManager = fbLoaderManager;
+    }
+
+    public ImageLoader getImageLoader() {
+        return imageLoader;
+    }
+
+    public MyData getSqlite() {
+        return sqlite;
+    }
+
+    public DisplayImageOptions getOptionsContent() {
+        return optionsContent;
+    }
+
+    public void setOptionsContent(DisplayImageOptions optionsContent) {
+        this.optionsContent = optionsContent;
+    }
+
+    public DisplayImageOptions getOptionsCircle() {
+        return optionsCircle;
+    }
+
+    public void setOptionsCircle(DisplayImageOptions optionsCircle) {
+        this.optionsCircle = optionsCircle;
+    }
+    
+    
 
 }

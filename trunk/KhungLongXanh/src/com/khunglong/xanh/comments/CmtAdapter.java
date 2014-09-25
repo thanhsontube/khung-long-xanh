@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +58,6 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Log.d("LOG", "log>>>" + "getView:" + position);
         View v = convertView;
         final Holder holder;
         final FbCmtData dto = mList.get(position);
@@ -103,13 +106,8 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
                 }
             }
         });
-        holder.btnPopup.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                
-            }
-        });
+
+        holder.btnPopup.setOnClickListener(new MyClickListener(position));
 
         // update avatar
         String idFrom = dto.getFrom().getId();
@@ -142,14 +140,11 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
     }
 
     public void loadDataAvatar(int pos, String idFrom, ImageView imageView) {
-        // int pos = (Integer) imageView.getTag();
         String source = mList.get(pos).getFrom().getSource();
         if (!TextUtils.isEmpty(source)) {
-            // Log.v("LOG", "log>>>" + "YESS:" + pos);
             imageLoader.displayImage(source, imageView, options, null);
             return;
         }
-        // Log.v("LOG", "log>>>" + "NOO:" + pos);
         final WeakReference<ImageView> imageViewReference = new WeakReference<ImageView>(imageView);
         String graphPath = idFrom + "/picture";
         Bundle params = new Bundle();
@@ -179,6 +174,34 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
             public void onFbLoaderFail(Throwable e) {
             }
         });
+    }
+
+    class MyClickListener implements OnClickListener, OnMenuItemClickListener {
+
+        int id;
+
+        public MyClickListener(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public void onClick(View v) {
+            PopupMenu popup = new PopupMenu(mContext, v);
+            popup.setOnMenuItemClickListener(this);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.menu_commend, popup.getMenu());
+            popup.show();
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem arg0) {
+            FbCmtData dto = mList.get(id);
+            if (resource.getSqlite().insertData(dto.getMessage())) {
+                Toast.makeText(mContext, "Save success:" + dto.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            return false;
+        }
+
     }
 
 }
