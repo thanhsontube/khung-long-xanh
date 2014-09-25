@@ -1,6 +1,5 @@
 package com.khunglong.xanh.main;
 
-import android.animation.TimeAnimator.TimeListener;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -94,15 +93,23 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         // dragonData = new DragonData();
         // app.getmListDragonDatas().add(dragonData);
 
-        dragonData = resource.getKlxData();
         setHasOptionsMenu(true);
 
         if (getArguments() != null) {
             Bundle bundle = getArguments();
             page = bundle.getString("page");
+            if (page.equals(resource.getListPageResource().get(0).getFbName())) {
+                dragonData = resource.getChandaiData();
+            }
+
+            if (page.equals(resource.getListPageResource().get(1).getFbName())) {
+                dragonData = resource.getKlxData();
+            }
         } else {
             page = resource.getListPageResource().get(0).getFbName();
+            dragonData = resource.getKlxData();
         }
+
         log.d("log>>> onCreate " + "page:" + page);
 
     }
@@ -130,7 +137,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         }
 
         // load(page, 0);
-        mController.load();
+        mControllerAlbums.load();
         // controllerTimelines.load();
         return rootView;
     }
@@ -192,7 +199,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         }
     };
 
-    Controller mController = new Controller() {
+    Controller mControllerAlbums = new Controller() {
 
         @Override
         public void load() {
@@ -223,7 +230,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
                 @Override
                 public void onFbLoaderFail(Throwable e) {
                     mEmpty.setVisibility(View.GONE);
-                    log.e("log>>>" + "mController onFbLoaderFail:" + e.toString());
+                    log.e("log>>>" + "mControllerAlbums onFbLoaderFail:" + e.toString());
                 }
             });
         }
@@ -360,7 +367,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
     public void load(String page, int pos) {
         log.d("log>>>" + "load:" + page);
         this.page = page;
-        mController.load();
+        mControllerAlbums.load();
     }
 
     Controller controllerTimelines = new Controller() {
