@@ -8,5 +8,9 @@
     <string name="save_image">Save Image</string>
     <string name="save_text">Save Text</string>
     <string name="save">Save</string>
+    <string name="save_success">Save success:</string>
+    <string name="coming_soon">coming soon...</string>
+    <string name="your_image_is_saved_to_this_folder">Your image is saved to this folder:</string>
+    <string name="error_save_imager">Error save Imager:</string>
 
 </resources>

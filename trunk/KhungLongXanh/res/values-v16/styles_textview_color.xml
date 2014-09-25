@@ -30,6 +30,18 @@
         <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
 
+    <style name="txt_white_18">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="txt_white_14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
     <style name="txt_gray_14">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
