@@ -143,7 +143,7 @@ public class MainFragment5 extends BaseFragment implements OnPageChangeListener,
 		}
 		
 		load(page, 0);
-		// mController.load();
+		// mControllerAlbums.load();
 		return rootView;
 	}
 
@@ -162,7 +162,7 @@ public class MainFragment5 extends BaseFragment implements OnPageChangeListener,
 	public void update() {
 	}
 
-	// Controller mController = new Controller() {
+	// Controller mControllerAlbums = new Controller() {
 	//
 	// @Override
 	// public void load() {
@@ -267,7 +267,7 @@ public class MainFragment5 extends BaseFragment implements OnPageChangeListener,
 				@Override
 				public void onFbLoaderFail(Throwable e) {
 					mEmpty.setVisibility(View.GONE);
-					log.e("log>>>" + "mController onFbLoaderFail:" + e.toString());
+					log.e("log>>>" + "mControllerAlbums onFbLoaderFail:" + e.toString());
 				}
 			});
 		}
@@ -356,7 +356,7 @@ public class MainFragment5 extends BaseFragment implements OnPageChangeListener,
 		// List<CmtData> list1 = dragonData.getData().get(arg0).getComments().data;
 		// f.setDataList(list1);
 		if ((dragonData.getData().size() - arg0) <= ILOAD && !isLoading) {
-			// mController.load();
+			// mControllerAlbums.load();
 			controllerPhoto.load();
 		}
 	}

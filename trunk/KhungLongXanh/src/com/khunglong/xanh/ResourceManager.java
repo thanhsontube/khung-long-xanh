@@ -21,7 +21,7 @@ public class ResourceManager {
     private static final String TAG = "ResourceManager";
 
     static ResourceManager instance = null;
-
+    private DragonData chandaiData;
     private DragonData klxData;
     private DragonData haivlData;
     private DragonData nghiemtucvlData;
@@ -50,6 +50,7 @@ public class ResourceManager {
         try {
             fbLoaderManager = new FbLoaderManager();
             klxData = new DragonData();
+            chandaiData = new DragonData();
             klxData.setAlbumTimeLines(MsConstant.ID_KLX_TIME_LINES);
 
             imageLoader = ImageLoader.getInstance();
@@ -175,6 +176,14 @@ public class ResourceManager {
 
     public void setOptionsCircle(DisplayImageOptions optionsCircle) {
         this.optionsCircle = optionsCircle;
+    }
+
+    public DragonData getChandaiData() {
+        return chandaiData;
+    }
+
+    public void setChandaiData(DragonData chandaiData) {
+        this.chandaiData = chandaiData;
     }
 
 }
