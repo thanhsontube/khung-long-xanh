@@ -1,9 +1,11 @@
 package com.khunglong.xanh.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.facebook.Session;
+import com.khunglong.xanh.MainActivity;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragmentActivity;
 import com.khunglong.xanh.login.LoginFragment.ILoginFragmentListener;
@@ -27,8 +29,10 @@ public class MyLoginActivity extends BaseFragmentActivity implements ILoginFragm
     }
 
     @Override
-    public void onLogin(LoginFragment f,String pageName) {
-
+    public void onLogin(LoginFragment f, String pageName) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("page", pageName);
+        startActivity(intent);
     }
 
     @Override
