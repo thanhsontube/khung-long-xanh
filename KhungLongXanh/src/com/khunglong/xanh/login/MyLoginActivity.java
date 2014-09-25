@@ -27,7 +27,7 @@ public class MyLoginActivity extends BaseFragmentActivity implements ILoginFragm
     }
 
     @Override
-    public void onLogin(LoginFragment f, Session session) {
+    public void onLogin(LoginFragment f,String pageName) {
 
     }
 
