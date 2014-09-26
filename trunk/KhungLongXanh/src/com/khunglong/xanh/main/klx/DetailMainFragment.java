@@ -39,6 +39,8 @@ public class DetailMainFragment extends BaseFragment {
     private ResourceManager resource;
     private IDetailsFragmentListener listener;
 
+    private String page;
+
     public static interface IDetailsFragmentListener {
         void onDetailsFragmentPicture(String link, String content);
     }
@@ -99,13 +101,26 @@ public class DetailMainFragment extends BaseFragment {
         ft.commit();
     }
 
-    public void setData(PageData data, int pos) {
+    public void setData1St(String page, PageData data, int pos) {
+        this.page = page;
         pageData = data;
         position = pos;
 
         txtLike.setText("---");
 
-        updateDetail(pageData);
+        updateDetail(pageData, true);
+
+        updateLike();
+    }
+
+    public void setData(PageData data, int pos) {
+        // log.i("log>>> " + "DetailMainFragment setdata:" + pos);
+        pageData = data;
+        position = pos;
+
+        txtLike.setText("---");
+
+        updateDetail(pageData, false);
         updateLike();
 
     }
@@ -120,7 +135,7 @@ public class DetailMainFragment extends BaseFragment {
         }
     }
 
-    private void updateDetail(PageData pageData) {
+    private void updateDetail(PageData pageData, boolean isFirst) {
         log.v("log>>>" + "updateDetail title:" + pageData.getName());
 
         FragmentManager fm = getChildFragmentManager();
@@ -131,7 +146,11 @@ public class DetailMainFragment extends BaseFragment {
         DetailCommentFragment cmtFragment = (DetailCommentFragment) fm.findFragmentById(R.id.detail_bottom);
         ft.commit();
         headerFragment.setData(pageData);
-        cmtFragment.setData(pageData, position);
+        if (isFirst) {
+            cmtFragment.setData1St(page, pageData, position);
+        } else {
+            cmtFragment.setData(pageData, position);
+        }
     }
 
     private Controller controllerLikes = new Controller() {
@@ -148,7 +167,7 @@ public class DetailMainFragment extends BaseFragment {
                     log.d("log>>>" + "FbLikesLoader onFbLoaderSuccess entry:" + entry.getSummary().getTotal_count());
 
                     // update data like
-                    resource.getKlxData().getData().get(position).setLikes(entry);
+//                    entry.getData().get(position).setLikes(entry);
 
                     txtLike.setText("NEW:" + entry.getSummary().getTotal_count());
                 }

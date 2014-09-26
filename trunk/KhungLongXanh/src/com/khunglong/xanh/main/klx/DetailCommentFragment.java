@@ -25,6 +25,7 @@ import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.comments.CmtAdapter;
 import com.khunglong.xanh.dialog.ReplyDialog;
+import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.json.PageData;
 import com.khunglong.xanh.myfacebook.FbCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbUserLoader;
@@ -46,7 +47,40 @@ public class DetailCommentFragment extends BaseFragment {
     private View mEmpty;
     private PageData pageData;
     private int position = 1;
-    private ResourceManager resource;
+    private String page = null;
+    private DragonData dragonData = null;
+
+    // public static DetailCommentFragment newInstance(String page) {
+    // DetailCommentFragment f = new DetailCommentFragment();
+    // Bundle bundle = new Bundle();
+    // bundle.putString("page", page);
+    // f.setArguments(bundle);
+    // return f;
+    // }
+    //
+    // @Override
+    // public void onCreate(Bundle savedInstanceState) {
+    // super.onCreate(savedInstanceState);
+    // setHasOptionsMenu(true);
+    //
+    // if (getArguments() != null) {
+    // Bundle bundle = getArguments();
+    // page = bundle.getString("page");
+    // if (page.equals(resource.getListPageResource().get(0).getFbName())) {
+    // dragonData = resource.getChandaiData();
+    // }
+    //
+    // if (page.equals(resource.getListPageResource().get(1).getFbName())) {
+    // dragonData = resource.getKlxData();
+    // }
+    // } else {
+    // page = resource.getListPageResource().get(0).getFbName();
+    // dragonData = resource.getKlxData();
+    // }
+    //
+    // log.d("log>>> onCreate " + "page:" + page);
+    //
+    // }
 
     public static DetailCommentFragment newInstance() {
         DetailCommentFragment f = new DetailCommentFragment();
@@ -55,6 +89,7 @@ public class DetailCommentFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        log.d("log>>> " + "onCreateView page:" + page);
         View rootView = inflater.inflate(R.layout.comment_fragment_card, container, false);
         View v = getActivity().getActionBar().getCustomView();
         txtCommend = (TextView) v.findViewWithTag("commend");
@@ -100,17 +135,30 @@ public class DetailCommentFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    public void setData1St(String page, PageData data, int position) {
+        this.page = page;
+        if (page.equals(resource.getListPageResource().get(0).getFbName())) {
+            dragonData = resource.getChandaiData();
+        }
+
+        if (page.equals(resource.getListPageResource().get(1).getFbName())) {
+            dragonData = resource.getKlxData();
+        }
+
+        setData(data, position);
+    }
+
     public void setData(PageData data, int position) {
+        log.i("log>>> " + "DetailCommentFragment setData:" + position);
         txtCommend.setText("---");
         this.pageData = data;
         this.position = position;
 
-        if (resource.getKlxData().getData().get(position).getComments() == null) {
+        if (dragonData.getData().get(position).getComments() == null) {
             controllerComments.load();
         } else {
-            txtCommend.setText("Old:"
-                    + resource.getKlxData().getData().get(position).getComments().getSummary().getTotal_count());
-            cmtAdapter.setData(resource.getKlxData().getData().get(position).getComments().getData(), true);
+            txtCommend.setText("Old:" + dragonData.getData().get(position).getComments().getSummary().getTotal_count());
+            cmtAdapter.setData(dragonData.getData().get(position).getComments().getData(), true);
             enableEmptyview(false);
         }
     }
@@ -130,18 +178,16 @@ public class DetailCommentFragment extends BaseFragment {
                 @Override
                 public void onFbLoaderSuccess(FbComments entry) {
                     // updateComments(entry, position);
-                    resource.getKlxData().getData().get(position).setComments(entry);
+                    dragonData.getData().get(position).setComments(entry);
 
-                    txtCommend
-                            .setText("N"
-                                    + resource.getKlxData().getData().get(position).getComments().getSummary()
-                                            .getTotal_count());
+                    txtCommend.setText("N"
+                            + dragonData.getData().get(position).getComments().getSummary().getTotal_count());
                     cmtAdapter.setData(entry.getData(), true);
 
                     enableEmptyview(false);
                     // updateComments(entry, position);
-                    
-//                    loadAvatarCommender(entry);
+
+                    // loadAvatarCommender(entry);
                 }
 
                 @Override
@@ -193,7 +239,7 @@ public class DetailCommentFragment extends BaseFragment {
     private void updateComments(final FbComments entry, final int position) {
         log.d("log>>>" + "==========updateComments position:" + position);
 
-        // DragonData mDragonData = resource.getKlxData();
+        // DragonData mDragonData = dragonData;
         // mDragonData.getData().get(position).getComments().setSummary(entry.getSummary());
         // mDragonData.getData().get(position).getComments().getData().addAll(entry.getData());
         // mDragonData.getData().get(position).getComments().setPaging(entry.getPaging());

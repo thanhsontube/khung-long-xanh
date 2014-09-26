@@ -14,51 +14,86 @@ import com.khunglong.xanh.myfacebook.object.FbCmtData;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbCmtSummary;
 import com.khunglong.xanh.myfacebook.object.FbComments;
+import com.khunglong.xanh.utils.MsUtils;
 
 public abstract class FbCommentsLoader extends FbLoaderGet<FbComments> {
-	
-	private static final String TAG = "FbCommentsLoader";
-	FilterLog log = new FilterLog(TAG);
 
-	public FbCommentsLoader(Context context, String graphpath, Bundle params) {
-		super(context, graphpath, params);
-	}
-	
-	@Override
-	protected FbComments handleResult(Response response) {
-		try {
-			GraphObject graphObject = response.getGraphObjectAs(GraphObject.class);
-			JSONObject jsonObject = graphObject.getInnerJSONObject();
-			JSONArray jsonArray = jsonObject.getJSONArray("data");
-			FbComments comments = new FbComments();
-			FbCmtData dto; 
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject ja = (JSONObject) jsonArray.get(i);
-				String id = ja.getString("id");
-				String created_time = ja.getString("created_time");
-				String message = ja.getString("message");
-				int like_count = ja.getInt("like_count");
-				
-				//get commenter
-				JSONObject jFrom = ja.getJSONObject("from");
-//				log.d("log>>>" + "bbb:" + jFrom.toString());
-				String fromId = jFrom.getString("id");
-				String fromName = jFrom.getString("name");
-				FbCmtFrom from = new FbCmtFrom(fromId,fromName);
-				dto = new FbCmtData(id, created_time, message, like_count, from);
-				comments.getData().add(dto);
-			}
-			
-			//get summaty
-			
-			JSONObject jSummary = (JSONObject) jsonObject.get("summary");
-			int total_count = jSummary.getInt("total_count");
-			comments.setSummary(new FbCmtSummary(total_count));
-			return comments;
-		} catch (Exception e) {
-			Log.e("", "log>>>" + "error  Comments handleResult:" + e.toString());
-		}
-		return null;
-	}
-	
+    private static final String TAG = "FbCommentsLoader";
+    FilterLog log = new FilterLog(TAG);
+
+    public FbCommentsLoader(Context context, String graphpath, Bundle params) {
+        super(context, graphpath, params);
+    }
+
+    @Override
+    protected FbComments handleResult(Response response) {
+        try {
+            GraphObject graphObject = response.getGraphObjectAs(GraphObject.class);
+            JSONObject jsonObject = graphObject.getInnerJSONObject();
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            FbComments comments = new FbComments();
+            FbCmtData dto;
+            String id = null;
+            String created_time = null;
+            String message = null;
+            int like_count = -1;
+            FbCmtFrom from = null;
+
+            JSONObject jFrom = null;
+            String fromId = null;
+            String fromName = null;
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject ja = (JSONObject) jsonArray.get(i);
+
+                if (MsUtils.iSJsonValueAvailable(ja, "id")) {
+                    id = ja.getString("id");
+                }
+
+                if (MsUtils.iSJsonValueAvailable(ja, "created_time")) {
+                    created_time = ja.getString("created_time");
+                }
+
+                if (MsUtils.iSJsonValueAvailable(ja, "message")) {
+                    message = ja.getString("message");
+                } else {
+                    message = "Message is Null";
+                }
+
+                if (MsUtils.iSJsonValueAvailable(ja, "like_count")) {
+                    like_count = ja.getInt("like_count");
+                }
+
+                if (MsUtils.iSJsonValueAvailable(ja, "from")) {
+                    jFrom = ja.getJSONObject("from");
+
+                    if (MsUtils.iSJsonValueAvailable(jFrom, "id")) {
+                        fromId = jFrom.getString("id");
+                    }
+
+                    if (MsUtils.iSJsonValueAvailable(jFrom, "name")) {
+                        fromName = jFrom.getString("name");
+                    }
+                }
+
+                // get commenter
+                // log.d("log>>>" + "bbb:" + jFrom.toString());
+                from = new FbCmtFrom(fromId, fromName);
+                dto = new FbCmtData(id, created_time, message, like_count, from);
+
+                comments.getData().add(dto);
+            }
+
+            // get summaty
+
+            JSONObject jSummary = (JSONObject) jsonObject.get("summary");
+            int total_count = jSummary.getInt("total_count");
+            comments.setSummary(new FbCmtSummary(total_count));
+            return comments;
+        } catch (Exception e) {
+            Log.e("", "log>>>" + "error  Comments handleResult:" + e.toString());
+        }
+        return null;
+    }
+
 }
