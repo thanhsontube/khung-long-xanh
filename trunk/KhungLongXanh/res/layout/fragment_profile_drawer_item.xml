@@ -12,35 +12,22 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:visibility="gone"
-            style="@style/main_img_profile"
-            android:src="@drawable/ic_launcher"
-            android:tag="img_button_profile" />
-
-        <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/hexagon_view"
             android:tag="img_hexagon" />
-
-        <ImageView
-            android:visibility="gone"
-            style="@style/main_img_profile"
-            android:src="@drawable/ic_launcher"
-            android:tag="img_button_new" />
     </LinearLayout>
 
     <!-- User name -->
 
     <TextView
+        style="@style/txt_white_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/lv1"
         android:tag="drawer_profile_name"
         android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="18sp"
         android:textStyle="bold" />
 
     <View

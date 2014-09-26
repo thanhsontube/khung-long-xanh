@@ -7,17 +7,23 @@
     android:paddingBottom="@dimen/lv2"
     android:paddingTop="@dimen/lv6" >
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/customline" />
+
     <com.facebook.widget.LoginButton
         android:id="@+id/authButtonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp" />
 
     <TextView
+        style="@style/txt_white_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/sologan"
-        android:textColor="@android:color/white" />
+        android:text="@string/sologan" />
 
 </LinearLayout>
