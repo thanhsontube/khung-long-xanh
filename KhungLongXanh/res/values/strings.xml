@@ -12,5 +12,7 @@
     <string name="coming_soon">coming soon...</string>
     <string name="your_image_is_saved_to_this_folder">Your image is saved to this folder:</string>
     <string name="error_save_imager">Error save Imager:</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
 
 </resources>
