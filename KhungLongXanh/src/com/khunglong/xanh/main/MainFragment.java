@@ -265,7 +265,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
             return;
         }
         DetailMainFragment f1 = (DetailMainFragment) mMainPagerAdapter.getFragment(mViewPager, virtualPosition);
-        f1.setData(dragonData.getData().get(position), position);
+        f1.setData1St(page,dragonData.getData().get(position), position);
 
         if ((dragonData.getData().size() - position) <= ILOAD && !isLoading) {
             controllerTimelines.load();
@@ -395,7 +395,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
                     // }
 
                     DetailMainFragment f1 = (DetailMainFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
-                    f1.setData(entry.getData().get(0), 0);
+                    f1.setData1St(page,entry.getData().get(0), 0);
+                    
                     isLoading = false;
                 }
 

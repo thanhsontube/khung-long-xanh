@@ -63,7 +63,7 @@ public class DetailHeaderFragment extends BaseFragment {
     public void setData(PageData pageData) {
         this.mPageData = pageData;
         try {
-            log.d("log>>>" + "setData:" + pageData.getName());
+            log.d("log>>>" + "DetailHeaderFragment setData:" + pageData.getName());
             // title
             txtTitle.setText(pageData.getName());
             // image
