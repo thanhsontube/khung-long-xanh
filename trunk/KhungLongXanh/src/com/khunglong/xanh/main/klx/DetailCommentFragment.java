@@ -1,7 +1,5 @@
 package com.khunglong.xanh.main.klx;
 
-import it.gmariotti.cardslib.library.view.CardListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +13,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +41,7 @@ public class DetailCommentFragment extends BaseFragment {
     private List<FbCmtData> cmtListData = new ArrayList<FbCmtData>();
 
     // layout
-    private CardListView cmtListview;
+    private ListView cmtListview;
     TextView txtCommend;
     private View mEmpty;
     private PageData pageData;
@@ -94,7 +93,7 @@ public class DetailCommentFragment extends BaseFragment {
         View v = getActivity().getActionBar().getCustomView();
         txtCommend = (TextView) v.findViewWithTag("commend");
 
-        cmtListview = (CardListView) rootView.findViewWithTag("listview");
+        cmtListview = (ListView) rootView.findViewWithTag("listview");
         mEmpty = (ViewGroup) rootView.findViewById(android.R.id.empty);
         inflater.inflate(R.layout.waiting, (ViewGroup) mEmpty, true);
         enableEmptyview(true);
@@ -103,9 +102,10 @@ public class DetailCommentFragment extends BaseFragment {
         cmtListview.setOnTouchListener(new OnTouchListener() {
 
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent ev) {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
+
             }
         });
 
