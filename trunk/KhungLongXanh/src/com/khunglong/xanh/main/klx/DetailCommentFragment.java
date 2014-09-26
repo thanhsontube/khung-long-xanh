@@ -99,6 +99,7 @@ public class DetailCommentFragment extends BaseFragment {
         enableEmptyview(true);
         cmtAdapter = new CmtAdapter(getActivity(), cmtListData, false);
         cmtListview.setAdapter(cmtAdapter);
+        // alow touch list in fragment
         cmtListview.setOnTouchListener(new OnTouchListener() {
 
             @Override
@@ -187,7 +188,7 @@ public class DetailCommentFragment extends BaseFragment {
                     enableEmptyview(false);
                     // updateComments(entry, position);
 
-                    // loadAvatarCommender(entry);
+                     loadAvatarCommender(entry);
                 }
 
                 @Override

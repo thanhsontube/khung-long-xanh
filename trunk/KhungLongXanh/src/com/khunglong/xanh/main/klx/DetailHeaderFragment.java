@@ -52,6 +52,7 @@ public class DetailHeaderFragment extends BaseFragment {
         txtTitle = (TextView) rootView.findViewWithTag("title");
         btnPopup = (ImageButton) rootView.findViewWithTag("popup");
         btnPopup.setOnClickListener(new MyClickListener(0));
+        btnPopup.setEnabled(false);
         return rootView;
     }
 
@@ -61,6 +62,7 @@ public class DetailHeaderFragment extends BaseFragment {
     }
 
     public void setData(PageData pageData) {
+        btnPopup.setEnabled(true);
         this.mPageData = pageData;
         try {
             log.d("log>>>" + "DetailHeaderFragment setData:" + pageData.getName());
