@@ -20,5 +20,7 @@
         android:background="@drawable/art5"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@drawable/customline"
+        android:footerDividersEnabled="true"
         android:orientation="vertical" />
-</android.support.v4.widget.DrawerLayout>
+
+</android.support.v4.widget.DrawerLayout>

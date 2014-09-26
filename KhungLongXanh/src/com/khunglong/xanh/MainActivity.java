@@ -12,12 +12,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,9 +24,9 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.facebook.LoginActivity;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
@@ -47,14 +45,9 @@ import com.khunglong.xanh.main.drawer.DrawerItemGenerator.DrawerItem;
 import com.khunglong.xanh.main.drawer.FragmentChangeDrawerItem;
 import com.khunglong.xanh.main.drawer.PageChangeDrawerItem;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
-import com.khunglong.xanh.myfacebook.FbMeLoader;
-import com.khunglong.xanh.myfacebook.FbUserLoader;
-import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
-import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.utils.ActionBarUtils;
 import com.khunglong.xanh.utils.GoogleAnaToolKLX;
 import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener {
     private static final String TAG = "MainActivity";
@@ -131,10 +124,11 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
                 R.layout.menu_list_drawer_footer, null);
         mDrawerList.addFooterView(footer, null, false);
 
-        LoginButton authButton = (LoginButton) footer.findViewById(R.id.authButtonLogout);
         View headerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
                 R.layout.fragment_profile_drawer_item, null);
+        mDrawerList.addHeaderView(headerView, null, false);
 
+        // LoginButton authButton = (LoginButton) footer.findViewById(R.id.authButtonLogout);
         // authButton.setOnClickListener(new OnClickListener() {
         //
         // @Override
@@ -143,16 +137,9 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
         // finish();
         // }
         // });
+
         // authButton.setReadPermissions(Arrays.asList("email", "user_likes", "user_status"));
         // authButton.setFragment(this);
-        mDrawerList.addHeaderView(headerView, null, false);
-
-        ImageView imgProfile = (ImageView) headerView.findViewWithTag("img_button_profile");
-        ImageView imgNew = (ImageView) headerView.findViewWithTag("img_button_new");
-        imgAvatar = (ImageView) headerView.findViewWithTag("img_hexagon");
-        txtName = (TextView) headerView.findViewWithTag("drawer_profile_name");
-        // imgAvatar.setImageBitmap(BitmapUtils.maskBitmap(this, R.drawable.taylor_swift, R.drawable.hexagon_view2));
-
         mDrawerList.setAdapter(getDrawerAdapter());
         mDrawerList.setOnItemClickListener(itemClickListener);
 
