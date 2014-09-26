@@ -1,12 +1,8 @@
 package com.khunglong.xanh.comments;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,11 +17,10 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
-import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtData;
-import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -38,10 +33,11 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
     private DisplayImageOptions options;
     private boolean isAnswer;
     private ResourceManager resource;
-    private WeakReference<ImageView> imageViewReference;
+    AQuery aQuery;
 
     public CmtAdapter(Context context, List<FbCmtData> list, boolean isAnswer) {
         super(context, 0, list);
+        aQuery = new AQuery(context);
         mContext = context;
         mList = list;
         this.isAnswer = isAnswer;
@@ -67,11 +63,10 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
             holder = new Holder();
             holder.img = (ImageView) v.findViewWithTag("icon");
             holder.txtTitle = (TextView) v.findViewWithTag("title");
-            holder.txtTime = (TextView) v.findViewWithTag("time");
+            holder.txtUser = (TextView) v.findViewWithTag("user");
             holder.txtLikes = (TextView) v.findViewWithTag("likes");
             holder.txtCmts = (TextView) v.findViewWithTag("cmt");
             holder.viewCmt = v.findViewWithTag("ll_cmt");
-            holder.viewSave = v.findViewWithTag("save");
             holder.btnPopup = (ImageButton) v.findViewWithTag("popup");
             v.setTag(holder);
 
@@ -81,7 +76,7 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
         holder.img.setTag(position);
 
         holder.txtTitle.setText(dto.getMessage());
-        holder.txtTime.setText(dto.getFrom().getName());
+        holder.txtUser.setText(dto.getFrom().getName());
         holder.txtLikes.setText("" + dto.getLike_count());
         imageLoader.displayImage(dto.getFrom().getSource(), holder.img, options, null);
 
@@ -96,16 +91,6 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
         } else {
             holder.viewCmt.setVisibility(View.VISIBLE);
         }
-
-        holder.viewSave.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (resource.getSqlite().insertData(dto.getMessage())) {
-                    Toast.makeText(mContext, "Save success:" + dto.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         holder.btnPopup.setOnClickListener(new MyClickListener(position));
 
@@ -128,53 +113,49 @@ public class CmtAdapter extends ArrayAdapter<FbCmtData> {
     static class Holder {
         ImageView img;
         TextView txtTitle;
-        TextView txtTime;
+        TextView txtUser;
         TextView txtLikes;
         TextView txtCmts;
         ImageButton btnPopup;
-
         View viewCmt;
-
-        // save cmt
-        View viewSave;
     }
 
-    public void loadDataAvatar(int pos, String idFrom, ImageView imageView) {
-        String source = mList.get(pos).getFrom().getSource();
-        if (!TextUtils.isEmpty(source)) {
-            imageLoader.displayImage(source, imageView, options, null);
-            return;
-        }
-        final WeakReference<ImageView> imageViewReference = new WeakReference<ImageView>(imageView);
-        String graphPath = idFrom + "/picture";
-        Bundle params = new Bundle();
-        params.putBoolean("redirect", false);
-        params.putInt("width", 100);
-        resource.getFbLoaderManager().load(new FbUserLoader(mContext, graphPath, params) {
-
-            @Override
-            public void onFbLoaderSuccess(FbCmtFrom f) {
-
-                if (imageViewReference != null) {
-                    final ImageView imageView = imageViewReference.get();
-                    if (imageView != null) {
-                        int pos = (Integer) imageView.getTag();
-                        Log.v("LOG", "log>>>" + "SUCCESS:" + pos);
-                        mList.get(pos).getFrom().setSource(f.getSource());
-                        imageLoader.displayImage(f.getSource(), imageView, options, null);
-                    }
-                }
-            }
-
-            @Override
-            public void onFbLoaderStart() {
-            }
-
-            @Override
-            public void onFbLoaderFail(Throwable e) {
-            }
-        });
-    }
+    // public void loadDataAvatar(int pos, String idFrom, ImageView imageView) {
+    // String source = mList.get(pos).getFrom().getSource();
+    // if (!TextUtils.isEmpty(source)) {
+    // imageLoader.displayImage(source, imageView, options, null);
+    // return;
+    // }
+    // final WeakReference<ImageView> imageViewReference = new WeakReference<ImageView>(imageView);
+    // String graphPath = idFrom + "/picture";
+    // Bundle params = new Bundle();
+    // params.putBoolean("redirect", false);
+    // params.putInt("width", 100);
+    // resource.getFbLoaderManager().load(new FbUserLoader(mContext, graphPath, params) {
+    //
+    // @Override
+    // public void onFbLoaderSuccess(FbCmtFrom f) {
+    //
+    // if (imageViewReference != null) {
+    // final ImageView imageView = imageViewReference.get();
+    // if (imageView != null) {
+    // int pos = (Integer) imageView.getTag();
+    // Log.v("LOG", "log>>>" + "SUCCESS:" + pos);
+    // mList.get(pos).getFrom().setSource(f.getSource());
+    // imageLoader.displayImage(f.getSource(), imageView, options, null);
+    // }
+    // }
+    // }
+    //
+    // @Override
+    // public void onFbLoaderStart() {
+    // }
+    //
+    // @Override
+    // public void onFbLoaderFail(Throwable e) {
+    // }
+    // });
+    // }
 
     class MyClickListener implements OnClickListener, OnMenuItemClickListener {
 

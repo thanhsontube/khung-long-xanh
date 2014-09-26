@@ -10,13 +10,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <it.gmariotti.cardslib.library.view.CardListView
-            android:overScrollMode="ifContentScrolls"
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:tag="listview"
-            card:list_card_layout_resourceID="@layout/list_card_thumbnail_layout" />
+            android:tag="listview" />
     </LinearLayout>
 
     <include layout="@layout/empty_layout" />

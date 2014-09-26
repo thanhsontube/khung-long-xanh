@@ -41,6 +41,9 @@ public class SaveFragment extends BaseFragment implements IDeleteListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().getActionBar().setHomeButtonEnabled(true);
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.save_fragment, container, false);
         listview = (CardListView) rootView.findViewWithTag("listview");
         cards.clear();
