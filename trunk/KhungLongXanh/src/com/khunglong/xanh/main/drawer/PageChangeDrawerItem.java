@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.khunglong.xanh.R;
+import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.main.drawer.DrawerItemGenerator.DrawerItem;
 
 public class PageChangeDrawerItem extends DrawerItem<String> {
+    AQuery aQuery;
 
     protected PageChangeDrawerItem(int icon, CharSequence title, CharSequence id, CharSequence extra, String param) {
         super(icon, title, id, extra, param);
@@ -31,8 +33,9 @@ public class PageChangeDrawerItem extends DrawerItem<String> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        holder.icon.setImageResource(icon);
+        aQuery = new AQuery(ResourceManager.getInstance().getContext());
+        aQuery.id(holder.icon).image(icon);
+        // holder.icon.setImageResource(icon);
         if (title != null) {
             holder.title.setText(title);
             holder.title.setVisibility(View.VISIBLE);
