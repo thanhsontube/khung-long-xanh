@@ -5,7 +5,7 @@
     </style>
 
     <style name="ActionBar.Solid.Example" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
-        <item name="android:background">@color/blue1</item>
+        <item name="android:background">@color/purple_deep</item>
         <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
     </style>
 
