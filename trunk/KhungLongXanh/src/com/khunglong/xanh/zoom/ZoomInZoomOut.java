@@ -13,11 +13,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.khunglong.xanh.MyApplication;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
-import com.khunglong.xanh.json.DragonData;
-import com.khunglong.xanh.main.MainFragment2;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ZoomInZoomOut extends BaseFragment implements OnTouchListener {
