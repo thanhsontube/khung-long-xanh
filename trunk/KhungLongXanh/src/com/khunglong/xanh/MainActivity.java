@@ -24,12 +24,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
+import com.androidquery.callback.ImageOptions;
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.khunglong.xanh.base.BaseFragmentActivity;
-import com.khunglong.xanh.login.LoginFragment;
 import com.khunglong.xanh.login.MyLoginActivity;
 import com.khunglong.xanh.main.MainFragment;
 import com.khunglong.xanh.main.drawer.DrawerItemGenerator.DrawerItem;
@@ -37,7 +38,13 @@ import com.khunglong.xanh.main.drawer.FragmentChangeDrawerItem;
 import com.khunglong.xanh.main.drawer.PageChangeDrawerItem;
 import com.khunglong.xanh.main.klx.DetailMainFragment.IDetailsFragmentListener;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
+import com.khunglong.xanh.myfacebook.FbMeLoader;
+import com.khunglong.xanh.myfacebook.FbUserLoader;
+import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
+import com.khunglong.xanh.myfacebook.object.FbMe;
+import com.khunglong.xanh.utils.BitmapUtils;
 import com.khunglong.xanh.utils.GoogleAnaToolKLX;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener {
     private static final String TAG = "MainActivity";
@@ -87,18 +94,10 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
-        mHandler.post(new Runnable() {
-
-            @Override
-            public void run() {
-                // getMyProfile(null, Session.getActiveSession());
-
-            }
-        });
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.user_info, 0) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_action_storage,
+                R.string.user_info, 0) {
             @Override
             public boolean onOptionsItemSelected(MenuItem item) {
                 return super.onOptionsItemSelected(item);
@@ -115,20 +114,10 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
         View headerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
                 R.layout.fragment_profile_drawer_item, null);
+
+        imgAvatar = (ImageView) headerView.findViewWithTag("image");
+        txtName = (TextView) headerView.findViewWithTag("title");
         mDrawerList.addHeaderView(headerView, null, false);
-
-        // LoginButton authButton = (LoginButton) footer.findViewById(R.id.authButtonLogout);
-        // authButton.setOnClickListener(new OnClickListener() {
-        //
-        // @Override
-        // public void onClick(View v) {
-        // startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        // finish();
-        // }
-        // });
-
-        // authButton.setReadPermissions(Arrays.asList("email", "user_likes", "user_status"));
-        // authButton.setFragment(this);
         mDrawerList.setAdapter(getDrawerAdapter());
         mDrawerList.setOnItemClickListener(itemClickListener);
 
@@ -140,63 +129,76 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
         View customView = inflater.inflate(R.layout.actionbar_custom, null);
         getActionBar().setCustomView(customView);
 
+        mHandler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                getMyProfile();
+
+            }
+        }, DELAY_ON_DRAWER_CLICK);
+
     }
 
     // TODO login listener
-    public void getMyProfile(LoginFragment f, Session session) {
+    public void getMyProfile() {
         // me request
         FbLoaderManager fbLoaderManager = ResourceManager.getInstance().getFbLoaderManager();
         String graphPath = "me/picture";
         Bundle params = new Bundle();
         params.putBoolean("redirect", false);
         params.putInt("width", 500);
-        // fbLoaderManager.load(new FbUserLoader(getApplicationContext(), graphPath, params) {
-        //
-        // @Override
-        // public void onFbLoaderSuccess(FbCmtFrom entry) {
-        // log.d("log>>>" + "FbUserLoader onFbLoaderSuccess");
-        // ImageLoader imageLoader = ImageLoader.getInstance();
-        // String uri = entry.getSource();
-        // // Bitmap mBitmap = imageLoader.loadImageSync(uri);
-        // // BitmapUtils.maskBitmap(getApplicationContext(), uri, R.drawable.hexagon_view2);
-        // imageLoader.displayImage(uri, imgAvatar, app.getOptionsCircle());
-        // }
-        //
-        // @Override
-        // public void onFbLoaderStart() {
-        //
-        // }
-        //
-        // @Override
-        // public void onFbLoaderFail(Throwable e) {
-        // log.e("log>>>" + "FbUserLoader onFbLoaderFail:" + e.toString());
-        //
-        // }
-        // });
-        //
-        // fbLoaderManager.load(new FbMeLoader(getApplicationContext(), "me", null) {
-        //
-        // @Override
-        // public void onFbLoaderSuccess(FbMe entry) {
-        // // TODO Auto-generated method stub
-        // txtName.setText(entry.getName());
-        // GoogleAnaToolKLX.trackerView(getApplicationContext(), "LOGIN:" + entry.getName() + ";email:" +
-        // entry.getEmail());
-        //
-        // }
-        //
-        // @Override
-        // public void onFbLoaderStart() {
-        // // TODO Auto-generated method stub
-        //
-        // }
-        //
-        // @Override
-        // public void onFbLoaderFail(Throwable e) {
-        // // TODO Auto-generated method stub
-        //
-        // }
-        // });
+        fbLoaderManager.load(new FbUserLoader(getApplicationContext(), graphPath, params) {
+
+            @Override
+            public void onFbLoaderSuccess(FbCmtFrom entry) {
+                log.d("log>>>" + "FbUserLoader onFbLoaderSuccess");
+                String uri = entry.getSource();
+                
+                ImageLoader loader = ImageLoader.getInstance();
+                loader.displayImage(uri, imgAvatar, ResourceManager.getInstance().getOptionsCircle());
+//                AQuery aQuery = new AQuery(getApplicationContext());
+//                ImageOptions options = new ImageOptions();
+//                options.round = 40;
+//                aQuery.id(imgAvatar).image(uri, options);
+
+            }
+
+            @Override
+            public void onFbLoaderStart() {
+
+            }
+
+            @Override
+            public void onFbLoaderFail(Throwable e) {
+                log.e("log>>>" + "FbUserLoader onFbLoaderFail:" + e.toString());
+
+            }
+        });
+
+        fbLoaderManager.load(new FbMeLoader(getApplicationContext(), "me", null) {
+
+            @Override
+            public void onFbLoaderSuccess(FbMe entry) {
+                // TODO Auto-generated method stub
+                txtName.setText(entry.getName());
+                GoogleAnaToolKLX.trackerView(getApplicationContext(),
+                        "LOGIN:" + entry.getName() + ";email:" + entry.getEmail());
+
+            }
+
+            @Override
+            public void onFbLoaderStart() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onFbLoaderFail(Throwable e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
     }
 
@@ -262,161 +264,161 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
                     // 1
                     GoogleAnaToolKLX.trackerView(getApplicationContext(), "page:" + page);
-//                    if (page.equals(getResources().getStringArray(R.array.page1)[0])) {
-//                        ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page1)[1],
-//                                R.drawable.ic_launcher);
-//                        setCurrentPosition(0);
-//                        MainFragment ftest = (MainFragment) fm.findFragmentByTag(FRAGMENT_KEY);
-//                        ft.show(ftest);
-//                        if (fm.findFragmentByTag("f2") != null) {
-//                            ft.hide(fm.findFragmentByTag("f2"));
-//                        }
-//
-//                        if (fm.findFragmentByTag("f3") != null) {
-//                            ft.hide(fm.findFragmentByTag("f3"));
-//                        }
-//
-//                        if (fm.findFragmentByTag("f4") != null) {
-//                            ft.hide(fm.findFragmentByTag("f4"));
-//                        }
-//                        if (fm.findFragmentByTag("f5") != null) {
-//                            ft.hide(fm.findFragmentByTag("f5"));
-//                        }
-//                        ft.commit();
-//
-//                        // 2
-//                    } else if (page.equals(getResources().getStringArray(R.array.page2)[0])) {
-//                        ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page2)[1],
-//                                R.drawable.haivl);
-//                        setCurrentPosition(1);
-//                        final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
-//                        ft.hide(ff);
-//
-//                        // hide f3
-//
-//                        if (fm.findFragmentByTag("f3") != null) {
-//                            ft.hide(fm.findFragmentByTag("f3"));
-//                        }
-//                        if (fm.findFragmentByTag("f4") != null) {
-//                            ft.hide(fm.findFragmentByTag("f4"));
-//                        }
-//                        if (fm.findFragmentByTag("f5") != null) {
-//                            ft.hide(fm.findFragmentByTag("f5"));
-//                        }
-//                        MainFragment2 f2;
-//                        if (fm.findFragmentByTag("f2") == null) {
-//                            log.d("log>>>" + "	ft.show(f2);");
-//                            f2 = MainFragment2.newInstance(page);
-//                            // f2 = new MainFragment3();
-//                            ft.add(getFragmentContentId(), f2, "f2");
-//                            ft.show(f2);
-//                        } else {
-//                            f2 = (MainFragment2) fm.findFragmentByTag("f2");
-//                            ft.show(f2);
-//                        }
-//                        ft.commit();
-//
-//                    } else if (page.equals(getResources().getStringArray(R.array.page3)[0])) {
-//                        ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page3)[1],
-//                                R.drawable.haivl);
-//                        setCurrentPosition(2);
-//
-//                        // hide f1
-//                        final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
-//                        ft.hide(ff);
-//
-//                        // hide f2
-//                        if (fm.findFragmentByTag("f2") != null) {
-//                            ft.hide(fm.findFragmentByTag("f2"));
-//
-//                        }
-//                        if (fm.findFragmentByTag("f4") != null) {
-//                            ft.hide(fm.findFragmentByTag("f4"));
-//                        }
-//                        if (fm.findFragmentByTag("f5") != null) {
-//                            ft.hide(fm.findFragmentByTag("f5"));
-//                        }
-//                        // show f3
-//                        if (fm.findFragmentByTag("f3") == null) {
-//                            // Fragment f3 = TestFragment.newInstance(page, 2);
-//                            Fragment f3 = MainFragment3.newInstance(page);
-//                            ft.add(getFragmentContentId(), f3, "f3");
-//                            ft.show(f3);
-//                            // ft.addToBackStack(null);
-//                        } else {
-//                            ft.show(fm.findFragmentByTag("f3"));
-//                        }
-//                        ft.commit();
-//                    }
-//
-//                    else if (page.equals(getResources().getStringArray(R.array.page4)[0])) {
-//                        ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page4)[1],
-//                                R.drawable.nghiemtucvl);
-//                        setCurrentPosition(3);
-//
-//                        // hide f1
-//                        final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
-//                        ft.hide(ff);
-//
-//                        // hide f2
-//                        if (fm.findFragmentByTag("f2") != null) {
-//                            ft.hide(fm.findFragmentByTag("f2"));
-//
-//                        }
-//
-//                        if (fm.findFragmentByTag("f3") != null) {
-//                            ft.hide(fm.findFragmentByTag("f3"));
-//
-//                        }
-//                        if (fm.findFragmentByTag("f5") != null) {
-//                            ft.hide(fm.findFragmentByTag("f5"));
-//
-//                        }
-//
-//                        if (fm.findFragmentByTag("f4") == null) {
-//                            Fragment f = MainFragment4.newInstance(page);
-//                            ft.add(getFragmentContentId(), f, "f4");
-//                            ft.show(f);
-//                        } else {
-//                            ft.show(fm.findFragmentByTag("f4"));
-//                        }
-//                        ft.commit();
-//                    }
-//
-//                    else if (page.equals(getResources().getStringArray(R.array.page5)[0])) {
-//                        ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page5)[1],
-//                                R.drawable.hanhphucgiobay);
-//                        setCurrentPosition(4);
-//
-//                        // hide f1
-//                        final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
-//                        ft.hide(ff);
-//
-//                        // hide f2
-//                        if (fm.findFragmentByTag("f2") != null) {
-//                            ft.hide(fm.findFragmentByTag("f2"));
-//
-//                        }
-//
-//                        if (fm.findFragmentByTag("f3") != null) {
-//                            ft.hide(fm.findFragmentByTag("f3"));
-//
-//                        }
-//
-//                        if (fm.findFragmentByTag("f4") != null) {
-//                            ft.hide(fm.findFragmentByTag("f4"));
-//
-//                        }
-//
-//                        if (fm.findFragmentByTag("f5") == null) {
-//                            Fragment f = MainFragment5.newInstance(page);
-//                            ft.add(getFragmentContentId(), f, "f5");
-//                            ft.show(f);
-//                        } else {
-//                            ft.show(fm.findFragmentByTag("f5"));
-//                        }
-//                        ft.commit();
-//                    }
+                    // if (page.equals(getResources().getStringArray(R.array.page1)[0])) {
+                    // ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page1)[1],
+                    // R.drawable.ic_launcher);
+                    // setCurrentPosition(0);
+                    // MainFragment ftest = (MainFragment) fm.findFragmentByTag(FRAGMENT_KEY);
+                    // ft.show(ftest);
+                    // if (fm.findFragmentByTag("f2") != null) {
+                    // ft.hide(fm.findFragmentByTag("f2"));
+                    // }
+                    //
+                    // if (fm.findFragmentByTag("f3") != null) {
+                    // ft.hide(fm.findFragmentByTag("f3"));
+                    // }
+                    //
+                    // if (fm.findFragmentByTag("f4") != null) {
+                    // ft.hide(fm.findFragmentByTag("f4"));
+                    // }
+                    // if (fm.findFragmentByTag("f5") != null) {
+                    // ft.hide(fm.findFragmentByTag("f5"));
+                    // }
+                    // ft.commit();
+                    //
+                    // // 2
+                    // } else if (page.equals(getResources().getStringArray(R.array.page2)[0])) {
+                    // ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page2)[1],
+                    // R.drawable.haivl);
+                    // setCurrentPosition(1);
+                    // final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
+                    // ft.hide(ff);
+                    //
+                    // // hide f3
+                    //
+                    // if (fm.findFragmentByTag("f3") != null) {
+                    // ft.hide(fm.findFragmentByTag("f3"));
+                    // }
+                    // if (fm.findFragmentByTag("f4") != null) {
+                    // ft.hide(fm.findFragmentByTag("f4"));
+                    // }
+                    // if (fm.findFragmentByTag("f5") != null) {
+                    // ft.hide(fm.findFragmentByTag("f5"));
+                    // }
+                    // MainFragment2 f2;
+                    // if (fm.findFragmentByTag("f2") == null) {
+                    // log.d("log>>>" + "	ft.show(f2);");
+                    // f2 = MainFragment2.newInstance(page);
+                    // // f2 = new MainFragment3();
+                    // ft.add(getFragmentContentId(), f2, "f2");
+                    // ft.show(f2);
+                    // } else {
+                    // f2 = (MainFragment2) fm.findFragmentByTag("f2");
+                    // ft.show(f2);
+                    // }
+                    // ft.commit();
+                    //
+                    // } else if (page.equals(getResources().getStringArray(R.array.page3)[0])) {
+                    // ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page3)[1],
+                    // R.drawable.haivl);
+                    // setCurrentPosition(2);
+                    //
+                    // // hide f1
+                    // final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
+                    // ft.hide(ff);
+                    //
+                    // // hide f2
+                    // if (fm.findFragmentByTag("f2") != null) {
+                    // ft.hide(fm.findFragmentByTag("f2"));
+                    //
+                    // }
+                    // if (fm.findFragmentByTag("f4") != null) {
+                    // ft.hide(fm.findFragmentByTag("f4"));
+                    // }
+                    // if (fm.findFragmentByTag("f5") != null) {
+                    // ft.hide(fm.findFragmentByTag("f5"));
+                    // }
+                    // // show f3
+                    // if (fm.findFragmentByTag("f3") == null) {
+                    // // Fragment f3 = TestFragment.newInstance(page, 2);
+                    // Fragment f3 = MainFragment3.newInstance(page);
+                    // ft.add(getFragmentContentId(), f3, "f3");
+                    // ft.show(f3);
+                    // // ft.addToBackStack(null);
+                    // } else {
+                    // ft.show(fm.findFragmentByTag("f3"));
+                    // }
+                    // ft.commit();
+                    // }
+                    //
+                    // else if (page.equals(getResources().getStringArray(R.array.page4)[0])) {
+                    // ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page4)[1],
+                    // R.drawable.nghiemtucvl);
+                    // setCurrentPosition(3);
+                    //
+                    // // hide f1
+                    // final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
+                    // ft.hide(ff);
+                    //
+                    // // hide f2
+                    // if (fm.findFragmentByTag("f2") != null) {
+                    // ft.hide(fm.findFragmentByTag("f2"));
+                    //
+                    // }
+                    //
+                    // if (fm.findFragmentByTag("f3") != null) {
+                    // ft.hide(fm.findFragmentByTag("f3"));
+                    //
+                    // }
+                    // if (fm.findFragmentByTag("f5") != null) {
+                    // ft.hide(fm.findFragmentByTag("f5"));
+                    //
+                    // }
+                    //
+                    // if (fm.findFragmentByTag("f4") == null) {
+                    // Fragment f = MainFragment4.newInstance(page);
+                    // ft.add(getFragmentContentId(), f, "f4");
+                    // ft.show(f);
+                    // } else {
+                    // ft.show(fm.findFragmentByTag("f4"));
+                    // }
+                    // ft.commit();
+                    // }
+                    //
+                    // else if (page.equals(getResources().getStringArray(R.array.page5)[0])) {
+                    // ActionBarUtils.update(getActionBar(), getResources().getStringArray(R.array.page5)[1],
+                    // R.drawable.hanhphucgiobay);
+                    // setCurrentPosition(4);
+                    //
+                    // // hide f1
+                    // final Fragment ff = fm.findFragmentByTag(FRAGMENT_KEY);
+                    // ft.hide(ff);
+                    //
+                    // // hide f2
+                    // if (fm.findFragmentByTag("f2") != null) {
+                    // ft.hide(fm.findFragmentByTag("f2"));
+                    //
+                    // }
+                    //
+                    // if (fm.findFragmentByTag("f3") != null) {
+                    // ft.hide(fm.findFragmentByTag("f3"));
+                    //
+                    // }
+                    //
+                    // if (fm.findFragmentByTag("f4") != null) {
+                    // ft.hide(fm.findFragmentByTag("f4"));
+                    //
+                    // }
+                    //
+                    // if (fm.findFragmentByTag("f5") == null) {
+                    // Fragment f = MainFragment5.newInstance(page);
+                    // ft.add(getFragmentContentId(), f, "f5");
+                    // ft.show(f);
+                    // } else {
+                    // ft.show(fm.findFragmentByTag("f5"));
+                    // }
+                    // ft.commit();
+                    // }
 
                     log.d("log>>>" + "stack:" + mFragmentTagStack.size());
 
@@ -512,27 +514,27 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
     @Override
     public void onDetailsFragmentPicture(String link, String content) {
         // TODO Auto-generated method stub
-        
+
     }
 
-//    @Override
-//    public void onDetailsFragmentPicture(String link, String content) {
-//        // ZoomInZoomOut f = ZoomInZoomOut.newInstance(image);
-//        // FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//        // ft.add(getFragmentContentId(), f, "fa");
-//        // ft.addToBackStack(null);
-//        // ft.show(f);
-//        // ft.commit();
-//        // Intent intent = new Intent(this, AnimationActivity.class);
-//        Intent intent = new Intent(this, SingleTouchImageViewActivity.class);
-//        intent.putExtra("image", link);
-//        intent.putExtra("content", content);
-//        startActivity(intent);
-//        // startActivity(new Intent(this, AnimationActivity.class));
-//
-//        // showFragment(f, true);
-//
-//    }
+    // @Override
+    // public void onDetailsFragmentPicture(String link, String content) {
+    // // ZoomInZoomOut f = ZoomInZoomOut.newInstance(image);
+    // // FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    // // ft.add(getFragmentContentId(), f, "fa");
+    // // ft.addToBackStack(null);
+    // // ft.show(f);
+    // // ft.commit();
+    // // Intent intent = new Intent(this, AnimationActivity.class);
+    // Intent intent = new Intent(this, SingleTouchImageViewActivity.class);
+    // intent.putExtra("image", link);
+    // intent.putExtra("content", content);
+    // startActivity(intent);
+    // // startActivity(new Intent(this, AnimationActivity.class));
+    //
+    // // showFragment(f, true);
+    //
+    // }
     /*
      * private static final long EXIT_INTERVAL = 2000L; private long exitTimer = Long.MIN_VALUE;
      * 

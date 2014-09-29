@@ -131,7 +131,7 @@ public class DetailMainFragment extends BaseFragment {
         if (pageData.getLikes().getSummary() == null) {
             controllerLikes.load();
         } else {
-            txtLike.setText("OLD:" + pageData.getLikes().getSummary().getTotal_count());
+            txtLike.setText("" + pageData.getLikes().getSummary().getTotal_count());
         }
     }
 
@@ -169,7 +169,7 @@ public class DetailMainFragment extends BaseFragment {
                     // update data like
 //                    entry.getData().get(position).setLikes(entry);
 
-                    txtLike.setText("NEW:" + entry.getSummary().getTotal_count());
+                    txtLike.setText("" + entry.getSummary().getTotal_count());
                 }
 
                 @Override

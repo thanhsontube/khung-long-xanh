@@ -15,7 +15,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/hexagon_view"
-            android:tag="img_hexagon" />
+            android:tag="image" />
     </LinearLayout>
 
     <!-- User name -->
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/lv1"
-        android:tag="drawer_profile_name"
+        android:tag="title"
         android:text="@string/app_name"
         android:textStyle="bold" />
 

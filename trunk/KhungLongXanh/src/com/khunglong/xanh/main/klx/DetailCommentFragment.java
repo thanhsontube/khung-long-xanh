@@ -161,7 +161,7 @@ public class DetailCommentFragment extends BaseFragment {
         if (dragonData.getData().get(position).getComments() == null) {
             controllerComments.load();
         } else {
-            txtCommend.setText("Old:" + dragonData.getData().get(position).getComments().getSummary().getTotal_count());
+            txtCommend.setText("" + dragonData.getData().get(position).getComments().getSummary().getTotal_count());
             cmtAdapter.setData(dragonData.getData().get(position).getComments().getData(), true);
             enableEmptyview(false);
         }
@@ -184,7 +184,7 @@ public class DetailCommentFragment extends BaseFragment {
                     // updateComments(entry, position);
                     dragonData.getData().get(position).setComments(entry);
 
-                    txtCommend.setText("N"
+                    txtCommend.setText(""
                             + dragonData.getData().get(position).getComments().getSummary().getTotal_count());
                     cmtAdapter.setData(entry.getData(), true);
 
