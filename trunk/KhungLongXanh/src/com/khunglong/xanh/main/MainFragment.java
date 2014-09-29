@@ -160,32 +160,6 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // checking album
-
-        // if (dragonData.getAlbums() != null) {
-        //
-        // for (FbAlbumsDto f : dragonData.getAlbums().listFbAlbumsDto) {
-        // log.d("log>>> " + f.getName());
-        // }
-        //
-        // if (dragonData.getData() != null && dragonData.getData().size() > 0) {
-        // log.e("log>>> " + "-------load OLD---------:" + dragonData.getData().size());
-        //
-        // for (PageData p : dragonData.getData()) {
-        // log.d("log>>> " + "mes:" + p.getMessage());
-        // }
-        // DetailsFragment f1 = (DetailsFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
-        // PageData pageData = dragonData.getData().get(0);
-        // log.d("log>>> " + "pageData:" + pageData.getMessage());
-        // // f1.setData(dragonData.getData().get(0), 0);
-        // isFirstLoad = false;
-        // }
-        //
-        // } else {
-        // controllerAlbums.load();
-        // log.e("log>>> " + "-------load NEWs---------");
-        // }
-
         controllerAlbums.load();
     }
 
