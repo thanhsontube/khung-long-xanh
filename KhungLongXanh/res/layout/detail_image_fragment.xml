@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/lv1"
             android:layout_marginTop="@dimen/lv1"
+            android:scaleType="centerInside"
             android:src="@drawable/iviet_temp"
             android:tag="image" />
 

@@ -70,6 +70,7 @@ public class DetailHeaderFragment extends BaseFragment {
             txtTitle.setText(pageData.getName());
             // image
             String link = pageData.getSource();
+            log.d("log>>> " + "link:" + link);
             AQuery aQuery = new AQuery(getActivity());
             aQuery.id(image).image(link);
         } catch (Exception e) {
