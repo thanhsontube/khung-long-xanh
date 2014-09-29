@@ -43,6 +43,9 @@ public class SaveFragment extends BaseFragment implements IDeleteListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().getActionBar().setHomeButtonEnabled(true);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActivity().getActionBar().setDisplayShowCustomEnabled(false);
+        
+        getActivity().getActionBar().setTitle("Save History");
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.save_fragment, container, false);
         listview = (CardListView) rootView.findViewWithTag("listview");

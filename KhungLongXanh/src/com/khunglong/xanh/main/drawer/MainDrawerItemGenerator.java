@@ -26,9 +26,9 @@ public class MainDrawerItemGenerator implements DrawerItemGenerator<DrawerItem<?
 //                        .getStringArray(R.array.page0)[0]));
 
         // Khung Long XANH
-        list.add(new PageChangeDrawerItem(R.drawable.drawer_klx,
-                context.getResources().getStringArray(R.array.page1)[1], "home", "home", context.getResources()
-                        .getStringArray(R.array.page1)[0]));
+//        list.add(new PageChangeDrawerItem(R.drawable.drawer_klx,
+//                context.getResources().getStringArray(R.array.page1)[1], "home", "home", context.getResources()
+//                        .getStringArray(R.array.page1)[0]));
 
         // // haiVL
         // list.add(new PageChangeDrawerItem(R.drawable.drawer_haivl,

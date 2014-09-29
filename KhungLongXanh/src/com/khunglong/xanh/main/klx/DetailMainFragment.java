@@ -37,10 +37,10 @@ public class DetailMainFragment extends BaseFragment {
     // private DragonData mDragonData;
 
     private ResourceManager resource;
-    private IDetailsFragmentListener listener;
 
     private String page;
 
+    private IDetailsFragmentListener listener;
     public static interface IDetailsFragmentListener {
         void onDetailsFragmentPicture(String link, String content);
     }

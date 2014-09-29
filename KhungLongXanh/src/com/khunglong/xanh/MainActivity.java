@@ -44,6 +44,7 @@ import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.utils.BitmapUtils;
 import com.khunglong.xanh.utils.GoogleAnaToolKLX;
+import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener {
@@ -154,13 +155,13 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
             public void onFbLoaderSuccess(FbCmtFrom entry) {
                 log.d("log>>>" + "FbUserLoader onFbLoaderSuccess");
                 String uri = entry.getSource();
-                
+
                 ImageLoader loader = ImageLoader.getInstance();
                 loader.displayImage(uri, imgAvatar, ResourceManager.getInstance().getOptionsCircle());
-//                AQuery aQuery = new AQuery(getApplicationContext());
-//                ImageOptions options = new ImageOptions();
-//                options.round = 40;
-//                aQuery.id(imgAvatar).image(uri, options);
+                // AQuery aQuery = new AQuery(getApplicationContext());
+                // ImageOptions options = new ImageOptions();
+                // options.round = 40;
+                // aQuery.id(imgAvatar).image(uri, options);
 
             }
 
@@ -221,6 +222,11 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
+        } else if (item.getItemId() == android.R.id.home) {
+            final FragmentManager fm = getSupportFragmentManager();
+            if (mFragmentTagStack.size() > 0) {
+                fm.popBackStackImmediate();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -513,28 +519,23 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
     @Override
     public void onDetailsFragmentPicture(String link, String content) {
-        // TODO Auto-generated method stub
+        // ZoomInZoomOut f = ZoomInZoomOut.newInstance(image);
+        // FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        // ft.add(getFragmentContentId(), f, "fa");
+        // ft.addToBackStack(null);
+        // ft.show(f);
+        // ft.commit();
+        // Intent intent = new Intent(this, AnimationActivity.class);
+        Intent intent = new Intent(this, SingleTouchImageViewActivity.class);
+        intent.putExtra("image", link);
+        intent.putExtra("content", content);
+        startActivity(intent);
+        // startActivity(new Intent(this, AnimationActivity.class));
+
+        // showFragment(f, true);
 
     }
 
-    // @Override
-    // public void onDetailsFragmentPicture(String link, String content) {
-    // // ZoomInZoomOut f = ZoomInZoomOut.newInstance(image);
-    // // FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-    // // ft.add(getFragmentContentId(), f, "fa");
-    // // ft.addToBackStack(null);
-    // // ft.show(f);
-    // // ft.commit();
-    // // Intent intent = new Intent(this, AnimationActivity.class);
-    // Intent intent = new Intent(this, SingleTouchImageViewActivity.class);
-    // intent.putExtra("image", link);
-    // intent.putExtra("content", content);
-    // startActivity(intent);
-    // // startActivity(new Intent(this, AnimationActivity.class));
-    //
-    // // showFragment(f, true);
-    //
-    // }
     /*
      * private static final long EXIT_INTERVAL = 2000L; private long exitTimer = Long.MIN_VALUE;
      * 
@@ -561,5 +562,16 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
     // getMenuInflater().inflate(R.menu.main, menu);
     // return true;
     // }
+
+    @Override
+    public void onBackStackChanged() {
+        super.onBackStackChanged();
+        if (mFragmentTagStack.size() > 0) {
+            mDrawerToggle.setDrawerIndicatorEnabled(false);
+        } else {
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            getActionBar().setDisplayShowCustomEnabled(true);
+        }
+    }
 
 }
