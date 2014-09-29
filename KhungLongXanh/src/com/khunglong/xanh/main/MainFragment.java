@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.MsConstant;
@@ -28,6 +29,7 @@ import com.khunglong.xanh.myfacebook.FbLoaderManager;
 import com.khunglong.xanh.myfacebook.FbPageLoader;
 import com.khunglong.xanh.myfacebook.object.FbAlbums;
 import com.khunglong.xanh.myfacebook.object.FbAlbumsDto;
+import com.khunglong.xanh.utils.MsUtils;
 
 public class MainFragment extends BaseFragment implements OnPageChangeListener, OnBackPressListener {
 
@@ -94,21 +96,37 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         // app.getmListDragonDatas().add(dragonData);
 
         setHasOptionsMenu(true);
+        resource.resetData();
 
         if (getArguments() != null) {
             Bundle bundle = getArguments();
             page = bundle.getString("page");
-            if (page.equals(resource.getListPageResource().get(0).getFbName())) {
-                dragonData = resource.getChandaiData();
-            }
+            dragonData = MsUtils.getDragonDataFrompage(page);
+            // if (page.equals(resource.getListPageResource().get(0).getFbName())) {
+            // dragonData = resource.getChandaiData();
+            // }
+            //
+            // if (page.equals(resource.getListPageResource().get(1).getFbName())) {
+            // dragonData = resource.getKlxData();
+            // }
+            //
+            // if (page.equals(resource.getListPageResource().get(2).getFbName())) {
+            // dragonData = resource.getGtgData();
+            // }
+            //
+            // if (page.equals(resource.getListPageResource().get(3).getFbName())) {
+            // dragonData = resource.getHaivlData();
+            // }
+            // if (page.equals(resource.getListPageResource().get(4).getFbName())) {
+            // dragonData = resource.getNghiemtucvlData();
+            // }
 
-            if (page.equals(resource.getListPageResource().get(1).getFbName())) {
-                dragonData = resource.getKlxData();
-            }
         } else {
-            page = resource.getListPageResource().get(0).getFbName();
-            dragonData = resource.getKlxData();
+            Toast.makeText(getActivity(), "Error get Page", Toast.LENGTH_SHORT).show();
         }
+
+        // dragonData = null;
+        // dragonData = new DragonData();
 
         log.d("log>>> onCreate " + "page:" + page);
 
@@ -136,10 +154,39 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
             listener.onIMainFragmentStart(MainFragment.this, 10, null);
         }
 
-        // load(page, 0);
-        mControllerAlbums.load();
-        // controllerTimelines.load();
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // checking album
+
+        // if (dragonData.getAlbums() != null) {
+        //
+        // for (FbAlbumsDto f : dragonData.getAlbums().listFbAlbumsDto) {
+        // log.d("log>>> " + f.getName());
+        // }
+        //
+        // if (dragonData.getData() != null && dragonData.getData().size() > 0) {
+        // log.e("log>>> " + "-------load OLD---------:" + dragonData.getData().size());
+        //
+        // for (PageData p : dragonData.getData()) {
+        // log.d("log>>> " + "mes:" + p.getMessage());
+        // }
+        // DetailsFragment f1 = (DetailsFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
+        // PageData pageData = dragonData.getData().get(0);
+        // log.d("log>>> " + "pageData:" + pageData.getMessage());
+        // // f1.setData(dragonData.getData().get(0), 0);
+        // isFirstLoad = false;
+        // }
+        //
+        // } else {
+        // controllerAlbums.load();
+        // log.e("log>>> " + "-------load NEWs---------");
+        // }
+
+        controllerAlbums.load();
     }
 
     public CharSequence getApplicationTitle(int position) {
@@ -154,52 +201,20 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         return false;
     }
 
-    Controller controllerPhoto = new Controller() {
-
-        @Override
-        public void load() {
-            isLoading = true;
-            String after = dragonData.getPaging().getCursors().after;
-            Bundle params = new Bundle();
-            params.putString("after", after);
-            final String graphPath = albumId + "/photos";
-            log.v("log>>>" + "controllerPhoto LOAD after:" + after + ";graphPath:" + graphPath);
-            mFbLoaderManager.load(new FbPageLoader(context, graphPath, params) {
-
-                @Override
-                public void onFbLoaderSuccess(DragonData entry) {
-                    log.d("log>>>" + "FbPageLoader onFbLoaderSuccess:graphPath:" + graphPath + ";load Image:"
-                            + entry.getData().size());
-                    dragonData.setPaging(entry.getPaging());
-                    dragonData.getData().addAll(entry.getData());
-                    mEmpty.setVisibility(View.GONE);
-                    DetailsFragment f1 = (DetailsFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
-                    // set id of photos to details
-                    if (isFirstLoad) {
-                        // f1.setId(entry.getData().get(0).getId(), 0);
-                        f1.setData(entry.getData().get(0), 0);
-                        isFirstLoad = false;
-                    }
-                    isLoading = false;
-                }
-
-                @Override
-                public void onFbLoaderStart() {
-                    mEmpty.setVisibility(View.VISIBLE);
-
-                }
-
-                @Override
-                public void onFbLoaderFail(Throwable e) {
-                    mEmpty.setVisibility(View.GONE);
-                    log.e("log>>>" + "controllerPhoto onFbLoaderFail:" + e.toString() + ";graphPath:" + graphPath);
-
-                }
-            });
+    public void findTimelineAlbums(FbAlbums entry) {
+        albumId = "nothing";
+        for (final FbAlbumsDto element : entry.listFbAlbumsDto) {
+            if (element.getName().equalsIgnoreCase("Timeline Photos")) {
+                albumId = element.getId();
+                controllerTimelines.load();
+                // controllerPhoto.load();
+            }
         }
-    };
 
-    Controller mControllerAlbums = new Controller() {
+        log.d("log>>> " + "findTimelineAlbums albumId:" + albumId);
+    }
+
+    private Controller controllerAlbums = new Controller() {
 
         @Override
         public void load() {
@@ -213,13 +228,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
                     log.d("log>>>" + "onFbLoaderSuccess size album:" + entry.listFbAlbumsDto.size());
                     dragonData.setAlbums(entry);
                     // get Timeline Photos album;
-                    for (final FbAlbumsDto element : entry.listFbAlbumsDto) {
-                        if (element.getName().equalsIgnoreCase("Timeline Photos")) {
-                            albumId = element.getId();
-                            controllerTimelines.load();
-                            // controllerPhoto.load();
-                        }
-                    }
+                    findTimelineAlbums(entry);
                 }
 
                 @Override
@@ -230,7 +239,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
                 @Override
                 public void onFbLoaderFail(Throwable e) {
                     mEmpty.setVisibility(View.GONE);
-                    log.e("log>>>" + "mControllerAlbums onFbLoaderFail:" + e.toString());
+                    log.e("log>>>" + "controllerAlbums onFbLoaderFail:" + e.toString());
                 }
             });
         }
@@ -265,7 +274,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
             return;
         }
         DetailMainFragment f1 = (DetailMainFragment) mMainPagerAdapter.getFragment(mViewPager, virtualPosition);
-        f1.setData1St(page,dragonData.getData().get(position), position);
+        f1.setData1St(page, dragonData.getData().get(position), position);
 
         if ((dragonData.getData().size() - position) <= ILOAD && !isLoading) {
             controllerTimelines.load();
@@ -364,12 +373,6 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
 
     }
 
-    public void load(String page, int pos) {
-        log.d("log>>>" + "load:" + page);
-        this.page = page;
-        mControllerAlbums.load();
-    }
-
     Controller controllerTimelines = new Controller() {
 
         @Override
@@ -395,8 +398,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
                     // }
 
                     DetailMainFragment f1 = (DetailMainFragment) mMainPagerAdapter.getFragment(mViewPager, 0);
-                    f1.setData1St(page,entry.getData().get(0), 0);
-                    
+                    f1.setData1St(page, entry.getData().get(0), 0);
+
                     isLoading = false;
                 }
 

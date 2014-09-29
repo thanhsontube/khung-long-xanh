@@ -31,6 +31,7 @@ import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtData;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbComments;
+import com.khunglong.xanh.utils.MsUtils;
 
 public class DetailCommentFragment extends BaseFragment {
     FilterLog log = new FilterLog("DetailCommentFragment");
@@ -138,13 +139,15 @@ public class DetailCommentFragment extends BaseFragment {
 
     public void setData1St(String page, PageData data, int position) {
         this.page = page;
-        if (page.equals(resource.getListPageResource().get(0).getFbName())) {
-            dragonData = resource.getChandaiData();
-        }
+        dragonData = MsUtils.getDragonDataFrompage(page);
 
-        if (page.equals(resource.getListPageResource().get(1).getFbName())) {
-            dragonData = resource.getKlxData();
-        }
+        // if (page.equals(resource.getListPageResource().get(0).getFbName())) {
+        // dragonData = resource.getChandaiData();
+        // }
+        //
+        // if (page.equals(resource.getListPageResource().get(1).getFbName())) {
+        // dragonData = resource.getKlxData();
+        // }
 
         setData(data, position);
     }
@@ -188,7 +191,7 @@ public class DetailCommentFragment extends BaseFragment {
                     enableEmptyview(false);
                     // updateComments(entry, position);
 
-                     loadAvatarCommender(entry);
+                    loadAvatarCommender(entry);
                 }
 
                 @Override

@@ -19,11 +19,10 @@ import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.facebook.Session;
-import com.facebook.Session.NewPermissionsRequest;
-import com.facebook.widget.LoginButton;
 import com.khunglong.xanh.MainActivity;
 import com.khunglong.xanh.MyApplication;
 import com.khunglong.xanh.R;
+import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.comments.CmtAdapter;
@@ -87,7 +86,7 @@ public class MyCommentsFragment extends BaseFragment {
 
 		imageLoader = ImageLoader.getInstance();
 		app = (MyApplication) getActivity().getApplication();
-		mFbLoaderManager = app.getmFbLoaderManager();
+		mFbLoaderManager = ResourceManager.getInstance().getFbLoaderManager();
 		if (getArguments() != null) {
 			Bundle bundle = getArguments();
 			title = bundle.getString("title");
@@ -114,7 +113,7 @@ public class MyCommentsFragment extends BaseFragment {
 		txtTitle.setText(title);
 
 		MyApplication app = (MyApplication) getActivity().getApplication();
-		imageLoader.displayImage(source, img, app.getOptionsContent(), null);
+		imageLoader.displayImage(source, img, ResourceManager.getInstance().getOptionsContent(), null);
 		return rootView;
 	}
 

@@ -3,10 +3,12 @@ package com.khunglong.xanh;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.androidquery.AQuery;
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.data.MyData;
 import com.khunglong.xanh.dto.PageResourceDto;
 import com.khunglong.xanh.json.DragonData;
+import com.khunglong.xanh.main.drawer.MainDrawerItemGenerator;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
 import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -20,9 +22,12 @@ public class ResourceManager {
 
     private static final String TAG = "ResourceManager";
 
+    private MainDrawerItemGenerator mMainDrawerItemGenerator;
+
     static ResourceManager instance = null;
     private DragonData chandaiData;
     private DragonData klxData;
+    private DragonData gtgData;
     private DragonData haivlData;
     private DragonData nghiemtucvlData;
     private FbMe userInfo;
@@ -45,13 +50,32 @@ public class ResourceManager {
 
     }
 
+    public static void destroy(Context context) {
+        instance = null;
+        AQuery aQuery = new AQuery(context);
+        aQuery.clear();
+    }
+
+    public void resetData() {
+        initDragonData();
+    }
+
+    private void initDragonData() {
+        chandaiData = new DragonData();
+        klxData = new DragonData();
+        gtgData = new DragonData();
+        haivlData = new DragonData();
+        nghiemtucvlData = new DragonData();
+        klxData.setAlbumTimeLines(MsConstant.ID_KLX_TIME_LINES);
+    }
+
     private void startup() {
         log.d("log>>>" + "startup");
         try {
+            mMainDrawerItemGenerator = new MainDrawerItemGenerator(context);
+
             fbLoaderManager = new FbLoaderManager();
-            klxData = new DragonData();
-            chandaiData = new DragonData();
-            klxData.setAlbumTimeLines(MsConstant.ID_KLX_TIME_LINES);
+            initDragonData();
 
             imageLoader = ImageLoader.getInstance();
 
@@ -184,6 +208,18 @@ public class ResourceManager {
 
     public void setChandaiData(DragonData chandaiData) {
         this.chandaiData = chandaiData;
+    }
+
+    public MainDrawerItemGenerator getDrawerItemGenerator() {
+        return mMainDrawerItemGenerator;
+    }
+
+    public DragonData getGtgData() {
+        return gtgData;
+    }
+
+    public void setGtgData(DragonData gtgData) {
+        this.gtgData = gtgData;
     }
 
 }

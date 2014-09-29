@@ -22,7 +22,7 @@ import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.utils.GoogleAnaToolKLX;
 
-public class LoginFragment extends BaseFragment {
+public class LoginFragment extends BaseFragment implements OnClickListener {
     private static final String TAG = "LoginFragment";
     private UiLifecycleHelper uiHelper;
     FilterLog log = new FilterLog(TAG);
@@ -67,48 +67,98 @@ public class LoginFragment extends BaseFragment {
         authButton.setReadPermissions(Arrays.asList("email", "user_likes", "user_status"));
         authButton.setFragment(this);
 
-        View page1 = rootView.findViewWithTag("page1");
-        page1.setOnClickListener(new OnClickListener() {
+        // setup page
 
-            @Override
-            public void onClick(View v) {
-                if (Session.getActiveSession().isOpened()) {
-                    pageName = resource.getListPageResource().get(0).getFbName();
-                    listener.onLogin(LoginFragment.this, pageName);
-                    // startActivity(new Intent(getActivity(), MainActivity.class));
-                } else {
-                    Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        View page1 = rootView.findViewWithTag("page1");
+        page1.setTag(resource.getListPageResource().get(0).getFbName());
 
         View page2 = rootView.findViewWithTag("page2");
-        page2.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (Session.getActiveSession().isOpened()) {
-                    pageName = resource.getListPageResource().get(1).getFbName();
-                    listener.onLogin(LoginFragment.this, pageName);
-                } else {
-                    Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        page2.setTag(resource.getListPageResource().get(1).getFbName());
 
         View page3 = rootView.findViewWithTag("page3");
-        page3.setOnClickListener(new OnClickListener() {
+        page3.setTag(resource.getListPageResource().get(2).getFbName());
 
-            @Override
-            public void onClick(View v) {
-                if (Session.getActiveSession().isOpened()) {
-                    pageName = resource.getListPageResource().get(2).getFbName();
-                    listener.onLogin(LoginFragment.this, pageName);
-                } else {
-                    Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        View page4 = rootView.findViewWithTag("page4");
+        page4.setTag(resource.getListPageResource().get(3).getFbName());
+
+        View page5 = rootView.findViewWithTag("page5");
+        page5.setTag(resource.getListPageResource().get(4).getFbName());
+
+        page1.setOnClickListener(this);
+        page2.setOnClickListener(this);
+        page3.setOnClickListener(this);
+        page4.setOnClickListener(this);
+        page5.setOnClickListener(this);
+
+        // page1.setOnClickListener(new OnClickListener() {
+        //
+        // @Override
+        // public void onClick(View v) {
+        // if (Session.getActiveSession().isOpened()) {
+        // pageName = resource.getListPageResource().get(0).getFbName();
+        // listener.onLogin(LoginFragment.this, pageName);
+        // // startActivity(new Intent(getActivity(), MainActivity.class));
+        // } else {
+        // Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
+        // }
+        // }
+        // });
+        //
+        // View page2 = rootView.findViewWithTag("page2");
+        // page2.setOnClickListener(new OnClickListener() {
+        //
+        // @Override
+        // public void onClick(View v) {
+        // if (Session.getActiveSession().isOpened()) {
+        // pageName = resource.getListPageResource().get(1).getFbName();
+        // listener.onLogin(LoginFragment.this, pageName);
+        // } else {
+        // Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
+        // }
+        // }
+        // });
+        //
+        // View page3 = rootView.findViewWithTag("page3");
+        // page3.setOnClickListener(new OnClickListener() {
+        //
+        // @Override
+        // public void onClick(View v) {
+        // if (Session.getActiveSession().isOpened()) {
+        // pageName = resource.getListPageResource().get(2).getFbName();
+        // listener.onLogin(LoginFragment.this, pageName);
+        // } else {
+        // Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
+        // }
+        // }
+        // });
+        //
+        // View page4 = rootView.findViewWithTag("page4");
+        // page4.setOnClickListener(new OnClickListener() {
+        //
+        // @Override
+        // public void onClick(View v) {
+        // if (Session.getActiveSession().isOpened()) {
+        // pageName = resource.getListPageResource().get(3).getFbName();
+        // listener.onLogin(LoginFragment.this, pageName);
+        // } else {
+        // Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
+        // }
+        // }
+        // });
+        //
+        // View page5 = rootView.findViewWithTag("page5");
+        // page5.setOnClickListener(new OnClickListener() {
+        //
+        // @Override
+        // public void onClick(View v) {
+        // if (Session.getActiveSession().isOpened()) {
+        // pageName = resource.getListPageResource().get(4).getFbName();
+        // listener.onLogin(LoginFragment.this, pageName);
+        // } else {
+        // Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
+        // }
+        // }
+        // });
         GoogleAnaToolKLX.trackerView(getActivity(), "LOGIN FRAGMENT");
         return rootView;
 
@@ -161,6 +211,16 @@ public class LoginFragment extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (Session.getActiveSession().isOpened()) {
+            listener.onLogin(LoginFragment.this, (String) v.getTag());
+        } else {
+            Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

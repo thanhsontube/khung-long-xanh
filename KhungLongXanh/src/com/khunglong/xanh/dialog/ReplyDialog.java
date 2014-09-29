@@ -32,6 +32,7 @@ import com.facebook.Session;
 import com.khunglong.xanh.MainActivity;
 import com.khunglong.xanh.MyApplication;
 import com.khunglong.xanh.R;
+import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.comments.AnswerFragment;
 import com.khunglong.xanh.comments.CmtAdapter;
@@ -98,7 +99,7 @@ public class ReplyDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         context = getActivity().getApplicationContext();
         app = (MyApplication) getActivity().getApplication();
-        mFbLoaderManager = app.getmFbLoaderManager();
+        mFbLoaderManager = ResourceManager.getInstance().getFbLoaderManager();
 
         Bundle bundle = getArguments();
         like = bundle.getInt("like");
