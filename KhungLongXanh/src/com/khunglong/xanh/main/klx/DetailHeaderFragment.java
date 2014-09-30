@@ -22,6 +22,7 @@ import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.json.PageData;
+import com.khunglong.xanh.notification.NotificationUtils;
 import com.khunglong.xanh.utils.BitmapUtils;
 
 public class DetailHeaderFragment extends BaseFragment {
@@ -128,6 +129,9 @@ public class DetailHeaderFragment extends BaseFragment {
 
                     }
                 }
+                break;
+            case R.id.action_noti:
+                NotificationUtils.notify(resource.getContext(), "aaaaaaaa", R.drawable.drawer_haivl);
                 break;
 
             default:
