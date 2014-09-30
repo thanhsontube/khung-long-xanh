@@ -48,10 +48,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
     private ViewGroup mEmpty;
     private boolean isLoading = false;
     private FbLoaderManager mFbLoaderManager;
-    // private MyApplication app;
     private Context context;
     private String albumId;
-    private boolean isFirstLoad = true;
     private String page;
 
     private ResourceManager resource;

@@ -33,6 +33,7 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.khunglong.xanh.base.BaseFragmentActivity;
 import com.khunglong.xanh.image.ImageFullZoomFragment;
+import com.khunglong.xanh.image.SwipeGalleryFragment;
 import com.khunglong.xanh.login.MyLoginActivity;
 import com.khunglong.xanh.main.MainFragment;
 import com.khunglong.xanh.main.drawer.DrawerItemGenerator.DrawerItem;
@@ -579,7 +580,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
 
     @Override
     public void onGridClick(File dto, int value) {
-        ImageFullZoomFragment f = ImageFullZoomFragment.newInstance(value);
+        SwipeGalleryFragment f = SwipeGalleryFragment.newInstance(value);
         showFragment(f, true);
     }
 
