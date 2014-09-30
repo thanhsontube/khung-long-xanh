@@ -23,9 +23,9 @@ import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.card.CardSave;
 import com.khunglong.xanh.card.CardSave.IDeleteListener;
 
-public class SaveFragment extends BaseFragment implements IDeleteListener {
+public class SaveImageFragment extends BaseFragment implements IDeleteListener {
 
-    private static final String TAG = "SaveFragment";
+    private static final String TAG = "SaveTextFragment";
 
     FilterLog log = new FilterLog(TAG);
 
@@ -85,7 +85,7 @@ public class SaveFragment extends BaseFragment implements IDeleteListener {
             do {
                 String title = cursor.getString(1);
                 CardSave card = new CardSave(getActivity(), title);
-                ((CardSave) card).setOnListener(SaveFragment.this);
+                ((CardSave) card).setOnListener(SaveImageFragment.this);
 
                 cards.add(card);
             } while (cursor.moveToNext());
