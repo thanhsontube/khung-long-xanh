@@ -1,5 +1,6 @@
 package com.khunglong.xanh;
 
+import java.io.File;
 import java.util.List;
 
 import android.content.Context;
@@ -31,6 +32,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.khunglong.xanh.base.BaseFragmentActivity;
+import com.khunglong.xanh.image.ImageFullZoomFragment;
 import com.khunglong.xanh.login.MyLoginActivity;
 import com.khunglong.xanh.main.MainFragment;
 import com.khunglong.xanh.main.drawer.DrawerItemGenerator.DrawerItem;
@@ -42,12 +44,13 @@ import com.khunglong.xanh.myfacebook.FbMeLoader;
 import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
+import com.khunglong.xanh.save.SaveImageFragment.ISaveImageListener;
 import com.khunglong.xanh.utils.BitmapUtils;
 import com.khunglong.xanh.utils.GoogleAnaToolKLX;
 import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener {
+public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener, ISaveImageListener {
     private static final String TAG = "MainActivity";
     FilterLog log = new FilterLog(TAG);
     public UiLifecycleHelper uiHelper;
@@ -572,6 +575,12 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
             mDrawerToggle.setDrawerIndicatorEnabled(true);
             getActionBar().setDisplayShowCustomEnabled(true);
         }
+    }
+
+    @Override
+    public void onGridClick(File dto, int value) {
+        ImageFullZoomFragment f = ImageFullZoomFragment.newInstance(value);
+        showFragment(f, true);
     }
 
 }

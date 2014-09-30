@@ -1,37 +1,33 @@
 package com.khunglong.xanh.save;
 
-import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
-import it.gmariotti.cardslib.library.internal.CardHeader.OnClickCardHeaderPopupMenuListener;
-import it.gmariotti.cardslib.library.internal.base.BaseCard;
-import it.gmariotti.cardslib.library.view.CardListView;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.database.Cursor;
+import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.R;
-import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
-import com.khunglong.xanh.card.CardSave;
-import com.khunglong.xanh.card.CardSave.IDeleteListener;
+import com.khunglong.xanh.save.adapter.GridPictureAdapter;
 
-public class SaveImageFragment extends BaseFragment implements IDeleteListener {
+public class SaveImageFragment extends BaseFragment {
 
     private static final String TAG = "SaveTextFragment";
 
     FilterLog log = new FilterLog(TAG);
 
-    private CardListView listview;
-    List<Card> cards = new ArrayList<Card>();
-    CardArrayAdapter mCardArrayAdapter;
+    private GridView gridView;
+    private List<File> list = new ArrayList<File>();
+    private GridPictureAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,54 +40,54 @@ public class SaveImageFragment extends BaseFragment implements IDeleteListener {
         getActivity().getActionBar().setHomeButtonEnabled(true);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         getActivity().getActionBar().setDisplayShowCustomEnabled(false);
-        
-        getActivity().getActionBar().setTitle("Save History");
+
+        getActivity().getActionBar().setTitle("Save Pictures");
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.save_fragment, container, false);
-        listview = (CardListView) rootView.findViewWithTag("listview");
-        cards.clear();
-
-        Cursor cursor = ResourceManager.getInstance().getSqlite().getData();
-
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(1);
-                CardSave card = new CardSave(getActivity(), title);
-                ((CardSave) card).setOnListener(this);
-
-                cards.add(card);
-            } while (cursor.moveToNext());
+        View rootView = inflater.inflate(R.layout.save_picture_fragment, container, false);
+        gridView = (GridView) rootView.findViewWithTag("gridview");
+        list.clear();
+        File file = new File(Environment.getExternalStorageDirectory(), "KLX");
+        if (file.exists()) {
+            File[] fs = file.listFiles();
+            for (File dto : fs) {
+                list.add(dto);
+            }
         }
-        mCardArrayAdapter = new CardArrayAdapter(context, cards);
+        adapter = new GridPictureAdapter(getActivity(), list);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new OnItemClickListener() {
 
-        listview.setAdapter(mCardArrayAdapter);
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listener == null) {
+                    return;
+                }
+                listener.onGridClick(list.get(position), position);
+            }
+        });
+
         return rootView;
     }
 
-    OnClickCardHeaderPopupMenuListener listener = new OnClickCardHeaderPopupMenuListener() {
+    private ISaveImageListener listener;
 
-        @Override
-        public void onMenuItemClick(BaseCard arg0, MenuItem arg1) {
-        }
-    };
+    public static interface ISaveImageListener {
+        void onGridClick(File dto, int value);
+
+    }
 
     @Override
-    public void delete() {
-
-        cards.clear();
-        Cursor cursor = ResourceManager.getInstance().getSqlite().getData();
-
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(1);
-                CardSave card = new CardSave(getActivity(), title);
-                ((CardSave) card).setOnListener(SaveImageFragment.this);
-
-                cards.add(card);
-            } while (cursor.moveToNext());
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISaveImageListener) {
+            listener = (ISaveImageListener) activity;
         }
-        mCardArrayAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
 }
