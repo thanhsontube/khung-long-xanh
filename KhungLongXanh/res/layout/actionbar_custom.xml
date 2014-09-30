@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:tag="like"
-                android:text="24900"
+                android:text="---"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:tag="commend"
-                android:text="900"
+                android:text="---"
                 android:textStyle="bold" />
 
             <TextView

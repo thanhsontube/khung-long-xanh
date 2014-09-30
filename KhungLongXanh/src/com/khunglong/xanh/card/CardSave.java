@@ -5,6 +5,7 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,12 @@ public class CardSave extends Card {
             public void onMenuItemClick(BaseCard card, MenuItem item) {
                 switch (item.getItemId()) {
                 case R.id.action_share:
-                    Toast.makeText(getContext(), "Coming soon ...", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), "Coming soon ...", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, message);
+                    getContext().startActivity(intent);
 
                     break;
                 case R.id.action_delete:

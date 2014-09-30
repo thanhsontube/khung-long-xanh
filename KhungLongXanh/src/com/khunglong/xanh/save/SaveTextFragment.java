@@ -44,7 +44,7 @@ public class SaveTextFragment extends BaseFragment implements IDeleteListener {
         getActivity().getActionBar().setHomeButtonEnabled(true);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         getActivity().getActionBar().setDisplayShowCustomEnabled(false);
-        
+
         getActivity().getActionBar().setTitle("Save History");
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.save_fragment, container, false);
@@ -53,14 +53,14 @@ public class SaveTextFragment extends BaseFragment implements IDeleteListener {
 
         Cursor cursor = ResourceManager.getInstance().getSqlite().getData();
 
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) {
             do {
                 String title = cursor.getString(1);
                 CardSave card = new CardSave(getActivity(), title);
                 ((CardSave) card).setOnListener(this);
 
                 cards.add(card);
-            } while (cursor.moveToNext());
+            } while (cursor.moveToPrevious());
         }
         mCardArrayAdapter = new CardArrayAdapter(context, cards);
 
