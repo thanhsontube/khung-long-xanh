@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ public class DetailHeaderFragment extends BaseFragment {
     private ImageView image;
     private ImageButton btnPopup;
     private PageData mPageData;
+
+    private String page;
 
     public static DetailHeaderFragment newInstance() {
         DetailHeaderFragment f = new DetailHeaderFragment();
@@ -61,7 +64,12 @@ public class DetailHeaderFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void setData(PageData pageData) {
+    public void setData(String page, PageData pageData) {
+        if (page.equalsIgnoreCase(resource.getListPageResource().get(0).getFbName())
+                || page.equalsIgnoreCase(resource.getListPageResource().get(3).getFbName())
+                || page.equalsIgnoreCase(resource.getListPageResource().get(4).getFbName())) {
+            image.setScaleType(ScaleType.FIT_XY);
+        }
         btnPopup.setEnabled(true);
         this.mPageData = pageData;
         try {
@@ -107,7 +115,7 @@ public class DetailHeaderFragment extends BaseFragment {
                 break;
             case R.id.action_save_image:
                 AQuery aQuery = new AQuery(getActivity());
-                Bitmap bitmap = aQuery.getCachedImage(mPageData.getSource());
+                Bitmap bitmap = aQuery.getCachedImage(mPageData.getSourceQuality());
                 BitmapUtils.saveImage(getActivity(), bitmap);
                 break;
 

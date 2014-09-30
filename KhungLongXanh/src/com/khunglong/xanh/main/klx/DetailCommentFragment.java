@@ -50,38 +50,6 @@ public class DetailCommentFragment extends BaseFragment {
     private String page = null;
     private DragonData dragonData = null;
 
-    // public static DetailCommentFragment newInstance(String page) {
-    // DetailCommentFragment f = new DetailCommentFragment();
-    // Bundle bundle = new Bundle();
-    // bundle.putString("page", page);
-    // f.setArguments(bundle);
-    // return f;
-    // }
-    //
-    // @Override
-    // public void onCreate(Bundle savedInstanceState) {
-    // super.onCreate(savedInstanceState);
-    // setHasOptionsMenu(true);
-    //
-    // if (getArguments() != null) {
-    // Bundle bundle = getArguments();
-    // page = bundle.getString("page");
-    // if (page.equals(resource.getListPageResource().get(0).getFbName())) {
-    // dragonData = resource.getChandaiData();
-    // }
-    //
-    // if (page.equals(resource.getListPageResource().get(1).getFbName())) {
-    // dragonData = resource.getKlxData();
-    // }
-    // } else {
-    // page = resource.getListPageResource().get(0).getFbName();
-    // dragonData = resource.getKlxData();
-    // }
-    //
-    // log.d("log>>> onCreate " + "page:" + page);
-    //
-    // }
-
     public static DetailCommentFragment newInstance() {
         DetailCommentFragment f = new DetailCommentFragment();
         return f;

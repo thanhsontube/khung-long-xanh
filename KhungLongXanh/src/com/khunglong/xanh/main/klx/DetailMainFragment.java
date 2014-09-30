@@ -41,6 +41,7 @@ public class DetailMainFragment extends BaseFragment {
     private String page;
 
     private IDetailsFragmentListener listener;
+
     public static interface IDetailsFragmentListener {
         void onDetailsFragmentPicture(String link, String content);
     }
@@ -145,7 +146,7 @@ public class DetailMainFragment extends BaseFragment {
         // comment
         DetailCommentFragment cmtFragment = (DetailCommentFragment) fm.findFragmentById(R.id.detail_bottom);
         ft.commit();
-        headerFragment.setData(pageData);
+        headerFragment.setData(page, pageData);
         if (isFirst) {
             cmtFragment.setData1St(page, pageData, position);
         } else {
@@ -167,7 +168,7 @@ public class DetailMainFragment extends BaseFragment {
                     log.d("log>>>" + "FbLikesLoader onFbLoaderSuccess entry:" + entry.getSummary().getTotal_count());
 
                     // update data like
-//                    entry.getData().get(position).setLikes(entry);
+                    // entry.getData().get(position).setLikes(entry);
 
                     txtLike.setText("" + entry.getSummary().getTotal_count());
                 }
