@@ -35,8 +35,6 @@ public class DetailHeaderFragment extends BaseFragment {
     private ImageButton btnPopup;
     private PageData mPageData;
 
-    private String page;
-
     public static DetailHeaderFragment newInstance() {
         DetailHeaderFragment f = new DetailHeaderFragment();
         return f;
