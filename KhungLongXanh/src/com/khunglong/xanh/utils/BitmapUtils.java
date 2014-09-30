@@ -2,7 +2,9 @@ package com.khunglong.xanh.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 
 import android.content.Context;
@@ -147,7 +149,6 @@ public class BitmapUtils {
     }
 
     public static void saveImage(final Context context, Bitmap loadedImage) {
-        try {
 
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             loadedImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -164,20 +165,38 @@ public class BitmapUtils {
 
             File f = new File(Environment.getExternalStorageDirectory() + File.separator + "KLX" + File.separator
                     + title);
-            f.createNewFile();
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             // write the bytes in file
-            FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
+            FileOutputStream fo = null;
+            try {
+                fo = new FileOutputStream(f);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            try {
+                fo.write(bytes.toByteArray());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             // remember close de FileOutput
-            fo.close();
+            try {
+                fo.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             PreferenceUtil.setPreference(context, MsConstant.KEY_SAVE, ++i);
             Toast.makeText(context, context.getString(R.string.your_image_is_saved_to_this_folder) + f.toString(),
                     Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Log.e("", "log>>>" + "error save Image:" + e.toString());
-            Toast.makeText(context, context.getString(R.string.error_save_imager), Toast.LENGTH_LONG).show();
-        }
+       
 
     }
 }

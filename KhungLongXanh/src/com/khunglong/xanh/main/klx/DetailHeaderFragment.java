@@ -115,8 +115,21 @@ public class DetailHeaderFragment extends BaseFragment {
                 break;
             case R.id.action_save_image:
                 AQuery aQuery = new AQuery(getActivity());
-                Bitmap bitmap = aQuery.getCachedImage(mPageData.getSourceQuality());
-                BitmapUtils.saveImage(getActivity(), bitmap);
+                try {
+
+                    Bitmap bitmap = aQuery.getCachedImage(mPageData.getSourceQuality());
+                    BitmapUtils.saveImage(getActivity(), bitmap);
+                } catch (Exception e) {
+
+                    try {
+                        Bitmap bitmap = aQuery.getCachedImage(mPageData.getSource());
+                        BitmapUtils.saveImage(getActivity(), bitmap);
+
+                    } catch (Exception e2) {
+                        Toast.makeText(getActivity(), "error 2 time:" + e.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
                 break;
 
             default:
