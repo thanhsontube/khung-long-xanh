@@ -90,9 +90,6 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         context = getActivity().getApplicationContext();
         resource = ResourceManager.getInstance();
         mFbLoaderManager = resource.getFbLoaderManager();
-        // dragonData = new DragonData();
-        // app.getmListDragonDatas().add(dragonData);
-
         setHasOptionsMenu(true);
         resource.resetData();
 
@@ -100,32 +97,10 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
             Bundle bundle = getArguments();
             page = bundle.getString("page");
             dragonData = MsUtils.getDragonDataFrompage(page);
-            // if (page.equals(resource.getListPageResource().get(0).getFbName())) {
-            // dragonData = resource.getChandaiData();
-            // }
-            //
-            // if (page.equals(resource.getListPageResource().get(1).getFbName())) {
-            // dragonData = resource.getKlxData();
-            // }
-            //
-            // if (page.equals(resource.getListPageResource().get(2).getFbName())) {
-            // dragonData = resource.getGtgData();
-            // }
-            //
-            // if (page.equals(resource.getListPageResource().get(3).getFbName())) {
-            // dragonData = resource.getHaivlData();
-            // }
-            // if (page.equals(resource.getListPageResource().get(4).getFbName())) {
-            // dragonData = resource.getNghiemtucvlData();
-            // }
 
         } else {
             Toast.makeText(getActivity(), "Error get Page", Toast.LENGTH_SHORT).show();
         }
-
-        // dragonData = null;
-        // dragonData = new DragonData();
-
         log.d("log>>> onCreate " + "page:" + page);
 
     }
@@ -151,6 +126,8 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
         if (listener != null) {
             listener.onIMainFragmentStart(MainFragment.this, 10, null);
         }
+
+        getActivity().getActionBar().setIcon(dragonData.getIcon());
 
         return rootView;
     }
