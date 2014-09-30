@@ -9,7 +9,7 @@
     <!-- message -->
 
     <TextView
-        style="@style/txt_blue_18"
+        style="@style/txt_black_18"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="title"

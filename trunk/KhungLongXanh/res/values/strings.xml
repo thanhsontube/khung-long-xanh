@@ -14,5 +14,6 @@
     <string name="error_save_imager">Error save Imager:</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
+    <string name="copied">Đã Copy</string>
 
 </resources>
