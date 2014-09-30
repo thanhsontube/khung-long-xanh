@@ -8,9 +8,9 @@ import com.facebook.Session;
 import com.khunglong.xanh.MainActivity;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragmentActivity;
-import com.khunglong.xanh.login.LoginFragment.ILoginFragmentListener;
+import com.khunglong.xanh.login.LoginFragment.ILoginListener;
 
-public class MyLoginActivity extends BaseFragmentActivity implements ILoginFragmentListener {
+public class MyLoginActivity extends BaseFragmentActivity implements ILoginListener {
 
     @Override
     protected Fragment createFragmentMain(Bundle savedInstanceState) {
