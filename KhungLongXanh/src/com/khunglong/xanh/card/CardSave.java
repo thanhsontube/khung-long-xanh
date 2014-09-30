@@ -3,6 +3,7 @@ package com.khunglong.xanh.card;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,12 @@ public class CardSave extends Card {
                     if (listener != null) {
                         listener.delete();
                     }
+
+                case R.id.action_copy:
+                    ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(
+                            Context.CLIPBOARD_SERVICE);
+                    clipboard.setText(message);
+                    Toast.makeText(getContext(), "Copy:" + message, Toast.LENGTH_SHORT).show();
                     break;
 
                 default:
