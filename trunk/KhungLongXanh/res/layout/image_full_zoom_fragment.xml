@@ -5,13 +5,19 @@
     android:background="@color/black"
     android:gravity="center"
     android:orientation="vertical" >
+    
+     <com.khunglong.xanh.libs.TouchImageView
+       android:tag="image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/snsd1" />
 
-    <ImageView
+   <!--  <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:scaleType="centerInside"
         android:src="@drawable/snsd1"
-        android:tag="image" />
+        android:tag="image" /> -->
 
 </LinearLayout>
