@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.khunglong.xanh.R;
@@ -83,7 +84,24 @@ public class GridPictureAdapter extends ArrayAdapter<File> {
         }
 
         @Override
-        public boolean onMenuItemClick(MenuItem arg0) {
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+            case R.id.action_delete:
+                File f = list.get(id);
+                if (f.exists()) {
+                    if (f.delete()) {
+                        Toast.makeText(getContext(), "delete success!", Toast.LENGTH_SHORT).show();
+                        list.remove(id);
+                        notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getContext(), "delete fail!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+
+            default:
+                break;
+            }
 
             return false;
         }
