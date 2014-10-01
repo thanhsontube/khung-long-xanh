@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -20,22 +21,24 @@ import android.view.ViewGroup;
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
+import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.MyFragmentPagerAdapter;
+import com.khunglong.xanh.data.MyDataHelper;
 
-public class SwipeGalleryFragment extends BaseFragment {
+public class SwipeFavoriteFragment extends BaseFragment {
 
-    private static final String TAG = "SwipeGalleryFragment";
+    private static final String TAG = "SwipeFavoriteFragment";
     private int position;
     List<String> pageTitle = new ArrayList<String>();
-    private File[] fs;
+    private List<File> list = new ArrayList<File>();
     private ViewPager pager;
     FilterLog log = new FilterLog(TAG);
 
     private MainPagerAdapter adapter;
 
-    public static SwipeGalleryFragment newInstance(int value) {
-        SwipeGalleryFragment f = new SwipeGalleryFragment();
+    public static SwipeFavoriteFragment newInstance(int value) {
+        SwipeFavoriteFragment f = new SwipeFavoriteFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("value", value);
         f.setArguments(bundle);
@@ -44,6 +47,7 @@ public class SwipeGalleryFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        log.d("log>>> " + "onCreate");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
@@ -59,16 +63,39 @@ public class SwipeGalleryFragment extends BaseFragment {
 
         getActivity().getActionBar().setTitle("Swipe Gallery");
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.swipe_gallery_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.swipe_favorite_fragment, container, false);
         File file = new File(Environment.getExternalStorageDirectory(), "KLX");
-        if (file.exists()) {
-            fs = file.listFiles();
-        }
+
         pageTitle.clear();
-        for (File dto : fs) {
-            pageTitle.add(dto.getName());
+        list.clear();
+
+        Cursor cursor = ResourceManager.getInstance().getSqlite().getData(MyDataHelper.DATABASE_TABLE_FAVORITE);
+        if (cursor.moveToFirst()) {
+            do {
+                String value = cursor.getString(1);
+                if (file.exists()) {
+                    File fPic = new File(file, value);
+                    if (fPic.exists()) {
+                        list.add(fPic);
+                        pageTitle.add(fPic.getName());
+                    }
+                }
+            } while (cursor.moveToNext());
         }
-        pager = (ViewPager) rootView.findViewById(R.id.pager_gallery);
+        cursor.close();
+
+        // Cursor cursor = resource.getSqlite().getData(MyDataHelper.DATABASE_TABLE_FAVORITE);
+        // if (cursor.moveToFirst()) {
+        // do {
+        // File dto = new File(file, cursor.getString(1));
+        // if (file.exists()) {
+        // list.add(dto);
+        // pageTitle.add(dto.getName());
+        // }
+        // } while (cursor.moveToNext());
+        // }
+
+        pager = (ViewPager) rootView.findViewById(R.id.pager_favorite);
         adapter = new MainPagerAdapter(getFragmentManager(), getActivity());
         pager.setAdapter(adapter);
 
@@ -113,7 +140,7 @@ public class SwipeGalleryFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return pageTitle.size();
+            return list.size();
         }
 
         @Override
@@ -131,28 +158,28 @@ public class SwipeGalleryFragment extends BaseFragment {
         }
     }
 
-    private MenuItem itemFavorite;
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-        if (itemFavorite != null) {
-            return;
-        }
-        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
-        itemFavorite.setIcon(R.drawable.star_off);
-        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-    }
-
-    @Override
-    public void onDetach() {
-        if (itemFavorite != null) {
-            itemFavorite.setVisible(false);
-            getActivity().invalidateOptionsMenu();
-        }
-        super.onDetach();
-    }
+//    private MenuItem itemFavorite;
+//
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+//        if (itemFavorite != null) {
+//            return;
+//        }
+//        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
+//        itemFavorite.setIcon(R.drawable.star_off);
+//        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        if (itemFavorite != null) {
+//            itemFavorite.setVisible(false);
+//            getActivity().invalidateOptionsMenu();
+//        }
+//        super.onDetach();
+//    }
 
 }
