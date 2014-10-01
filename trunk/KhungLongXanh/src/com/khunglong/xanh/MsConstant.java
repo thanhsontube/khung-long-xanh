@@ -10,6 +10,8 @@ public class MsConstant {
 	public static final String  PAGE_3 = "nghiemtucvl";
 	
 	public static final String  KEY_SAVE = "KEY_SAVE";
+	
+	public static final int  MENU_FAVORITE_ID = 101;
 //	congdongvnexpress
 //	khunglongxanhvietnam
 //	nghiemtucvl

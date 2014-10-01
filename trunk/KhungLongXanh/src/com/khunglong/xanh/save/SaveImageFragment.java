@@ -8,13 +8,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.save.adapter.GridPictureAdapter;

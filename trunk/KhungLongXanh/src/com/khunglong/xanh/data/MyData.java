@@ -52,7 +52,7 @@ public class MyData {
     }
 
     // TABLE FAVORITE
-    public boolean favorite(String text) {
+    public boolean addFavorite(String text) {
         try {
             ContentValues values = new ContentValues();
             values.put("value", text);
@@ -61,6 +61,23 @@ public class MyData {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean isFavorite(String text) {
+        String whereClause = "value = ?";
+        String[] whereArgs = new String[] { text };
+        Cursor cursor = db.query(MyDataHelper.DATABASE_TABLE_FAVORITE, null, whereClause, whereArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            return true;
+        }
+        return false;
+    }
+
+    public void removeFavorite(String text) {
+        String whereClause = "value = ?";
+        String[] whereArgs = new String[] { text };
+        db.delete(MyDataHelper.DATABASE_TABLE_FAVORITE, whereClause, whereArgs);
+
     }
 
 }
