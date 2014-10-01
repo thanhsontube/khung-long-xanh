@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +26,7 @@ import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.MyFragmentPagerAdapter;
 import com.khunglong.xanh.image.ImageFullZoomFragment;
 
-public class SwipeGalleryFragment extends BaseFragment {
+public class SwipeGalleryFragment extends BaseFragment implements OnPageChangeListener {
 
     private static final String TAG = "SwipeGalleryFragment";
     private int position;
@@ -32,6 +34,7 @@ public class SwipeGalleryFragment extends BaseFragment {
     private File[] fs;
     private ViewPager pager;
     FilterLog log = new FilterLog(TAG);
+    private boolean isFavorite;
 
     private MainPagerAdapter adapter;
 
@@ -50,6 +53,7 @@ public class SwipeGalleryFragment extends BaseFragment {
         if (getArguments() != null) {
             position = getArguments().getInt("value");
         }
+
     }
 
     @Override
@@ -65,12 +69,15 @@ public class SwipeGalleryFragment extends BaseFragment {
         if (file.exists()) {
             fs = file.listFiles();
         }
+        isFavorite = resource.getSqlite().isFavorite(fs[position].getName());
+        getActivity().invalidateOptionsMenu();
         pageTitle.clear();
         for (File dto : fs) {
             pageTitle.add(dto.getName());
         }
         pager = (ViewPager) rootView.findViewById(R.id.pager_gallery);
         adapter = new MainPagerAdapter(getFragmentManager(), getActivity());
+        pager.setOnPageChangeListener(this);
         pager.setAdapter(adapter);
 
         return rootView;
@@ -132,33 +139,82 @@ public class SwipeGalleryFragment extends BaseFragment {
         }
     }
 
-//    private MenuItem itemFavorite;
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-//        if (itemFavorite != null) {
-//            return;
-//        }
-//        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
-//        itemFavorite.setIcon(R.drawable.star_off);
-//        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//
-//    }
-//
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden) {
-//            if (itemFavorite != null) {
-//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
-//                itemFavorite.setVisible(false);
-//                getActivity().invalidateOptionsMenu();
-//            } else {
-//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
-//            }
-//        }
-//    }
+    private MenuItem itemFavorite;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+        if (itemFavorite != null) {
+            return;
+        }
+        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
+        itemFavorite.setIcon(R.drawable.star_off);
+        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (itemFavorite == null) {
+            return;
+        }
+        if (isFavorite) {
+            itemFavorite.setIcon(R.drawable.star_on);
+        } else {
+            itemFavorite.setIcon(R.drawable.star_off);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case MsConstant.MENU_FAVORITE_ID:
+            if (TextUtils.isEmpty(fs[position].getName())) {
+                return false;
+            }
+            if (isFavorite) {
+                resource.getSqlite().removeFavorite(fs[position].getName());
+            } else {
+                resource.getSqlite().addFavorite(fs[position].getName());
+            }
+            isFavorite = !isFavorite;
+
+            getActivity().invalidateOptionsMenu();
+            break;
+
+        default:
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (itemFavorite != null) {
+            itemFavorite.setVisible(false);
+            getActivity().invalidateOptionsMenu();
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+    }
+
+    @Override
+    public void onPageSelected(int arg0) {
+        position = arg0;
+        isFavorite = resource.getSqlite().isFavorite(fs[arg0].getName());
+        getActivity().invalidateOptionsMenu();
+    }
 
 }
