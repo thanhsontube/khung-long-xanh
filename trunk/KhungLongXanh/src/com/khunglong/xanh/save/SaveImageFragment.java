@@ -37,7 +37,7 @@ public class SaveImageFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -47,7 +47,6 @@ public class SaveImageFragment extends BaseFragment {
         getActivity().getActionBar().setDisplayShowCustomEnabled(false);
 
         getActivity().getActionBar().setTitle("Save Pictures");
-        setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.save_picture_fragment, container, false);
         gridView = (GridView) rootView.findViewWithTag("gridview");
         list.clear();
@@ -92,7 +91,47 @@ public class SaveImageFragment extends BaseFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        getActivity().invalidateOptionsMenu();
         listener = null;
+    }
+
+    private MenuItem itemFavorite;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+        if (itemFavorite != null) {
+            return;
+        }
+        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
+        itemFavorite.setIcon(R.drawable.star_off);
+        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        itemFavorite.setVisible(false);
+
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+        if (itemFavorite != null) {
+            itemFavorite.setVisible(false);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if (itemFavorite != null) {
+                log.e("log>>> " + "itemFavorite:" + itemFavorite);
+                itemFavorite.setVisible(false);
+                getActivity().invalidateOptionsMenu();
+            } else {
+                log.e("log>>> " + "itemFavorite:" + itemFavorite);
+            }
+        }
     }
 
 }
