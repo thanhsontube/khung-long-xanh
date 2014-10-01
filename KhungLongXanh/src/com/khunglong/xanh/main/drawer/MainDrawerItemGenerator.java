@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.main.drawer.DrawerItemGenerator.DrawerItem;
+import com.khunglong.xanh.save.FavoriteImageFragment;
 import com.khunglong.xanh.save.SaveImageFragment;
 import com.khunglong.xanh.save.SaveTextFragment;
 
@@ -54,10 +55,8 @@ public class MainDrawerItemGenerator implements DrawerItemGenerator<DrawerItem<?
         list.add(new FragmentChangeDrawerItem(R.drawable.drawer_save_s, "Save Image", "Save", "Save",
                 new SaveImageFragment()));
         list.add(new FragmentChangeDrawerItem(R.drawable.drawer_save_s, "Favorite Image", "Save", "Save",
-                new SaveImageFragment()));
-
-        list.add(new PageChangeDrawerItem(R.drawable.drawer_save_s, "Feetback", "Save", "Save",
-               "Feetback"));
+                new FavoriteImageFragment()));
+        list.add(new PageChangeDrawerItem(R.drawable.drawer_save_s, "Feetback", "Save", "Save", "Feetback"));
         return list;
     }
 }

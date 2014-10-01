@@ -22,6 +22,7 @@ import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.card.CardSave;
 import com.khunglong.xanh.card.CardSave.IDeleteListener;
+import com.khunglong.xanh.data.MyDataHelper;
 
 public class SaveTextFragment extends BaseFragment implements IDeleteListener {
 
@@ -51,7 +52,7 @@ public class SaveTextFragment extends BaseFragment implements IDeleteListener {
         listview = (CardListView) rootView.findViewWithTag("listview");
         cards.clear();
 
-        Cursor cursor = ResourceManager.getInstance().getSqlite().getData();
+        Cursor cursor = ResourceManager.getInstance().getSqlite().getData(MyDataHelper.DATABASE_TABLE);
 
         if (cursor.moveToLast()) {
             do {
@@ -79,7 +80,7 @@ public class SaveTextFragment extends BaseFragment implements IDeleteListener {
     public void delete() {
 
         cards.clear();
-        Cursor cursor = ResourceManager.getInstance().getSqlite().getData();
+        Cursor cursor = ResourceManager.getInstance().getSqlite().getData(MyDataHelper.DATABASE_TABLE);
 
         if (cursor.moveToFirst()) {
             do {

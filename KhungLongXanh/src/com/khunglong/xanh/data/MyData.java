@@ -29,8 +29,8 @@ public class MyData {
         }
     }
 
-    public Cursor getData() {
-        return db.query(MyDataHelper.DATABASE_TABLE, null, null, null, null, null, null);
+    public Cursor getData(String tableName) {
+        return db.query(tableName, null, null, null, null, null, null);
     }
 
     public void deleteRow(Cursor cursor) {
@@ -43,6 +43,24 @@ public class MyData {
         String whereClause = "value = ?";
         String[] whereArgs = new String[] { message };
         db.delete(MyDataHelper.DATABASE_TABLE, whereClause, whereArgs);
+    }
+
+    public void deleteRow(String tableName, String message) {
+        String whereClause = "value = ?";
+        String[] whereArgs = new String[] { message };
+        db.delete(tableName, whereClause, whereArgs);
+    }
+
+    // TABLE FAVORITE
+    public boolean favorite(String text) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put("value", text);
+            db.insertOrThrow(MyDataHelper.DATABASE_TABLE_FAVORITE, null, values);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

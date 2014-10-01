@@ -150,53 +150,52 @@ public class BitmapUtils {
 
     public static void saveImage(final Context context, Bitmap loadedImage) {
 
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            loadedImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            // you can create a new file name "test.jpg" in sdcard folder.
-            File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "KLX");
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        loadedImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        // you can create a new file name "test.jpg" in sdcard folder.
+        File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "KLX");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
 
-            String title = "KLX_";
-            int i = PreferenceUtil.getPreference(context, MsConstant.KEY_SAVE, 0);
-            title += i;
-            title += ".jpg";
+        String title = "KLX_" + DatetimeUtils.getTimtFromLongTime(System.currentTimeMillis());
 
-            File f = new File(Environment.getExternalStorageDirectory() + File.separator + "KLX" + File.separator
-                    + title);
-            try {
-                f.createNewFile();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            // write the bytes in file
-            FileOutputStream fo = null;
-            try {
-                fo = new FileOutputStream(f);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            try {
-                fo.write(bytes.toByteArray());
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+         int i = PreferenceUtil.getPreference(context, MsConstant.KEY_SAVE, 0);
+        // title += i;
+        title += ".jpg";
 
-            // remember close de FileOutput
-            try {
-                fo.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            PreferenceUtil.setPreference(context, MsConstant.KEY_SAVE, ++i);
-            Toast.makeText(context, context.getString(R.string.your_image_is_saved_to_this_folder) + f.toString(),
-                    Toast.LENGTH_LONG).show();
-       
+        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "KLX" + File.separator + title);
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // write the bytes in file
+        FileOutputStream fo = null;
+        try {
+            fo = new FileOutputStream(f);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            fo.write(bytes.toByteArray());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // remember close de FileOutput
+        try {
+            fo.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        PreferenceUtil.setPreference(context, MsConstant.KEY_SAVE, ++i);
+        Toast.makeText(context, context.getString(R.string.your_image_is_saved_to_this_folder) + f.toString(),
+                Toast.LENGTH_LONG).show();
 
     }
 }
