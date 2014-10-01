@@ -63,6 +63,7 @@ public class FavoriteImageFragment extends BaseFragment {
                 }
             } while (cursor.moveToNext());
         }
+        cursor.close();
         adapter = new GridPictureAdapter(getActivity(), list);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new OnItemClickListener() {
@@ -72,6 +73,7 @@ public class FavoriteImageFragment extends BaseFragment {
                 if (listener == null) {
                     return;
                 }
+                log.d("log>>> " + "FAVORITE Click:" + list.get(position).getName() + ";pos:" + position);
                 listener.onFavoriteImageGridClick(list.get(position), position);
             }
         });

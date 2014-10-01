@@ -1,4 +1,4 @@
-package com.khunglong.xanh.image;
+package com.khunglong.xanh.swipe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.MyFragmentPagerAdapter;
+import com.khunglong.xanh.image.ImageFullZoomFragment;
 
 public class SwipeGalleryFragment extends BaseFragment {
 
@@ -108,7 +109,7 @@ public class SwipeGalleryFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return ImageFullZoomFragment.newInstance(position);
+            return ImageFullZoomFragment.newInstance(fs[position].getAbsolutePath());
         }
 
         @Override

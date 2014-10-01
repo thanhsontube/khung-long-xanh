@@ -1,4 +1,4 @@
-package com.khunglong.xanh.image;
+package com.khunglong.xanh.swipe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,19 +12,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
-import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.MyFragmentPagerAdapter;
 import com.khunglong.xanh.data.MyDataHelper;
+import com.khunglong.xanh.image.ImageFullZoomFragment;
 
 public class SwipeFavoriteFragment extends BaseFragment {
 
@@ -61,7 +58,7 @@ public class SwipeFavoriteFragment extends BaseFragment {
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         getActivity().getActionBar().setDisplayShowCustomEnabled(false);
 
-        getActivity().getActionBar().setTitle("Swipe Gallery");
+        getActivity().getActionBar().setTitle("Swipe Favorite");
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.swipe_favorite_fragment, container, false);
         File file = new File(Environment.getExternalStorageDirectory(), "KLX");
@@ -83,18 +80,6 @@ public class SwipeFavoriteFragment extends BaseFragment {
             } while (cursor.moveToNext());
         }
         cursor.close();
-
-        // Cursor cursor = resource.getSqlite().getData(MyDataHelper.DATABASE_TABLE_FAVORITE);
-        // if (cursor.moveToFirst()) {
-        // do {
-        // File dto = new File(file, cursor.getString(1));
-        // if (file.exists()) {
-        // list.add(dto);
-        // pageTitle.add(dto.getName());
-        // }
-        // } while (cursor.moveToNext());
-        // }
-
         pager = (ViewPager) rootView.findViewById(R.id.pager_favorite);
         adapter = new MainPagerAdapter(getFragmentManager(), getActivity());
         pager.setAdapter(adapter);
@@ -135,7 +120,7 @@ public class SwipeFavoriteFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return ImageFullZoomFragment.newInstance(position);
+            return ImageFullZoomFragment.newInstance(list.get(position).getAbsolutePath());
         }
 
         @Override
@@ -158,28 +143,28 @@ public class SwipeFavoriteFragment extends BaseFragment {
         }
     }
 
-//    private MenuItem itemFavorite;
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-//        if (itemFavorite != null) {
-//            return;
-//        }
-//        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
-//        itemFavorite.setIcon(R.drawable.star_off);
-//        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        if (itemFavorite != null) {
-//            itemFavorite.setVisible(false);
-//            getActivity().invalidateOptionsMenu();
-//        }
-//        super.onDetach();
-//    }
+    // private MenuItem itemFavorite;
+    //
+    // @Override
+    // public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    // super.onCreateOptionsMenu(menu, inflater);
+    // itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+    // if (itemFavorite != null) {
+    // return;
+    // }
+    // itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
+    // itemFavorite.setIcon(R.drawable.star_off);
+    // itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    //
+    // }
+    //
+    // @Override
+    // public void onDetach() {
+    // if (itemFavorite != null) {
+    // itemFavorite.setVisible(false);
+    // getActivity().invalidateOptionsMenu();
+    // }
+    // super.onDetach();
+    // }
 
 }
