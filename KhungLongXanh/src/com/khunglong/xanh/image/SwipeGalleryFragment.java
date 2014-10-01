@@ -11,13 +11,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.base.MyFragmentPagerAdapter;
+import com.khunglong.xanh.utils.MsUtils;
 
 public class SwipeGalleryFragment extends BaseFragment {
 
@@ -41,6 +46,7 @@ public class SwipeGalleryFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             position = getArguments().getInt("value");
         }
@@ -125,4 +131,29 @@ public class SwipeGalleryFragment extends BaseFragment {
             return pageTitle.get(position);
         }
     }
+
+    private MenuItem itemFavorite;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+        if (itemFavorite != null) {
+            return;
+        }
+        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
+        itemFavorite.setIcon(R.drawable.star_off);
+        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+    }
+
+    @Override
+    public void onDetach() {
+        if (itemFavorite != null) {
+            itemFavorite.setVisible(false);
+            getActivity().invalidateOptionsMenu();
+        }
+        super.onDetach();
+    }
+
 }

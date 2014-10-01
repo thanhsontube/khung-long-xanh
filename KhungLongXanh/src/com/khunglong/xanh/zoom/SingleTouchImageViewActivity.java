@@ -131,7 +131,7 @@ public class SingleTouchImageViewActivity extends Activity {
     }
 
     // @Override
-    // public boolean onOptionsItemSelected(MenuItem item) {
+    // public boolean onOptionsItemSelected(MenuItem itemFavorite) {
     // finish();
     // return true;
     // }

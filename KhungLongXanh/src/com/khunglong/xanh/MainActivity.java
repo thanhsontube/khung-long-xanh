@@ -243,7 +243,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
     }
 
     /**
-     * item left-drawer click
+     * itemFavorite left-drawer click
      */
     OnItemClickListener itemClickListener = new OnItemClickListener() {
 
@@ -265,7 +265,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
                 final DrawerItem<?> item = (DrawerItem<?>) mDrawerList.getAdapter().getItem(position);
                 if (item instanceof PageChangeDrawerItem) {
 
-                    // String page = ((PageChangeDrawerItem) item).getParam();
+                    // String page = ((PageChangeDrawerItem) itemFavorite).getParam();
                     // while (mFragmentTagStack.size() > 0) {
                     // fm.popBackStackImmediate();
                     // log.d("log>>>" + "fm.popBackStackImmediate()");
@@ -437,7 +437,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
                     // // fmain.changeViewPager(0);
                     // fmain.load(page, 0);
 
-                    // Fragment f = ((FragmentChangeDrawerItem) item).getParam();
+                    // Fragment f = ((FragmentChangeDrawerItem) itemFavorite).getParam();
                     // if (f instanceof MainFragment) {
                     // log.d("log>>>" + "f instanceof MainFragment");
                     // while (mFragmentTagStack.size() > 1) {

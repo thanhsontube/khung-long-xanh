@@ -64,15 +64,15 @@ public abstract class MyFragmentPagerAdapter extends PagerAdapter {
 		boolean reusable = (fragment != null && isFragmentReusable(fragment, position));
 		
 		if (fragment != null && reusable) {
-			log.v("Reuse item show #" + position + ": f=" + fragment);
+			log.v("Reuse itemFavorite show #" + position + ": f=" + fragment);
 			mCurTransaction.show(fragment);
 		} else {
 			fragment = getItem(position);
 			if (reusable) {
-				log.v("Replacing item #" + position + ": f=" + fragment);
+				log.v("Replacing itemFavorite #" + position + ": f=" + fragment);
 				mCurTransaction.replace(container.getId(), fragment, makeFragmentName(container.getId(), position));
 			} else {
-				log.v("Adding item #" + position + ": f=" + fragment);
+				log.v("Adding itemFavorite #" + position + ": f=" + fragment);
 				mCurTransaction.add(container.getId(), fragment, makeFragmentName(container.getId(), position));
 			}
 		}
@@ -90,10 +90,10 @@ public abstract class MyFragmentPagerAdapter extends PagerAdapter {
 		}
 		final Fragment f = (Fragment) object;
 		if (isFragmentReusable(f, position)) {
-			log.v("Hide item #" + position + ": f=" + object + " v=" + ((Fragment) object).getView());
+			log.v("Hide itemFavorite #" + position + ": f=" + object + " v=" + ((Fragment) object).getView());
 			mCurTransaction.hide(f);
 		} else {
-			log.v("Detaching item #" + position + ": f=" + object + " v=" + ((Fragment) object).getView());
+			log.v("Detaching itemFavorite #" + position + ": f=" + object + " v=" + ((Fragment) object).getView());
 			mCurTransaction.detach((Fragment) object);
 		}
 	}
