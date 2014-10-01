@@ -72,25 +72,25 @@ public class FavoriteImageFragment extends BaseFragment {
                 if (listener == null) {
                     return;
                 }
-                listener.onGridClick(list.get(position), position);
+                listener.onFavoriteImageGridClick(list.get(position), position);
             }
         });
 
         return rootView;
     }
 
-    private ISaveImageListener listener;
+    private IFavoriteImageListener listener;
 
-    public static interface ISaveImageListener {
-        void onGridClick(File dto, int value);
+    public static interface IFavoriteImageListener {
+        void onFavoriteImageGridClick(File dto, int value);
 
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof ISaveImageListener) {
-            listener = (ISaveImageListener) activity;
+        if (activity instanceof IFavoriteImageListener) {
+            listener = (IFavoriteImageListener) activity;
         }
     }
 

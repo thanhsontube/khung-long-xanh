@@ -26,13 +26,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
-import com.androidquery.callback.ImageOptions;
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.khunglong.xanh.base.BaseFragmentActivity;
-import com.khunglong.xanh.image.ImageFullZoomFragment;
+import com.khunglong.xanh.image.SwipeFavoriteFragment;
 import com.khunglong.xanh.image.SwipeGalleryFragment;
 import com.khunglong.xanh.login.MyLoginActivity;
 import com.khunglong.xanh.main.MainFragment;
@@ -45,14 +44,14 @@ import com.khunglong.xanh.myfacebook.FbMeLoader;
 import com.khunglong.xanh.myfacebook.FbUserLoader;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
 import com.khunglong.xanh.myfacebook.object.FbMe;
+import com.khunglong.xanh.save.FavoriteImageFragment.IFavoriteImageListener;
 import com.khunglong.xanh.save.SaveImageFragment.ISaveImageListener;
-import com.khunglong.xanh.utils.BitmapUtils;
 import com.khunglong.xanh.utils.GoogleAnaToolKLX;
 import com.khunglong.xanh.utils.MsUtils;
 import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener, ISaveImageListener {
+public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener, ISaveImageListener , IFavoriteImageListener{
     private static final String TAG = "MainActivity";
     FilterLog log = new FilterLog(TAG);
     public UiLifecycleHelper uiHelper;
@@ -587,6 +586,13 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
     public void onGridClick(File dto, int value) {
         SwipeGalleryFragment f = SwipeGalleryFragment.newInstance(value);
         showFragment(f, true);
+    }
+
+    @Override
+    public void onFavoriteImageGridClick(File dto, int value) {
+        SwipeFavoriteFragment f = SwipeFavoriteFragment.newInstance(value);
+        showFragment(f, true);
+        
     }
 
 }
