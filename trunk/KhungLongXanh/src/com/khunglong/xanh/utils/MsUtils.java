@@ -2,11 +2,14 @@ package com.khunglong.xanh.utils;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.IntentCompat;
+import android.util.Log;
+
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.json.DragonData;
-
-import android.util.Log;
 
 public class MsUtils {
     public static boolean iSJsonValueAvailable(JSONObject ja, String value) {
@@ -47,5 +50,18 @@ public class MsUtils {
         }
 
         return dragonData;
+    }
+
+    public static void sendEmail(Context context, String receiver, String subject, String body) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { receiver });
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        try {
+            context.startActivity(Intent.createChooser(intent, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+        }
     }
 }
