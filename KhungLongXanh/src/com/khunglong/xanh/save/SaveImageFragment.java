@@ -95,43 +95,43 @@ public class SaveImageFragment extends BaseFragment {
         listener = null;
     }
 
-    private MenuItem itemFavorite;
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-        if (itemFavorite != null) {
-            return;
-        }
-        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
-        itemFavorite.setIcon(R.drawable.star_off);
-        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        itemFavorite.setVisible(false);
-
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-        if (itemFavorite != null) {
-            itemFavorite.setVisible(false);
-        }
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if (itemFavorite != null) {
-                log.e("log>>> " + "itemFavorite:" + itemFavorite);
-                itemFavorite.setVisible(false);
-                getActivity().invalidateOptionsMenu();
-            } else {
-                log.e("log>>> " + "itemFavorite:" + itemFavorite);
-            }
-        }
-    }
+//    private MenuItem itemFavorite;
+//
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+//        if (itemFavorite != null) {
+//            return;
+//        }
+//        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
+//        itemFavorite.setIcon(R.drawable.star_off);
+//        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        itemFavorite.setVisible(false);
+//
+//    }
+//
+//    @Override
+//    public void onPrepareOptionsMenu(Menu menu) {
+//        super.onPrepareOptionsMenu(menu);
+//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+//        if (itemFavorite != null) {
+//            itemFavorite.setVisible(false);
+//        }
+//    }
+//
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden) {
+//            if (itemFavorite != null) {
+//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
+//                itemFavorite.setVisible(false);
+//                getActivity().invalidateOptionsMenu();
+//            } else {
+//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
+//            }
+//        }
+//    }
 
 }
