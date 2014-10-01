@@ -78,6 +78,10 @@ public class ImageFullZoomFragment extends BaseFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        if (itemFavorite != null) {
+            itemFavorite.setVisible(true);
+            return;
+        }
         if (isFavorite) {
             itemFavorite.setIcon(R.drawable.star_on);
         } else {

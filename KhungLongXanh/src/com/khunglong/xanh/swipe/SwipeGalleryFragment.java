@@ -132,28 +132,33 @@ public class SwipeGalleryFragment extends BaseFragment {
         }
     }
 
-    private MenuItem itemFavorite;
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-        if (itemFavorite != null) {
-            return;
-        }
-        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
-        itemFavorite.setIcon(R.drawable.star_off);
-        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-    }
-
-    @Override
-    public void onDetach() {
-        if (itemFavorite != null) {
-            itemFavorite.setVisible(false);
-            getActivity().invalidateOptionsMenu();
-        }
-        super.onDetach();
-    }
+//    private MenuItem itemFavorite;
+//
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
+//        if (itemFavorite != null) {
+//            return;
+//        }
+//        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
+//        itemFavorite.setIcon(R.drawable.star_off);
+//        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//
+//    }
+//
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden) {
+//            if (itemFavorite != null) {
+//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
+//                itemFavorite.setVisible(false);
+//                getActivity().invalidateOptionsMenu();
+//            } else {
+//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
+//            }
+//        }
+//    }
 
 }
