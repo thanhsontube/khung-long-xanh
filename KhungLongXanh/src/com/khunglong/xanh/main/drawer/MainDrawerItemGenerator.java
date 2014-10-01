@@ -54,9 +54,9 @@ public class MainDrawerItemGenerator implements DrawerItemGenerator<DrawerItem<?
 
         list.add(new FragmentChangeDrawerItem(R.drawable.drawer_save_s, "Save Image", "Save", "Save",
                 new SaveImageFragment()));
-        list.add(new FragmentChangeDrawerItem(R.drawable.drawer_save_s, "Favorite Image", "Save", "Save",
+        list.add(new FragmentChangeDrawerItem(R.drawable.star_on, "Favorite Image", "Save", "Save",
                 new FavoriteImageFragment()));
-        list.add(new PageChangeDrawerItem(R.drawable.drawer_save_s, "Feetback", "Save", "Save", "Feetback"));
+        list.add(new PageChangeDrawerItem(R.drawable.tab_info_on, "Feedback", "Save", "Save", "Feetback"));
         return list;
     }
 }
