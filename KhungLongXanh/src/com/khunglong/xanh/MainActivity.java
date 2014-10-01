@@ -48,6 +48,7 @@ import com.khunglong.xanh.myfacebook.object.FbMe;
 import com.khunglong.xanh.save.SaveImageFragment.ISaveImageListener;
 import com.khunglong.xanh.utils.BitmapUtils;
 import com.khunglong.xanh.utils.GoogleAnaToolKLX;
+import com.khunglong.xanh.utils.MsUtils;
 import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -264,11 +265,11 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
                 final DrawerItem<?> item = (DrawerItem<?>) mDrawerList.getAdapter().getItem(position);
                 if (item instanceof PageChangeDrawerItem) {
 
-                    String page = ((PageChangeDrawerItem) item).getParam();
-                    while (mFragmentTagStack.size() > 0) {
-                        fm.popBackStackImmediate();
-                        log.d("log>>>" + "fm.popBackStackImmediate()");
-                    }
+                    // String page = ((PageChangeDrawerItem) item).getParam();
+                    // while (mFragmentTagStack.size() > 0) {
+                    // fm.popBackStackImmediate();
+                    // log.d("log>>>" + "fm.popBackStackImmediate()");
+                    // }
                     // log.d("log>>>" + "f instanceof MainFragment:" + mFragmentTagStack.size() +"tag:" +
                     // mFragmentTagStack.peek());
 
@@ -456,6 +457,8 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
                     // showFragment(f, false);
                     // }
 
+                    MsUtils.sendEmail(MainActivity.this, "thanhsontube@gmail.com", "[Feetback] KLX app", "");
+
                 } else if (item instanceof FragmentChangeDrawerItem) {
 
                     Fragment f = (Fragment) item.getParam();
@@ -512,6 +515,8 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
     @Override
     public void onDestroy() {
         super.onDestroy();
+        AQuery aQuery = new AQuery(this);
+        aQuery.clear();
         uiHelper.onDestroy();
     }
 

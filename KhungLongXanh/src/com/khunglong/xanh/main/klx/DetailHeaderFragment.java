@@ -64,8 +64,7 @@ public class DetailHeaderFragment extends BaseFragment {
     }
 
     public void setData(String page, PageData pageData) {
-        if (page.equalsIgnoreCase(resource.getListPageResource().get(0).getFbName())
-                || page.equalsIgnoreCase(resource.getListPageResource().get(3).getFbName())
+        if ( page.equalsIgnoreCase(resource.getListPageResource().get(3).getFbName())
                 || page.equalsIgnoreCase(resource.getListPageResource().get(4).getFbName())) {
             image.setScaleType(ScaleType.FIT_XY);
         }
