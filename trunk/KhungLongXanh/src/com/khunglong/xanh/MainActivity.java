@@ -51,7 +51,8 @@ import com.khunglong.xanh.utils.MsUtils;
 import com.khunglong.xanh.zoom.SingleTouchImageViewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener, ISaveImageListener , IFavoriteImageListener{
+public class MainActivity extends BaseFragmentActivity implements IDetailsFragmentListener, ISaveImageListener,
+        IFavoriteImageListener {
     private static final String TAG = "MainActivity";
     FilterLog log = new FilterLog(TAG);
     public UiLifecycleHelper uiHelper;
@@ -456,7 +457,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
                     // showFragment(f, false);
                     // }
 
-                    MsUtils.sendEmail(MainActivity.this, "thanhsontube@gmail.com", "[Feetback] KLX app", "");
+                    MsUtils.sendEmail(MainActivity.this, "thanhsontube@gmail.com", "[Feedback] KLX app", "");
 
                 } else if (item instanceof FragmentChangeDrawerItem) {
 
@@ -592,7 +593,7 @@ public class MainActivity extends BaseFragmentActivity implements IDetailsFragme
     public void onFavoriteImageGridClick(File dto, int value) {
         SwipeFavoriteFragment f = SwipeFavoriteFragment.newInstance(value);
         showFragment(f, true);
-        
+
     }
 
 }
