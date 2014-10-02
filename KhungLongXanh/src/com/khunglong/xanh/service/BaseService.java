@@ -10,11 +10,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.example.sonnt_commonandroid.utils.PreferenceUtil;
 import com.khunglong.xanh.MsConstant;
+import com.khunglong.xanh.R;
+import com.khunglong.xanh.ResourceManager;
+import com.khunglong.xanh.base.Controller;
+import com.khunglong.xanh.json.DragonData;
+import com.khunglong.xanh.main.klx.DetailMainFragment;
+import com.khunglong.xanh.myfacebook.FbLoaderAlbumsList;
+import com.khunglong.xanh.myfacebook.FbLoaderManager;
+import com.khunglong.xanh.myfacebook.FbPageLoader;
+import com.khunglong.xanh.myfacebook.object.FbAlbums;
+import com.khunglong.xanh.myfacebook.object.FbAlbumsDto;
+import com.khunglong.xanh.utils.MsUtils;
 
 public class BaseService extends Service {
     private static final String TAG = "BaseService";
@@ -23,6 +38,9 @@ public class BaseService extends Service {
     private LocalBinder localBinder = new LocalBinder();
     private CommonBroadcastReceiver commonBroadcastReceiver;
     private PendingIntent pendingIntentAlarm;
+    ResourceManager resource;
+    private Context context;
+    private int pagePosition = 0;
 
     public class LocalBinder extends Binder {
         public BaseService getService(Context context) {
@@ -39,6 +57,9 @@ public class BaseService extends Service {
     public void onCreate() {
         log.d("log>>> " + "SERVICE onCreate ");
         super.onCreate();
+        context = getApplicationContext();
+        resource = ResourceManager.getInstance();
+        mFbLoaderManager = resource.getFbLoaderManager();
         IntentFilter filter = new IntentFilter();
         filter.addAction(MsConstant.ACTION_CHECK);
         commonBroadcastReceiver = new CommonBroadcastReceiver();
@@ -77,11 +98,158 @@ public class BaseService extends Service {
             log.d("log>>>" + "onReceive:" + action);
             if (action.equals(MsConstant.ACTION_CHECK)) {
                 log.d("log>>> " + "CommonBroadcastReceiver ACTION_CHECK");
+
                 setAlarm(getApplicationContext(), MsConstant.ALARM_CHECK, pendingIntentAlarm);
+                pagePosition = 0;
+                page = resource.getListPageResource().get(pagePosition).getFbName();
+                controllerAlbums.load();
 
             }
         }
-
     }
+
+    private String page;
+    private boolean isLoading;
+    private FbLoaderManager mFbLoaderManager;
+
+    private StringBuilder stringNotification = new StringBuilder();
+    private Controller controllerAlbums = new Controller() {
+
+        @Override
+        public void load() {
+            isLoading = true;
+
+            mFbLoaderManager.load(new FbLoaderAlbumsList(context, page) {
+
+                @Override
+                public void onFbLoaderSuccess(FbAlbums entry) {
+                    // get Timeline Photos album;
+                    for (final FbAlbumsDto element : entry.listFbAlbumsDto) {
+                        if (element.getName().equalsIgnoreCase("Timeline Photos")) {
+                            int count = element.getCount();
+                            int saveCount;
+
+                            if (page.equals(resource.getListPageResource().get(0).getFbName())) {
+                                saveCount = PreferenceUtil.getPreference(context, MsConstant.KEY_PAGE_1,
+                                        MsConstant.DEFAULT);
+
+                                if (saveCount == MsConstant.DEFAULT) {
+                                    PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_1, count);
+                                } else {
+                                    if (count != saveCount) {
+                                        int iNew = count - saveCount;
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_1, count);
+                                        if (iNew > 0) {
+                                            stringNotification.append(page + ":" + iNew + " NEW POST");
+
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            if (page.equals(resource.getListPageResource().get(1).getFbName())) {
+                                saveCount = PreferenceUtil.getPreference(context, MsConstant.KEY_PAGE_2,
+                                        MsConstant.DEFAULT);
+
+                                if (saveCount == MsConstant.DEFAULT) {
+                                    PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_2, count);
+                                } else {
+                                    if (count != saveCount) {
+                                        int iNew = count - saveCount;
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_2, count);
+                                        if (iNew > 0) {
+                                            stringNotification.append(page + ":" + iNew + " NEW POST;");
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (page.equals(resource.getListPageResource().get(2).getFbName())) {
+                                saveCount = PreferenceUtil.getPreference(context, MsConstant.KEY_PAGE_3,
+                                        MsConstant.DEFAULT);
+
+                                if (saveCount == MsConstant.DEFAULT) {
+                                    PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_3, count);
+                                } else {
+                                    if (count != saveCount) {
+                                        int iNew = count - saveCount;
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_3, count);
+                                        if (iNew > 0) {
+                                            stringNotification.append(page + ":" + iNew + " NEW POST;");
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (page.equals(resource.getListPageResource().get(3).getFbName())) {
+                                saveCount = PreferenceUtil.getPreference(context, MsConstant.KEY_PAGE_4,
+                                        MsConstant.DEFAULT);
+
+                                if (saveCount == MsConstant.DEFAULT) {
+                                    PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_4, count);
+                                } else {
+                                    if (count != saveCount) {
+                                        int iNew = count - saveCount;
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_4, count);
+                                        if (iNew > 0) {
+                                            stringNotification.append(page + ":" + iNew + " NEW POST;");
+
+                                        }
+                                    }
+                                }
+                            }
+                            if (page.equals(resource.getListPageResource().get(4).getFbName())) {
+                                saveCount = PreferenceUtil.getPreference(context, MsConstant.KEY_PAGE_5,
+                                        MsConstant.DEFAULT);
+
+                                if (saveCount == MsConstant.DEFAULT) {
+                                    PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_5, count);
+                                } else {
+                                    if (count != saveCount) {
+                                        int iNew = count - saveCount;
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_5, count);
+                                        if (iNew > 0) {
+                                            stringNotification.append(page + ":" + iNew + " NEW POST");
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            log.d("log>>> " + "page:" + page + ";count:" + count);
+                        }
+                    }
+
+                    if (pagePosition < 5) {
+                        pagePosition++;
+                        page = resource.getListPageResource().get(pagePosition).getFbName();
+                        controllerAlbums.load();
+                    }
+
+                    if (pagePosition == 5) {
+
+                        if (!TextUtils.isEmpty(stringNotification.toString())) {
+                            log.e("log>>> " + "NEWS:" + stringNotification.toString());
+                        } else {
+                            log.e("log>>> " + "NO PAGE HAVE NEW POST");
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFbLoaderStart() {
+                }
+
+                @Override
+                public void onFbLoaderFail(Throwable e) {
+                    log.e("log>>>" + "controllerAlbums onFbLoaderFail:" + e.toString());
+                }
+            });
+        }
+    };
 
 }
