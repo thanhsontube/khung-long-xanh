@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- Post -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_deep"
+        android:gravity="center_vertical"
+        android:minHeight="200dp"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/txt_white_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/lv1"
+            android:tag="title"
+            android:text="@string/test1" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/lv1"
+                android:src="@drawable/nghiemtucvl"
+                android:tag="avatar" />
+
+            <TextView
+                style="@style/txt_white_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_margin="@dimen/lv1"
+                android:background="@color/blue_transparent"
+                android:maxLines="5"
+                android:scrollbars="vertical"
+                android:tag="name"
+                android:text="@string/about" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_margin="@dimen/lv1"
+                android:src="@drawable/tool_stop_white"
+                android:tag="close" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

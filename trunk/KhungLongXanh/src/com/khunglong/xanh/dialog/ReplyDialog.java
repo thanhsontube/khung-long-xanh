@@ -1,9 +1,6 @@
 package com.khunglong.xanh.dialog;
 
-import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
-import it.gmariotti.cardslib.library.view.CardView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,13 +11,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,7 +29,6 @@ import com.khunglong.xanh.MyApplication;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.Controller;
-import com.khunglong.xanh.comments.AnswerFragment;
 import com.khunglong.xanh.comments.CmtAdapter;
 import com.khunglong.xanh.myfacebook.FbCommentsLoader;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
@@ -53,10 +47,9 @@ public class ReplyDialog extends DialogFragment {
     FilterLog log = new FilterLog(TAG);
     private TextView txtTitle;
     private TextView txtName;
-    private TextView txtLike;
     private View viewCmt;
     private EditText txtContent;
-    private ImageView imgAvatar;
+    private ImageView imgAvatar, imgClose;
     private ListView cmtListview;
     private CmtAdapter cmtAdapter;
     private List<FbCmtData> cmtListData;
@@ -115,44 +108,16 @@ public class ReplyDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog rootView = new Dialog(getActivity());
         rootView.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        rootView.setContentView(R.layout.reply_dialog2);
+        rootView.setContentView(R.layout.dialog_reply);
         mEmpty = (ViewGroup) rootView.findViewById(android.R.id.empty);
         mEmpty.setVisibility(View.VISIBLE);
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.waiting, mEmpty, true);
 
-        CardView cardView = (CardView) rootView.findViewById(R.id.reply_card_header);
-        Card card = new Card(getActivity());
-        CardHeader cardHeader = new CardHeader(getActivity());
-        cardHeader.setTitle(title);
-        cardHeader.setButtonExpandVisible(true);
-        cardHeader.setPopupMenu(R.menu.menu_commend, null);
-        card.addCardHeader(cardHeader);
-
-        cardThumbnail = new CardThumbnail(getActivity());
-        if (image != null) {
-            log.d("log>>> " + "image:" + image);
-            // ImageLoader imageLoader = ImageLoader.getInstance();
-            // imageLoader.displayImage(image, imgAvatar, null, null);
-
-            cardThumbnail.setUrlResource(image);
-        }
-
-        card.addCardThumbnail(cardThumbnail);
-
-        cardView.setCard(card);
-
-        // txtTitle = (TextView) rootView.findViewById(R.id.title);
-        // txtTitle.setMovementMethod(new ScrollingMovementMethod());
-        // txtLike = (TextView) rootView.findViewById(R.id.like);
-        // txtTitle.setText("" + like);
-        // txtName = (TextView) rootView.findViewById(R.id.name);
-        // txtContent = (EditText) rootView.findViewById(R.id.answer_txt_content);
-        // imgAvatar = (ImageView) rootView.findViewById(R.id.avatar);
-        // txtTitle.setText(title);
-
-        // txtName.setText(name);
+        View header = inflater.inflate(R.layout.header_dialog_reply, null, false);
+        initHeader(header);
         cmtListview = (ListView) rootView.findViewById(R.id.answer_lv);
+        cmtListview.addHeaderView(header);
         cmtListData = new ArrayList<FbCmtData>();
         cmtAdapter = new CmtAdapter(context, cmtListData, true);
         cmtListview.setAdapter(cmtAdapter);
@@ -166,6 +131,27 @@ public class ReplyDialog extends DialogFragment {
         // });
         controllerComments.load();
         return rootView;
+    }
+
+    private void initHeader(View rootView) {
+        txtTitle = (TextView) rootView.findViewWithTag("title");
+        txtName = (TextView) rootView.findViewWithTag("name");
+        imgAvatar = (ImageView) rootView.findViewWithTag("avatar");
+        imgClose = (ImageView) rootView.findViewWithTag("close");
+        imgClose.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dismissAllowingStateLoss();
+            }
+        });
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(image, imgAvatar, ResourceManager.getInstance().getOptionsCircle());
+
+        txtTitle.setText(title);
+        txtName.setText(name);
+
     }
 
     public void setOnAddPictureDialogListener(AddPictureDialogListener listener) {
