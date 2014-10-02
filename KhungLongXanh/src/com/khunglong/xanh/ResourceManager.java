@@ -3,8 +3,13 @@ package com.khunglong.xanh;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.androidquery.AQuery;
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.facebook.Session;
+import com.facebook.UiLifecycleHelper;
 import com.khunglong.xanh.data.MyData;
 import com.khunglong.xanh.dto.PageResourceDto;
 import com.khunglong.xanh.json.DragonData;
@@ -16,8 +21,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-
-import android.content.Context;
 
 public class ResourceManager {
 

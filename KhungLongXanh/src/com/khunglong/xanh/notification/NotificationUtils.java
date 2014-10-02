@@ -2,6 +2,8 @@ package com.khunglong.xanh.notification;
 
 import com.androidquery.AQuery;
 import com.facebook.LoginActivity;
+import com.khunglong.xanh.MsConstant;
+import com.khunglong.xanh.login.MyLoginActivity;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,13 +23,18 @@ public class NotificationUtils {
         builder.setTicker(message);
         builder.setSmallIcon(icon);
 
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, MyLoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Intent intent = new Intent();
+        // intent.setAction(MsConstant.ACTION_NOTIFICATION);
+        // PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         builder.setContentIntent(pendingIntent);
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(1, builder.build());
+        manager.notify(12345, builder.build());
     }
 }
