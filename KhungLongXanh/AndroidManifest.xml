@@ -40,6 +40,9 @@
         </activity>
         <activity android:name="com.khunglong.xanh.zoom.SingleTouchImageViewActivity" >
         </activity>
+
+        <service android:name="com.khunglong.xanh.service.BaseService" >
+        </service>
     </application>
 
 </manifest>

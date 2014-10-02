@@ -11,6 +11,7 @@ import com.khunglong.xanh.json.DragonData;
 import com.khunglong.xanh.main.drawer.MainDrawerItemGenerator;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
 import com.khunglong.xanh.myfacebook.object.FbMe;
+import com.khunglong.xanh.service.BaseService;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -54,6 +55,7 @@ public class ResourceManager {
         instance = null;
         AQuery aQuery = new AQuery(context);
         aQuery.clear();
+        context.stopService(BaseService.getIntentService(context));
     }
 
     public void resetData() {
@@ -72,6 +74,8 @@ public class ResourceManager {
     private void startup() {
         log.d("log>>>" + "startup");
         try {
+
+            context.startService(BaseService.getIntentService(context));
             mMainDrawerItemGenerator = new MainDrawerItemGenerator(context);
 
             fbLoaderManager = new FbLoaderManager();
