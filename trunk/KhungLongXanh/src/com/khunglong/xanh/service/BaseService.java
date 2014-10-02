@@ -10,11 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.example.sonnt_commonandroid.utils.PreferenceUtil;
@@ -22,14 +20,12 @@ import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.Controller;
-import com.khunglong.xanh.json.DragonData;
-import com.khunglong.xanh.main.klx.DetailMainFragment;
 import com.khunglong.xanh.myfacebook.FbLoaderAlbumsList;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
-import com.khunglong.xanh.myfacebook.FbPageLoader;
+import com.khunglong.xanh.myfacebook.FbMyFriendLoader;
 import com.khunglong.xanh.myfacebook.object.FbAlbums;
 import com.khunglong.xanh.myfacebook.object.FbAlbumsDto;
-import com.khunglong.xanh.utils.MsUtils;
+import com.khunglong.xanh.notification.NotificationUtils;
 
 public class BaseService extends Service {
     private static final String TAG = "BaseService";
@@ -102,9 +98,12 @@ public class BaseService extends Service {
                 setAlarm(getApplicationContext(), MsConstant.ALARM_CHECK, pendingIntentAlarm);
                 pagePosition = 0;
                 page = resource.getListPageResource().get(pagePosition).getFbName();
+                stringNotification.setLength(0);
                 controllerAlbums.load();
+                // controllerFriend.load();
 
             }
+
         }
     }
 
@@ -191,6 +190,7 @@ public class BaseService extends Service {
                                 if (saveCount == MsConstant.DEFAULT) {
                                     PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_4, count);
                                 } else {
+                                    saveCount--;
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_4, count);
@@ -208,6 +208,7 @@ public class BaseService extends Service {
                                 if (saveCount == MsConstant.DEFAULT) {
                                     PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_5, count);
                                 } else {
+                                    saveCount--;
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_5, count);
@@ -229,10 +230,11 @@ public class BaseService extends Service {
                         controllerAlbums.load();
                     }
 
-                    if (pagePosition == 5) {
+                    else if (pagePosition == 5) {
 
                         if (!TextUtils.isEmpty(stringNotification.toString())) {
                             log.e("log>>> " + "NEWS:" + stringNotification.toString());
+                            NotificationUtils.notify(context, stringNotification.toString(), R.drawable.ic_launcher);
                         } else {
                             log.e("log>>> " + "NO PAGE HAVE NEW POST");
                         }
@@ -247,6 +249,33 @@ public class BaseService extends Service {
                 @Override
                 public void onFbLoaderFail(Throwable e) {
                     log.e("log>>>" + "controllerAlbums onFbLoaderFail:" + e.toString());
+                }
+            });
+        }
+    };
+
+    private Controller controllerFriend = new Controller() {
+
+        @Override
+        public void load() {
+            mFbLoaderManager.load(new FbMyFriendLoader(context, "729372340455086/photos", null) {
+
+                @Override
+                public void onFbLoaderSuccess(String entry) {
+                    log.d("log>>> " + "entry:" + entry);
+
+                }
+
+                @Override
+                public void onFbLoaderStart() {
+                    log.d("log>>> " + "entry:");
+
+                }
+
+                @Override
+                public void onFbLoaderFail(Throwable e) {
+                    log.d("log>>> " + "onFbLoaderFail:");
+
                 }
             });
         }

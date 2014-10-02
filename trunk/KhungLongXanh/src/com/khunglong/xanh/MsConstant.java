@@ -14,6 +14,8 @@ public class MsConstant {
     public static final int MENU_FAVORITE_ID = 101;
 
     public static final String ACTION_CHECK = "ACTION_CHECK";
+    
+    public static final String ACTION_NOTIFICATION = "ACTION_NOTIFICATION";
 
     // ALARM CHECKING : SECOND
     public static final int ALARM_CHECK = 20;
