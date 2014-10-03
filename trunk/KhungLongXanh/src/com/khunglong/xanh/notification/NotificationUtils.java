@@ -21,6 +21,7 @@ public class NotificationUtils {
         builder.setContentText(context.getString(R.string.app_name));
         builder.setTicker(message);
         builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setAutoCancel(true);
 
         Intent intent = new Intent(context, MyLoginActivity.class);
         // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

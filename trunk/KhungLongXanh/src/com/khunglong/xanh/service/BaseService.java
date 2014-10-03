@@ -202,7 +202,6 @@ public class BaseService extends Service {
                                 if (saveCount == MsConstant.DEFAULT) {
                                     PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_4, count);
                                 } else {
-                                    saveCount--;
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_4, count);
@@ -224,7 +223,6 @@ public class BaseService extends Service {
                                 if (saveCount == MsConstant.DEFAULT) {
                                     PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_5, count);
                                 } else {
-                                    saveCount--;
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_5, count);
