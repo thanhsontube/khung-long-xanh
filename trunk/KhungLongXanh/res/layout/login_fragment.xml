@@ -55,6 +55,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|bottom" />
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="top|right"
+                        android:layout_margin="@dimen/lv1"
+                        android:background="@drawable/d_circle"
+                        android:fontFamily="sans-serif-condensed"
+                        android:gravity="center"
+                        android:tag="new_page1"
+                        android:text="12"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
                 </FrameLayout>
             </FrameLayout>
 
@@ -96,6 +109,18 @@
                             android:text="Khủng Long Xanh"
                             android:textColor="@android:color/white"
                             android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top|right"
+                            android:background="@drawable/d_circle"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center"
+                            android:tag="new_page2"
+                            android:text="12"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
                     </FrameLayout>
                 </FrameLayout>
                 <!-- page3 -->
@@ -129,6 +154,18 @@
                             android:text="Góc Thư Giãn"
                             android:textColor="@android:color/white"
                             android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top|right"
+                            android:background="@drawable/d_circle"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center"
+                            android:tag="new_page3"
+                            android:text="12"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
                     </FrameLayout>
                 </FrameLayout>
             </LinearLayout>
@@ -169,6 +206,18 @@
                             android:text="Giúp bạn cười nhiều hơn mỗi ngày"
                             android:textColor="@android:color/white"
                             android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top|right"
+                            android:background="@drawable/d_circle"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center"
+                            android:tag="new_page4"
+                            android:text="12"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
                     </FrameLayout>
                 </FrameLayout>
                 <!-- page 5 -->
@@ -203,6 +252,18 @@
                             android:text="Lớn cả rồi, nghiêm túc đê!"
                             android:textColor="@android:color/white"
                             android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="top|right"
+                            android:background="@drawable/d_circle"
+                            android:fontFamily="sans-serif-condensed"
+                            android:gravity="center"
+                            android:tag="new_page5"
+                            android:text="12"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
                     </FrameLayout>
                 </FrameLayout>
             </LinearLayout>
