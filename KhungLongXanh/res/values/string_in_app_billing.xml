@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="demo_purchase">
+<![CDATA[
+        <b>Donate</b>
+    ]]>
+    </string>
+    <string name="purchase_cancel">Hủy</string>
+    <string name="demo_item_small_beer">Mua cho Sơn 1 Ly cfe</string>
+    <string name="demo_item_medium_beer">Mua cho Sơn 1 Bữa trưa</string>
+    <string name="demo_item_large_beer">Mua cho Sơn 1 vé xem phim</string>
+    <string name="demo_item_xlarge_beer">Mua cho Sơn 1 vé Massage :D</string>
+
+</resources>
