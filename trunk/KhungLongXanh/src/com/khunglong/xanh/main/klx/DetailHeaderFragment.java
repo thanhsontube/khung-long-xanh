@@ -22,7 +22,6 @@ import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.json.PageData;
-import com.khunglong.xanh.notification.NotificationUtils;
 import com.khunglong.xanh.utils.BitmapUtils;
 
 public class DetailHeaderFragment extends BaseFragment {
@@ -64,7 +63,7 @@ public class DetailHeaderFragment extends BaseFragment {
     }
 
     public void setData(String page, PageData pageData) {
-        if ( page.equalsIgnoreCase(resource.getListPageResource().get(3).getFbName())
+        if (page.equalsIgnoreCase(resource.getListPageResource().get(3).getFbName())
                 || page.equalsIgnoreCase(resource.getListPageResource().get(4).getFbName())) {
             image.setScaleType(ScaleType.FIT_XY);
         }
@@ -129,10 +128,6 @@ public class DetailHeaderFragment extends BaseFragment {
                     }
                 }
                 break;
-            case R.id.action_noti:
-                NotificationUtils.notify(resource.getContext(), "aaaaaaaa", R.drawable.drawer_haivl);
-                break;
-
             default:
                 break;
             }

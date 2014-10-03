@@ -1,5 +1,6 @@
 package com.khunglong.xanh.test;
 
+import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class TestFragment extends BaseFragment {
 		View viewRoot = inflater.inflate(R.layout.test_fragment, container, false);
 		txt = (TextView) viewRoot.findViewWithTag("text");
 		txt.setText(getString());
+		
 		return viewRoot;
 	}
 	
