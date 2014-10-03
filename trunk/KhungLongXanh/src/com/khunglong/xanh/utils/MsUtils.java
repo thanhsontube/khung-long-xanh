@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v4.content.IntentCompat;
 import android.util.Log;
 
+import com.example.sonnt_commonandroid.utils.PreferenceUtil;
+import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.json.DragonData;
@@ -50,6 +52,30 @@ public class MsUtils {
         }
 
         return dragonData;
+    }
+
+    public static void resetNews(String page) {
+        ResourceManager resource = ResourceManager.getInstance();
+        ;
+        if (page.equals(resource.getListPageResource().get(0).getFbName())) {
+            PreferenceUtil.setPreference(resource.getContext(), MsConstant.KEY_NEW_1, MsConstant.DEFAULT);
+        }
+
+        if (page.equals(resource.getListPageResource().get(1).getFbName())) {
+            PreferenceUtil.setPreference(resource.getContext(), MsConstant.KEY_NEW_2, MsConstant.DEFAULT);
+        }
+
+        if (page.equals(resource.getListPageResource().get(2).getFbName())) {
+            PreferenceUtil.setPreference(resource.getContext(), MsConstant.KEY_NEW_3, MsConstant.DEFAULT);
+        }
+
+        if (page.equals(resource.getListPageResource().get(3).getFbName())) {
+            PreferenceUtil.setPreference(resource.getContext(), MsConstant.KEY_NEW_4, MsConstant.DEFAULT);
+        }
+        if (page.equals(resource.getListPageResource().get(4).getFbName())) {
+            PreferenceUtil.setPreference(resource.getContext(), MsConstant.KEY_NEW_5, MsConstant.DEFAULT);
+        }
+
     }
 
     public static void sendEmail(Context context, String receiver, String subject, String body) {
