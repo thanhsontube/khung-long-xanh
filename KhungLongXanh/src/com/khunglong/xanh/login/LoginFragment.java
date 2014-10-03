@@ -9,13 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
+import com.example.sonnt_commonandroid.utils.PreferenceUtil;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.LoginButton;
+import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.BaseFragment;
@@ -25,6 +28,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     private static final String TAG = "LoginFragment";
     private UiLifecycleHelper uiHelper;
     FilterLog log = new FilterLog(TAG);
+
+    private TextView n1, n2, n3, n4, n5;
 
     private ResourceManager resource;
 
@@ -89,6 +94,13 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         page4.setOnClickListener(this);
         page5.setOnClickListener(this);
 
+        // setup new
+        n1 = (TextView) rootView.findViewWithTag("new_page1");
+        n2 = (TextView) rootView.findViewWithTag("new_page2");
+        n3 = (TextView) rootView.findViewWithTag("new_page3");
+        n4 = (TextView) rootView.findViewWithTag("new_page4");
+        n5 = (TextView) rootView.findViewWithTag("new_page5");
+
         GoogleAnaToolKLX.trackerView(getActivity(), "LOGIN FRAGMENT");
         return rootView;
 
@@ -114,6 +126,42 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     public void onResume() {
         super.onResume();
         uiHelper.onResume();
+
+        int iNew;
+        if ((iNew = PreferenceUtil.getPreference(getActivity(), MsConstant.KEY_NEW_1, MsConstant.DEFAULT)) > 0) {
+            n1.setText(String.valueOf(iNew));
+            n1.setVisibility(View.VISIBLE);
+        } else {
+            n1.setVisibility(View.GONE);
+        }
+
+        if ((iNew = PreferenceUtil.getPreference(getActivity(), MsConstant.KEY_NEW_2, MsConstant.DEFAULT)) > 0) {
+            n2.setText(String.valueOf(iNew));
+            n2.setVisibility(View.VISIBLE);
+        } else {
+            n2.setVisibility(View.GONE);
+        }
+
+        if ((iNew = PreferenceUtil.getPreference(getActivity(), MsConstant.KEY_NEW_3, MsConstant.DEFAULT)) > 0) {
+            n3.setText(String.valueOf(iNew));
+            n3.setVisibility(View.VISIBLE);
+        } else {
+            n3.setVisibility(View.GONE);
+        }
+
+        if ((iNew = PreferenceUtil.getPreference(getActivity(), MsConstant.KEY_NEW_4, MsConstant.DEFAULT)) > 0) {
+            n4.setText(String.valueOf(iNew));
+            n4.setVisibility(View.VISIBLE);
+        } else {
+            n4.setVisibility(View.GONE);
+        }
+
+        if ((iNew = PreferenceUtil.getPreference(getActivity(), MsConstant.KEY_NEW_5, MsConstant.DEFAULT)) > 0) {
+            n5.setText(String.valueOf(iNew));
+            n5.setVisibility(View.VISIBLE);
+        } else {
+            n5.setVisibility(View.GONE);
+        }
     }
 
     @Override

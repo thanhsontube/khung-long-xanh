@@ -14,7 +14,7 @@ public class MsConstant {
     public static final int MENU_FAVORITE_ID = 101;
 
     public static final String ACTION_CHECK = "ACTION_CHECK";
-    
+
     public static final String ACTION_NOTIFICATION = "ACTION_NOTIFICATION";
 
     // ALARM CHECKING : SECOND
@@ -25,6 +25,14 @@ public class MsConstant {
     public static final String KEY_PAGE_3 = "KEY_PAGE_3";
     public static final String KEY_PAGE_4 = "KEY_PAGE_4";
     public static final String KEY_PAGE_5 = "KEY_PAGE_5";
+    
+    //SAVE THE VALUE OF NEW POST
+
+    public static final String KEY_NEW_1 = "KEY_NEW_1";
+    public static final String KEY_NEW_2 = "KEY_NEW_2";
+    public static final String KEY_NEW_3 = "KEY_NEW_3";
+    public static final String KEY_NEW_4 = "KEY_NEW_4";
+    public static final String KEY_NEW_5 = "KEY_NEW_5";
 
     public static final int DEFAULT = -1;
     // congdongvnexpress
