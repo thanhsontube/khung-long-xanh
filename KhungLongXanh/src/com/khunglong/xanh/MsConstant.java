@@ -16,6 +16,8 @@ public class MsConstant {
     public static final String ACTION_CHECK = "ACTION_CHECK";
 
     public static final String ACTION_NOTIFICATION = "ACTION_NOTIFICATION";
+    
+    public static final String ACTION_UPDATE_NEWS = "ACTION_UPDATE_NEWS";
 
     // ALARM CHECKING : SECOND
     public static final int ALARM_CHECK = 20;

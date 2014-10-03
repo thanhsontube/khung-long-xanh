@@ -138,6 +138,7 @@ public class BaseService extends Service {
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_1, count);
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_1, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST");
 
@@ -157,6 +158,7 @@ public class BaseService extends Service {
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_2, count);
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_2, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST;");
 
@@ -175,6 +177,7 @@ public class BaseService extends Service {
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_3, count);
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_3, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST;");
 
@@ -194,6 +197,7 @@ public class BaseService extends Service {
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_4, count);
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_4, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST;");
 
@@ -212,9 +216,9 @@ public class BaseService extends Service {
                                     if (count != saveCount) {
                                         int iNew = count - saveCount;
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_5, count);
+                                        PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_5, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST");
-
                                         }
                                     }
                                 }
@@ -231,6 +235,9 @@ public class BaseService extends Service {
                     }
 
                     else if (pagePosition == 5) {
+
+                        Intent intent = new Intent(MsConstant.ACTION_UPDATE_NEWS);
+                        sendBroadcast(intent);
 
                         if (!TextUtils.isEmpty(stringNotification.toString())) {
                             log.e("log>>> " + "NEWS:" + stringNotification.toString());

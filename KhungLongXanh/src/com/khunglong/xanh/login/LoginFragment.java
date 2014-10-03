@@ -3,7 +3,10 @@ package com.khunglong.xanh.login;
 import java.util.Arrays;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +35,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     private TextView n1, n2, n3, n4, n5;
 
     private ResourceManager resource;
+    BroadCastUpdateNews receiver;
 
     public static interface ILoginListener {
         void onLogin(LoginFragment f, String pageName);
@@ -61,6 +65,11 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         resource = ResourceManager.getInstance();
         uiHelper = new UiLifecycleHelper(getActivity(), callback);
         uiHelper.onCreate(savedInstanceState);
+
+        receiver = new BroadCastUpdateNews();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MsConstant.ACTION_UPDATE_NEWS);
+        getActivity().registerReceiver(receiver, filter);
     }
 
     @Override
@@ -127,6 +136,11 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
         super.onResume();
         uiHelper.onResume();
 
+        updateNews();
+    }
+
+    public void updateNews() {
+        log.d("log>>> " + "updateNews");
         int iNew;
         if ((iNew = PreferenceUtil.getPreference(getActivity(), MsConstant.KEY_NEW_1, MsConstant.DEFAULT)) > 0) {
             n1.setText(String.valueOf(iNew));
@@ -180,6 +194,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         uiHelper.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 
     @Override
@@ -194,6 +209,19 @@ public class LoginFragment extends BaseFragment implements OnClickListener {
             listener.onLogin(LoginFragment.this, (String) v.getTag());
         } else {
             Toast.makeText(getActivity(), "Bạn phải login bằng Facebook trước !", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private class BroadCastUpdateNews extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(MsConstant.ACTION_UPDATE_NEWS)) {
+                updateNews();
+            }
+
         }
 
     }
