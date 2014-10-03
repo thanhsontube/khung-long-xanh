@@ -11,10 +11,5 @@
         android:icon="@drawable/save"
         android:showAsAction="always"
         android:title="@string/save_text"/>
-     <item
-        android:id="@+id/action_noti"
-        android:icon="@drawable/save"
-        android:showAsAction="always"
-        android:title="Notificaition"/>
 
 </menu>

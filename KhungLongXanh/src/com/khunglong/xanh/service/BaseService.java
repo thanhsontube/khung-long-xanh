@@ -17,12 +17,10 @@ import android.util.Log;
 import com.example.sonnt_commonandroid.utils.FilterLog;
 import com.example.sonnt_commonandroid.utils.PreferenceUtil;
 import com.khunglong.xanh.MsConstant;
-import com.khunglong.xanh.R;
 import com.khunglong.xanh.ResourceManager;
 import com.khunglong.xanh.base.Controller;
 import com.khunglong.xanh.myfacebook.FbLoaderAlbumsList;
 import com.khunglong.xanh.myfacebook.FbLoaderManager;
-import com.khunglong.xanh.myfacebook.FbMyFriendLoader;
 import com.khunglong.xanh.myfacebook.object.FbAlbums;
 import com.khunglong.xanh.myfacebook.object.FbAlbumsDto;
 import com.khunglong.xanh.notification.NotificationUtils;
@@ -108,7 +106,6 @@ public class BaseService extends Service {
     }
 
     private String page;
-    private boolean isLoading;
     private FbLoaderManager mFbLoaderManager;
 
     private StringBuilder stringNotification = new StringBuilder();
@@ -116,7 +113,6 @@ public class BaseService extends Service {
 
         @Override
         public void load() {
-            isLoading = true;
 
             mFbLoaderManager.load(new FbLoaderAlbumsList(context, page) {
 
@@ -274,31 +270,31 @@ public class BaseService extends Service {
         }
     };
 
-    private Controller controllerFriend = new Controller() {
-
-        @Override
-        public void load() {
-            mFbLoaderManager.load(new FbMyFriendLoader(context, "729372340455086/photos", null) {
-
-                @Override
-                public void onFbLoaderSuccess(String entry) {
-                    log.d("log>>> " + "entry:" + entry);
-
-                }
-
-                @Override
-                public void onFbLoaderStart() {
-                    log.d("log>>> " + "entry:");
-
-                }
-
-                @Override
-                public void onFbLoaderFail(Throwable e) {
-                    log.d("log>>> " + "onFbLoaderFail:");
-
-                }
-            });
-        }
-    };
+    // private Controller controllerFriend = new Controller() {
+    //
+    // @Override
+    // public void load() {
+    // mFbLoaderManager.load(new FbMyFriendLoader(context, "729372340455086/photos", null) {
+    //
+    // @Override
+    // public void onFbLoaderSuccess(String entry) {
+    // log.d("log>>> " + "entry:" + entry);
+    //
+    // }
+    //
+    // @Override
+    // public void onFbLoaderStart() {
+    // log.d("log>>> " + "entry:");
+    //
+    // }
+    //
+    // @Override
+    // public void onFbLoaderFail(Throwable e) {
+    // log.d("log>>> " + "onFbLoaderFail:");
+    //
+    // }
+    // });
+    // }
+    // };
 
 }
