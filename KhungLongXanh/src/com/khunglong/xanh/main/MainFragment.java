@@ -97,6 +97,7 @@ public class MainFragment extends BaseFragment implements OnPageChangeListener, 
             Bundle bundle = getArguments();
             page = bundle.getString("page");
             dragonData = MsUtils.getDragonDataFrompage(page);
+            MsUtils.resetNews(page);
 
         } else {
             Toast.makeText(getActivity(), "Error get Page", Toast.LENGTH_SHORT).show();
