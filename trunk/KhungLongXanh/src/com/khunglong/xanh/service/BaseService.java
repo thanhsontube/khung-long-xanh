@@ -140,7 +140,10 @@ public class BaseService extends Service {
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_PAGE_1, count);
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_1, iNew);
                                         if (iNew > 0) {
-                                            stringNotification.append(page + ":" + iNew + " NEW POST");
+                                            stringNotification.append("Gái xinh có " + ":" + iNew + " ảnh mới");
+                                            String message = "Gái xinh có " + ":" + iNew + " ảnh mới";
+                                            NotificationUtils
+                                                    .notify(context, message, MsConstant.ID_NOTIFICATION_PAGE1);
 
                                         }
                                     }
@@ -161,6 +164,9 @@ public class BaseService extends Service {
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_2, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST;");
+                                            String message = "KLX có " + ":" + iNew + " ảnh mới";
+                                            NotificationUtils
+                                                    .notify(context, message, MsConstant.ID_NOTIFICATION_PAGE2);
 
                                         }
                                     }
@@ -180,6 +186,9 @@ public class BaseService extends Service {
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_3, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST;");
+                                            String message = "Góc thư giãn có " + ":" + iNew + " ảnh mới";
+                                            NotificationUtils
+                                                    .notify(context, message, MsConstant.ID_NOTIFICATION_PAGE3);
 
                                         }
                                     }
@@ -200,6 +209,9 @@ public class BaseService extends Service {
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_4, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST;");
+                                            String message = "Hài vl có " + ":" + iNew + " ảnh mới";
+                                            NotificationUtils
+                                                    .notify(context, message, MsConstant.ID_NOTIFICATION_PAGE4);
 
                                         }
                                     }
@@ -219,6 +231,9 @@ public class BaseService extends Service {
                                         PreferenceUtil.setPreference(context, MsConstant.KEY_NEW_5, iNew);
                                         if (iNew > 0) {
                                             stringNotification.append(page + ":" + iNew + " NEW POST");
+                                            String message = "Nghiêm túc vl có " + ":" + iNew + " ảnh mới";
+                                            NotificationUtils
+                                                    .notify(context, message, MsConstant.ID_NOTIFICATION_PAGE5);
                                         }
                                     }
                                 }
@@ -241,7 +256,7 @@ public class BaseService extends Service {
 
                         if (!TextUtils.isEmpty(stringNotification.toString())) {
                             log.e("log>>> " + "NEWS:" + stringNotification.toString());
-                            NotificationUtils.notify(context, stringNotification.toString(), R.drawable.ic_launcher);
+                            // NotificationUtils.notify(context, stringNotification.toString(), R.drawable.ic_launcher);
                         } else {
                             log.e("log>>> " + "NO PAGE HAVE NEW POST");
                         }

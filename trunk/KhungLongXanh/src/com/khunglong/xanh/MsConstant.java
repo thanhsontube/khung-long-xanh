@@ -16,7 +16,7 @@ public class MsConstant {
     public static final String ACTION_CHECK = "ACTION_CHECK";
 
     public static final String ACTION_NOTIFICATION = "ACTION_NOTIFICATION";
-    
+
     public static final String ACTION_UPDATE_NEWS = "ACTION_UPDATE_NEWS";
 
     // ALARM CHECKING : SECOND
@@ -27,8 +27,8 @@ public class MsConstant {
     public static final String KEY_PAGE_3 = "KEY_PAGE_3";
     public static final String KEY_PAGE_4 = "KEY_PAGE_4";
     public static final String KEY_PAGE_5 = "KEY_PAGE_5";
-    
-    //SAVE THE VALUE OF NEW POST
+
+    // SAVE THE VALUE OF NEW POST
 
     public static final String KEY_NEW_1 = "KEY_NEW_1";
     public static final String KEY_NEW_2 = "KEY_NEW_2";
@@ -37,6 +37,12 @@ public class MsConstant {
     public static final String KEY_NEW_5 = "KEY_NEW_5";
 
     public static final int DEFAULT = -1;
+
+    public static final int ID_NOTIFICATION_PAGE1 = 101;
+    public static final int ID_NOTIFICATION_PAGE2 = 102;
+    public static final int ID_NOTIFICATION_PAGE3 = 103;
+    public static final int ID_NOTIFICATION_PAGE4 = 104;
+    public static final int ID_NOTIFICATION_PAGE5 = 105;
     // congdongvnexpress
     // khunglongxanhvietnam
     // nghiemtucvl
