@@ -78,7 +78,7 @@ public class ResourceManager {
         log.d("log>>>" + "startup");
         try {
 
-            context.startService(BaseService.getIntentService(context));
+//            context.startService(BaseService.getIntentService(context));
             mMainDrawerItemGenerator = new MainDrawerItemGenerator(context);
 
             fbLoaderManager = new FbLoaderManager();
