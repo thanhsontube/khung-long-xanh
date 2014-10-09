@@ -9,9 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
-import com.facebook.FacebookRequestError;
 import com.facebook.Response;
-import com.facebook.android.FacebookError;
 import com.facebook.model.GraphObject;
 import com.khunglong.xanh.myfacebook.object.FbCmtData;
 import com.khunglong.xanh.myfacebook.object.FbCmtFrom;
@@ -32,9 +30,9 @@ public abstract class FbCommentsLoader extends FbLoaderGet<FbComments> {
 	protected FbComments handleResult(Response response) {
 		try {
 			GraphObject graphObject = response.getGraphObject();
-//			FacebookRequestError facebookError = response.getError();
-//			String err = facebookError.getErrorMessage();
-//			log.d("log>>>" + "err:" + err);
+			// FacebookRequestError facebookError = response.getError();
+			// String err = facebookError.getErrorMessage();
+			// log.d("log>>>" + "err:" + err);
 			JSONObject jsonObject = graphObject.getInnerJSONObject();
 			JSONArray jsonArray = jsonObject.getJSONArray("data");
 			FbComments comments = new FbComments();
@@ -102,9 +100,9 @@ public abstract class FbCommentsLoader extends FbLoaderGet<FbComments> {
 			comments.setSummary(new FbCmtSummary(total_count));
 			return comments;
 		} catch (Exception e) {
-			Log.e("", "log>>>" + "error  Comments handleResult:" + e.toString());
+			Log.e("", "log>>>" + "error FbCommentsLoader:" + e.toString());
+			return null;
 		}
-		return null;
 	}
 
 }
