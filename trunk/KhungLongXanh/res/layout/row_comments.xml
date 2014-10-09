@@ -113,7 +113,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:tag="ll_cmt" >
+                        android:tag="ll_cmt"
+                        android:visibility="gone" >
 
                         <TextView
                             style="@style/txt_blue_14"
