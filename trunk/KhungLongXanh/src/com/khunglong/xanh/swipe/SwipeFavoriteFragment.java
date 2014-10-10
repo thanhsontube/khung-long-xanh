@@ -88,8 +88,8 @@ public class SwipeFavoriteFragment extends BaseFragment implements OnPageChangeL
 		cursor.close();
 		pager = (ViewPager) rootView.findViewById(R.id.pager_favorite);
 		adapter = new MainPagerAdapter(getFragmentManager(), getActivity());
+		pager.setOnPageChangeListener(this);
 		pager.setAdapter(adapter);
-
 		return rootView;
 	}
 
@@ -168,8 +168,11 @@ public class SwipeFavoriteFragment extends BaseFragment implements OnPageChangeL
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		if (itemFavorite == null) {
+			log.e("log>>>" + "itemFavorite NULL");
 			return;
 		}
+		isFavorite = resource.getSqlite().isFavorite(list.get(position).getName());
+		log.d("log>>>" + "position:" + position + ";isFavorite:" + isFavorite);
 		if (isFavorite) {
 			itemFavorite.setIcon(R.drawable.ic_action_star_on_light);
 		} else {
@@ -189,7 +192,7 @@ public class SwipeFavoriteFragment extends BaseFragment implements OnPageChangeL
 			} else {
 				resource.getSqlite().addFavorite(list.get(position).getName());
 			}
-			isFavorite = !isFavorite;
+			// isFavorite = !isFavorite;
 
 			getActivity().invalidateOptionsMenu();
 			break;
@@ -222,8 +225,9 @@ public class SwipeFavoriteFragment extends BaseFragment implements OnPageChangeL
 
 	@Override
 	public void onPageSelected(int arg0) {
-		position = arg0;
-		isFavorite = resource.getSqlite().isFavorite(list.get(position).getName());
+		log.d("log>>>" + "onPageSelected:" + arg0);
+		this.position = arg0;
+		// isFavorite = resource.getSqlite().isFavorite(list.get(position).getName());
 		getActivity().invalidateOptionsMenu();
 	}
 
