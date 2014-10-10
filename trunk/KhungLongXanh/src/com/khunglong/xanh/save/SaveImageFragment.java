@@ -8,18 +8,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.example.sonnt_commonandroid.utils.FilterLog;
-import com.khunglong.xanh.MsConstant;
 import com.khunglong.xanh.R;
 import com.khunglong.xanh.base.BaseFragment;
 import com.khunglong.xanh.save.adapter.GridPictureAdapter;
@@ -95,43 +90,23 @@ public class SaveImageFragment extends BaseFragment {
         listener = null;
     }
 
-//    private MenuItem itemFavorite;
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-//        if (itemFavorite != null) {
-//            return;
-//        }
-//        itemFavorite = menu.add(0, MsConstant.MENU_FAVORITE_ID, 0, "Favorite");
-//        itemFavorite.setIcon(R.drawable.star_off);
-//        itemFavorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//        itemFavorite.setVisible(false);
-//
-//    }
-//
-//    @Override
-//    public void onPrepareOptionsMenu(Menu menu) {
-//        super.onPrepareOptionsMenu(menu);
-//        itemFavorite = menu.findItem(MsConstant.MENU_FAVORITE_ID);
-//        if (itemFavorite != null) {
-//            itemFavorite.setVisible(false);
-//        }
-//    }
-//
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden) {
-//            if (itemFavorite != null) {
-//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
-//                itemFavorite.setVisible(false);
-//                getActivity().invalidateOptionsMenu();
-//            } else {
-//                log.e("log>>> " + "itemFavorite:" + itemFavorite);
-//            }
-//        }
-//    }
+	@Override
+	public void onHiddenChanged(boolean hidden) {
+		super.onHiddenChanged(hidden);
+		if(!isHidden()) {
+			list.clear();
+	        File file = new File(Environment.getExternalStorageDirectory(), "KLX");
+	        if (file.exists()) {
+	            File[] fs = file.listFiles();
+	            for (File dto : fs) {
+	                list.add(dto);
+	            }
+	        }
+	        adapter.notifyDataSetChanged();
+		}
+	}
+    
+    
+
 
 }
